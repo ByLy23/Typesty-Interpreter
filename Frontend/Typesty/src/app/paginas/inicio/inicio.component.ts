@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InicioService } from 'src/app/servicios/inicio.service';
 
 @Component({
   selector: 'app-inicio',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private iniSrv: InicioService
+  ) { }
 
   ngOnInit(): void {
+    this.iniSrv.obtenerAlgo().subscribe(res=>{
+      console.log(res);
+    });
   }
 
 }
