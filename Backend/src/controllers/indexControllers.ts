@@ -5,5 +5,10 @@ class IndexController{
         //res.send('Mensaje');
         res.json({text:'Hola bbsitas'});
     }
+    public interpretar(req: Request, res: Response){
+        let parser= require('./Analizador/analizador');
+        const {entrada}=req.body;
+        
+    }
 }
 export const indexController= new IndexController();

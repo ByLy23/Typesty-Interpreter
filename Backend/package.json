@@ -5,7 +5,8 @@
   "main": "build/index.js",
   "scripts": {
     "build": "tsc -w",
-    "dev": "nodemon build/index.js"
+    "dev": "nodemon build/index.js",
+    "jison":"jison src/controllers/Analizador/analizador.jison"
   },
   "keywords": [],
   "author": "",
