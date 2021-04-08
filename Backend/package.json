@@ -6,12 +6,13 @@
   "scripts": {
     "build": "tsc -w",
     "dev": "nodemon build/index.js",
-    "jison": "jison src/controllers/Analizador/analizador.jison"
+    "jison": "jison src/controllers/Analizador/analizador.jison && copy analizador.js build\\controllers\\Analizador"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "copy": "^0.3.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

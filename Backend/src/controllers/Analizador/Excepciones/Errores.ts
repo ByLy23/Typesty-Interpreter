@@ -23,6 +23,7 @@ export default class Errores{
         this.desc=desc;
         this.fila=fila;
         this.columna=columna;
+
     }
     public returnError():String{
         return "Se obtuvo: "+this.tipoError+" desc:{"+this.desc+"} en la fila"+this.fila+" en la columna: "+this.columna+"\n";
