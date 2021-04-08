@@ -4,8 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.indexController = void 0;
+var Errores_1 = __importDefault(require("./Analizador/Excepciones/Errores"));
 var Arbol_1 = __importDefault(require("./Analizador/Simbolos/Arbol"));
 var tablaSimbolos_1 = __importDefault(require("./Analizador/Simbolos/tablaSimbolos"));
+var listaErrores;
 //tablas arboles y excepcciones
 var IndexController = /** @class */ (function () {
     function IndexController() {
@@ -15,6 +17,7 @@ var IndexController = /** @class */ (function () {
         res.json({ text: 'Hola bbsitas' });
     };
     IndexController.prototype.interpretar = function (req, res) {
+        listaErrores = new Array();
         var parser = require('./Analizador/analizador');
         var entrada = req.body.entrada;
         try {
@@ -23,6 +26,10 @@ var IndexController = /** @class */ (function () {
             ast.settablaGlobal(tabla);
             for (var _i = 0, _a = ast.getinstrucciones(); _i < _a.length; _i++) {
                 var i = _a[_i];
+                if (i instanceof Errores_1.default) {
+                    listaErrores.push(i);
+                    ast.actualizaConsola(i.returnError());
+                }
                 var resultador = i.interpretar(ast, tabla);
                 res.json({ resultado: ast.getconsola() });
             }

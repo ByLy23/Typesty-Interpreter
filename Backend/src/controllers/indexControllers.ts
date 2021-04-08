@@ -1,6 +1,9 @@
 import {Request, Response} from 'express';
+import Errores from './Analizador/Excepciones/Errores';
 import Arbol from './Analizador/Simbolos/Arbol';
 import tablaSimbolos from './Analizador/Simbolos/tablaSimbolos';
+
+let listaErrores: Array<Errores>;
 //tablas arboles y excepcciones
 class IndexController{
     public index(req: Request,  res: Response){
@@ -8,6 +11,7 @@ class IndexController{
         res.json({text:'Hola bbsitas'});
     }
     public interpretar(req: Request, res: Response){
+        listaErrores= new Array<Errores>();
         let parser= require('./Analizador/analizador');
         const {entrada}=req.body;
         try{
@@ -15,6 +19,10 @@ class IndexController{
             var tabla= new tablaSimbolos();
             ast.settablaGlobal(tabla);
             for(let i of ast.getinstrucciones()){
+                if(i instanceof Errores){
+                    listaErrores.push(i);
+                    ast.actualizaConsola((<Errores>i).returnError());
+                }
                 var resultador= i.interpretar(ast,tabla);
                 res.json({resultado: ast.getconsola()});
             }
