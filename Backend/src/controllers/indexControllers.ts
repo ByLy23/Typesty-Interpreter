@@ -3,7 +3,7 @@ import Errores from './Analizador/Excepciones/Errores';
 import Arbol from './Analizador/Simbolos/Arbol';
 import tablaSimbolos from './Analizador/Simbolos/tablaSimbolos';
 
-let listaErrores: Array<Errores>;
+export let listaErrores: Array<Errores>;
 //tablas arboles y excepcciones
 class IndexController{
     public index(req: Request,  res: Response){
@@ -24,10 +24,14 @@ class IndexController{
                     ast.actualizaConsola((<Errores>i).returnError());
                 }
                 var resultador= i.interpretar(ast,tabla);
-                res.json({resultado: ast.getconsola()});
+                if(resultador instanceof Errores){
+                    listaErrores.push(resultador);
+                    ast.actualizaConsola((<Errores>resultador).returnError());
+                }
+                res.json({resultado: ast.getconsola(), errores:listaErrores});
             }
-        }catch(error){
-            res.json({error:error});
+        }catch(err){
+            res.json({error:err,errores:listaErrores});
         }
     }
 }

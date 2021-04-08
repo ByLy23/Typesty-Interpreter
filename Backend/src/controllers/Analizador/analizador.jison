@@ -2,6 +2,13 @@
 
 
 
+%{
+//codigo js
+const print=require('./Instrucciones/print');
+const nativo= require('./Expresiones/Nativo');
+const errores= require('./Excepciones/Errores');
+const inicio= require('../indexControllers');
+%}
 //definicion lexica
 %lex 
 
@@ -26,8 +33,8 @@
 //espacios en blanco
 //cadena
 \"[^\"]*\"             { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
-[0-9]+\b               return 'ENTERO';
 [0-9]+("."[0-9]+)\b     return 'DECIMAL';
+[0-9]+\b               return 'ENTERO';
 ([^\t\n\r ])\b          return 'CARACTER';
 ("true"|"false")\b      return 'BOOLEANO';
 
@@ -35,13 +42,8 @@
 <<EOF>>                 return 'EOF';
 
 
-.   {console.log('ERROR lexico en: '+yytext+' , en la linea tal y tal xd');}
+.   {inicio.listaErrores.push(new errores.default('ERROR LEXICO',yytext,this._$.first_line,this._$.first_column)); console.log("lexi "+yytext);}
 /lex
-%{
-//codigo js
-const print=require('./Instrucciones/print');
-const nativo= require('./Expresiones/Nativo');
-%}
 //Precedencia
 %left 'POR' 'DIVI'
 %left 'MAS' 'MENOS'
@@ -134,7 +136,7 @@ INSTRUCCION:
     IMPRIMIR                            {$$=$1;}
     //|CONDICION
     //|CICLO
-    |error PTCOMA {console.error('error sintactico');};
+    |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta ");};
 IMPRIMIR: RESPRINT PARABRE EXPRESION PARCIERRA PTCOMA          {$$=new print.default($3,@1.first_line,@1.first_column);} 
 ;//{};
 
