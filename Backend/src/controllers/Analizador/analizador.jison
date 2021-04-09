@@ -8,6 +8,8 @@ const print=require('./Instrucciones/print');
 const nativo= require('./Expresiones/Nativo');
 const errores= require('./Excepciones/Errores');
 const inicio= require('../indexControllers');
+const aritmeticas= require('./Expresiones/Aritmetica');
+const Tipo= require('./Simbolos/Tipo');
 %}
 //definicion lexica
 %lex 
@@ -140,12 +142,12 @@ INSTRUCCION:
 IMPRIMIR: RESPRINT PARABRE EXPRESION PARCIERRA PTCOMA          {$$=new print.default($3,@1.first_line,@1.first_column);} 
 ;//{};
 
-EXPRESION: EXPRESION MAS EXPRESION
-    |EXPRESION MENOS EXPRESION
-    |EXPRESION POR EXPRESION
-    |EXPRESION DIVI EXPRESION
-    |ENTERO                     {$$= new nativo.default($1,@1.first_line,@1.first_column);}
-    |DECIMAL                    {$$= new nativo.default($1,@1.first_line,@1.first_column);}
-    |CADENA                     {$$= new nativo.default($1,@1.first_line,@1.first_column);}
-    |BOOLEANO                   {$$= new nativo.default($1,@1.first_line,@1.first_column);}
+EXPRESION: EXPRESION MAS EXPRESION      {$$= new aritmeticas.default(aritmeticas.Operadores.SUMA,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION MENOS EXPRESION          {$$= new aritmeticas.default(aritmeticas.Operadores.RESTA,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION POR EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.MULTIPLICACION,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION DIVI EXPRESION           {$$= new aritmeticas.default(aritmeticas.Operadores.DIVISION,@1.first_line,@1.first_column,$1,$3);}
+    |ENTERO                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.ENTERO),$1,@1.first_line,@1.first_column);}
+    |DECIMAL                    {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.DECIMAL),$1,@1.first_line,@1.first_column);}
+    |CADENA                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CADENA),$1,@1.first_line,@1.first_column);}
+    |BOOLEANO                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.BOOLEANO),$1,@1.first_line,@1.first_column);}
     ;

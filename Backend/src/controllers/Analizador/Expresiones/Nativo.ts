@@ -2,18 +2,18 @@ import { Instruccion } from "../Abastracto/Instruccion"
 import Errores from "../Excepciones/Errores";
 import Arbol from "../Simbolos/Arbol";
 import tablaSimbolos from "../Simbolos/tablaSimbolos";
+import Tipo from "../Simbolos/Tipo";
 
 
 
 export default class Nativo extends Instruccion{
     valor: any;
-    constructor(valor: any, fila: Number, columna: Number){
-        super(valor,fila,columna);
-        Object.assign(this,{valor});
+    constructor(tipo:Tipo,valor: any, fila: Number, columna: Number){
+        super(tipo,fila,columna);
+       this.valor=valor;
     }
 
     interpretar(arbol:Arbol, tabla: tablaSimbolos){
-        if(this.valor instanceof Errores) return this.valor;
         return this.valor;
     }
 }

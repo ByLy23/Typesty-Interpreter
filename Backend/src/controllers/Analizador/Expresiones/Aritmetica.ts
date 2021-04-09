@@ -36,7 +36,32 @@ export default class Aritmetica extends Instruccion{
             der=this.operando2?.interpretar(arbol,tabla);
             if(der instanceof Errores) return der;
         }
+        switch(this.operador){
+            case Operadores.SUMA:
+               
+                break;
+            case Operadores.RESTA:
+                console.log("ACA LLEGA LA RESTA WIIII");
+                break;
+            case Operadores.MULTIPLICACION:
+                console.log("ACA LLEGA LA MULTI WIIII");
+            break;
+            case Operadores.DIVISION:
+                console.log("ACA LLEGA LA DIVISION WIIII");
+            break;
+            default:
+                return new Errores("ERROR SEMANTICO","OPERADOR INVALIDO",this.fila,this.columna);
+        }
     }
+
+    private funcionOperador(izq:Instruccion,der:Instruccion,uno:Instruccion){
+        
+    }
+private operador1Suma(){
+  //  var izqDe= this.operando1?.tipoDato.getTipo();
+    //console.log(izqDe);
+    
+}
 }
 export enum Operadores{
     SUMA,

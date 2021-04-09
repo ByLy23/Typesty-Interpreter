@@ -71,6 +71,27 @@ var Aritmetica = /** @class */ (function (_super) {
             if (der instanceof Errores_1.default)
                 return der;
         }
+        switch (this.operador) {
+            case Operadores.SUMA:
+                break;
+            case Operadores.RESTA:
+                console.log("ACA LLEGA LA RESTA WIIII");
+                break;
+            case Operadores.MULTIPLICACION:
+                console.log("ACA LLEGA LA MULTI WIIII");
+                break;
+            case Operadores.DIVISION:
+                console.log("ACA LLEGA LA DIVISION WIIII");
+                break;
+            default:
+                return new Errores_1.default("ERROR SEMANTICO", "OPERADOR INVALIDO", this.fila, this.columna);
+        }
+    };
+    Aritmetica.prototype.funcionOperador = function (izq, der, uno) {
+    };
+    Aritmetica.prototype.operador1Suma = function () {
+        //  var izqDe= this.operando1?.tipoDato.getTipo();
+        //console.log(izqDe);
     };
     return Aritmetica;
 }(Instruccion_1.Instruccion));
