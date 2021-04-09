@@ -93,53 +93,86 @@ export default class Aritmetica extends Instruccion{
         else if(numero==2){//decimal
             switch(op2){//OPERADOR 2
                 case tipoDato.ENTERO://retorna decimal
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.DECIMAL);
+                    return parseFloat(izq)+parseFloat(der);
                 case tipoDato.DECIMAL://retorna decimal
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.DECIMAL);
+                    return parseFloat(izq)+parseFloat(der);
                 case tipoDato.BOOLEANO://retorna decimal
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.DECIMAL);
+                    if(der=="true")
+                        return parseFloat(izq)+1;
+                    return parseFloat(izq);
                 case tipoDato.CADENA://retorna cadena
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.CADENA);  
+                    return izq+""+der;
                 case tipoDato.CARACTER://retorna decimal
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.DECIMAL);    
+                    var da=der+"";
+                    var res= da.charCodeAt(1);
+                    return parseFloat(izq)+res;
             }
         }
         else if(numero==3){//boolean
             switch(op2){//OPERADOR 2
                 case tipoDato.ENTERO://retorna entero
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.ENTERO);
+                    if(izq=="true")
+                        return parseInt(der)+1;
+                    return parseInt(der);
                 case tipoDato.DECIMAL://retorna decimal
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.DECIMAL);
+                    if(izq=="true")
+                        return parseFloat(der)+1;
+                    return parseFloat(der);
                 case tipoDato.CADENA://retorna cadena
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.CADENA);  
+                    return izq+""+der;
                 default://error
-                    break;
+                    return new Errores("SEMANTICO","TIPO DE DATO NO PERMITIDO",this.fila,this.columna);
             }
         }
         else if(numero==4){//cadena
             switch(op2){//OPERADOR 2
                 case tipoDato.ENTERO://retorna cadena
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.CADENA);  
+                    return izq+""+der;
                 case tipoDato.DECIMAL://retorna cadena
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.CADENA);  
+                    return izq+""+der;
                 case tipoDato.BOOLEANO://retorna cadena
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.CADENA);  
+                    return izq+""+der;
                 case tipoDato.CADENA://retorna cadena
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.CADENA);  
+                    return izq+""+der;
                 case tipoDato.CARACTER://retorna cadena
-                    break;
+                    this.tipoDato=new Tipo(tipoDato.CADENA);  
+                    var dato=der.replace(/['"]+/g, '');
+                    return izq+""+dato;
             }
         }
         else if(numero==5){//caracter
             switch(op2){//OPERADOR 2
-                case tipoDato.ENTERO:
-                    break;
-                case tipoDato.DECIMAL:
-                    break;
-                case tipoDato.CADENA:
-                    break;
-                case tipoDato.CARACTER:
-                    break;
+                case tipoDato.ENTERO://retorna entero
+                    this.tipoDato=new Tipo(tipoDato.DECIMAL);
+                    var da1=izq+"";
+                    var res1= da1.charCodeAt(1);
+                    return res1+parseInt(der);
+                case tipoDato.DECIMAL://retorna decimal
+                    this.tipoDato=new Tipo(tipoDato.DECIMAL);
+                    var da1=izq+"";
+                    var res1= da1.charCodeAt(1);
+                    return res1+parseFloat(der);
+                case tipoDato.CADENA://retorna cadena
+                    this.tipoDato=new Tipo(tipoDato.CADENA);  
+                    var otro11=izq.replace(/['"]+/g, '');
+                    return otro11+""+der;
+                case tipoDato.CARACTER://retorna cadena
+                    this.tipoDato=new Tipo(tipoDato.CADENA);  
+                    var otro=der.replace(/['"]+/g, '');
+                    var otro1=izq.replace(/['"]+/g, '');
+                    return otro1+""+otro;
                 default://error semantico
                     break;
             }

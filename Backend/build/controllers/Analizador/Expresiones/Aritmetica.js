@@ -130,53 +130,86 @@ var Aritmetica = /** @class */ (function (_super) {
         else if (numero == 2) { //decimal
             switch (op2) { //OPERADOR 2
                 case Tipo_1.tipoDato.ENTERO: //retorna decimal
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    return parseFloat(izq) + parseFloat(der);
                 case Tipo_1.tipoDato.DECIMAL: //retorna decimal
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    return parseFloat(izq) + parseFloat(der);
                 case Tipo_1.tipoDato.BOOLEANO: //retorna decimal
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    if (der == "true")
+                        return parseFloat(izq) + 1;
+                    return parseFloat(izq);
                 case Tipo_1.tipoDato.CADENA: //retorna cadena
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                    return izq + "" + der;
                 case Tipo_1.tipoDato.CARACTER: //retorna decimal
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    var da = der + "";
+                    var res = da.charCodeAt(1);
+                    return parseFloat(izq) + res;
             }
         }
         else if (numero == 3) { //boolean
             switch (op2) { //OPERADOR 2
                 case Tipo_1.tipoDato.ENTERO: //retorna entero
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    if (izq == "true")
+                        return parseInt(der) + 1;
+                    return parseInt(der);
                 case Tipo_1.tipoDato.DECIMAL: //retorna decimal
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    if (izq == "true")
+                        return parseFloat(der) + 1;
+                    return parseFloat(der);
                 case Tipo_1.tipoDato.CADENA: //retorna cadena
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                    return izq + "" + der;
                 default: //error
-                    break;
+                    return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
             }
         }
         else if (numero == 4) { //cadena
             switch (op2) { //OPERADOR 2
                 case Tipo_1.tipoDato.ENTERO: //retorna cadena
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                    return izq + "" + der;
                 case Tipo_1.tipoDato.DECIMAL: //retorna cadena
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                    return izq + "" + der;
                 case Tipo_1.tipoDato.BOOLEANO: //retorna cadena
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                    return izq + "" + der;
                 case Tipo_1.tipoDato.CADENA: //retorna cadena
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                    return izq + "" + der;
                 case Tipo_1.tipoDato.CARACTER: //retorna cadena
-                    break;
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                    var dato = der.replace(/['"]+/g, '');
+                    return izq + "" + dato;
             }
         }
         else if (numero == 5) { //caracter
             switch (op2) { //OPERADOR 2
-                case Tipo_1.tipoDato.ENTERO:
-                    break;
-                case Tipo_1.tipoDato.DECIMAL:
-                    break;
-                case Tipo_1.tipoDato.CADENA:
-                    break;
-                case Tipo_1.tipoDato.CARACTER:
-                    break;
+                case Tipo_1.tipoDato.ENTERO: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    var da1 = izq + "";
+                    var res1 = da1.charCodeAt(1);
+                    return res1 + parseInt(der);
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    var da1 = izq + "";
+                    var res1 = da1.charCodeAt(1);
+                    return res1 + parseFloat(der);
+                case Tipo_1.tipoDato.CADENA: //retorna cadena
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                    var otro11 = izq.replace(/['"]+/g, '');
+                    return otro11 + "" + der;
+                case Tipo_1.tipoDato.CARACTER: //retorna cadena
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                    var otro = der.replace(/['"]+/g, '');
+                    var otro1 = izq.replace(/['"]+/g, '');
+                    return otro1 + "" + otro;
                 default: //error semantico
                     break;
             }
