@@ -14,6 +14,7 @@ export default class Nativo extends Instruccion{
     }
 
     interpretar(arbol:Arbol, tabla: tablaSimbolos){
+
         return this.valor;
     }
 }

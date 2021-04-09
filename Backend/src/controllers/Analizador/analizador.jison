@@ -36,10 +36,9 @@ const Tipo= require('./Simbolos/Tipo');
 //cadena
 \"[^\"]*\"             { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
 [0-9]+("."[0-9]+)\b     return 'DECIMAL';
-[0-9]+\b               return 'ENTERO';
-([^\t\n\r ])\b          return 'CARACTER';
+[0-9]+\b                return 'ENTERO';
+\'[^\']\'               return 'CARACTER';
 ("true"|"false")\b      return 'BOOLEANO';
-
 
 <<EOF>>                 return 'EOF';
 
@@ -150,4 +149,5 @@ EXPRESION: EXPRESION MAS EXPRESION      {$$= new aritmeticas.default(aritmeticas
     |DECIMAL                    {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.DECIMAL),$1,@1.first_line,@1.first_column);}
     |CADENA                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CADENA),$1,@1.first_line,@1.first_column);}
     |BOOLEANO                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.BOOLEANO),$1,@1.first_line,@1.first_column);}
+    |CARACTER                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CARACTER),$1,@1.first_line,@1.first_column);}
     ;

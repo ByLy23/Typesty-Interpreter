@@ -72,12 +72,12 @@
   }
 */
 var analizador = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,6],$V2=[2,5,9],$V3=[1,12],$V4=[1,13],$V5=[1,14],$V6=[1,15],$V7=[1,17],$V8=[1,18],$V9=[12,13,14,15,16],$Va=[12,15,16];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,6],$V2=[2,5,9],$V3=[1,12],$V4=[1,13],$V5=[1,14],$V6=[1,15],$V7=[1,16],$V8=[1,18],$V9=[1,19],$Va=[12,13,14,15,16],$Vb=[12,15,16];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"INI":3,"INSTRUCCIONES":4,"EOF":5,"INSTRUCCION":6,"IMPRIMIR":7,"PTCOMA":8,"RESPRINT":9,"PARABRE":10,"EXPRESION":11,"PARCIERRA":12,"MAS":13,"MENOS":14,"POR":15,"DIVI":16,"ENTERO":17,"DECIMAL":18,"CADENA":19,"BOOLEANO":20,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",8:"PTCOMA",9:"RESPRINT",10:"PARABRE",12:"PARCIERRA",13:"MAS",14:"MENOS",15:"POR",16:"DIVI",17:"ENTERO",18:"DECIMAL",19:"CADENA",20:"BOOLEANO"},
-productions_: [0,[3,2],[4,2],[4,1],[6,1],[6,2],[7,5],[11,3],[11,3],[11,3],[11,3],[11,1],[11,1],[11,1],[11,1]],
+symbols_: {"error":2,"INI":3,"INSTRUCCIONES":4,"EOF":5,"INSTRUCCION":6,"IMPRIMIR":7,"PTCOMA":8,"RESPRINT":9,"PARABRE":10,"EXPRESION":11,"PARCIERRA":12,"MAS":13,"MENOS":14,"POR":15,"DIVI":16,"ENTERO":17,"DECIMAL":18,"CADENA":19,"BOOLEANO":20,"CARACTER":21,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",8:"PTCOMA",9:"RESPRINT",10:"PARABRE",12:"PARCIERRA",13:"MAS",14:"MENOS",15:"POR",16:"DIVI",17:"ENTERO",18:"DECIMAL",19:"CADENA",20:"BOOLEANO",21:"CARACTER"},
+productions_: [0,[3,2],[4,2],[4,1],[6,1],[6,2],[7,5],[11,3],[11,3],[11,3],[11,3],[11,1],[11,1],[11,1],[11,1],[11,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -125,9 +125,12 @@ break;
 case 14:
 this.$= new nativo.default(new Tipo.default(Tipo.tipoDato.BOOLEANO),$$[$0],_$[$0].first_line,_$[$0].first_column);
 break;
+case 15:
+this.$= new nativo.default(new Tipo.default(Tipo.tipoDato.CARACTER),$$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
 }
 },
-table: [{2:$V0,3:1,4:2,6:3,7:4,9:$V1},{1:[3]},{2:$V0,5:[1,7],6:8,7:4,9:$V1},o($V2,[2,3]),o($V2,[2,4]),{8:[1,9]},{10:[1,10]},{1:[2,1]},o($V2,[2,2]),o($V2,[2,5]),{11:11,17:$V3,18:$V4,19:$V5,20:$V6},{12:[1,16],13:$V7,14:$V8,15:[1,19],16:[1,20]},o($V9,[2,11]),o($V9,[2,12]),o($V9,[2,13]),o($V9,[2,14]),{8:[1,21]},{11:22,17:$V3,18:$V4,19:$V5,20:$V6},{11:23,17:$V3,18:$V4,19:$V5,20:$V6},{11:24,17:$V3,18:$V4,19:$V5,20:$V6},{11:25,17:$V3,18:$V4,19:$V5,20:$V6},o($V2,[2,6]),o($V9,[2,7]),o($V9,[2,8]),o($Va,[2,9],{13:$V7,14:$V8}),o($Va,[2,10],{13:$V7,14:$V8})],
+table: [{2:$V0,3:1,4:2,6:3,7:4,9:$V1},{1:[3]},{2:$V0,5:[1,7],6:8,7:4,9:$V1},o($V2,[2,3]),o($V2,[2,4]),{8:[1,9]},{10:[1,10]},{1:[2,1]},o($V2,[2,2]),o($V2,[2,5]),{11:11,17:$V3,18:$V4,19:$V5,20:$V6,21:$V7},{12:[1,17],13:$V8,14:$V9,15:[1,20],16:[1,21]},o($Va,[2,11]),o($Va,[2,12]),o($Va,[2,13]),o($Va,[2,14]),o($Va,[2,15]),{8:[1,22]},{11:23,17:$V3,18:$V4,19:$V5,20:$V6,21:$V7},{11:24,17:$V3,18:$V4,19:$V5,20:$V6,21:$V7},{11:25,17:$V3,18:$V4,19:$V5,20:$V6,21:$V7},{11:26,17:$V3,18:$V4,19:$V5,20:$V6,21:$V7},o($V2,[2,6]),o($Va,[2,7]),o($Va,[2,8]),o($Vb,[2,9],{13:$V8,14:$V9}),o($Vb,[2,10],{13:$V8,14:$V9})],
 defaultActions: {7:[2,1]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
@@ -738,7 +741,7 @@ case 11:return 18;
 break;
 case 12:return 17;
 break;
-case 13:return 'CARACTER';
+case 13:return 21;
 break;
 case 14:return 20;
 break;
@@ -748,7 +751,7 @@ case 16:inicio.listaErrores.push(new errores.default('ERROR LEXICO',yy_.yytext,t
 break;
 }
 },
-rules: [/^(?:print\b)/i,/^(?:;)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\/)/i,/^(?:\*)/i,/^(?:[ \r\t]+)/i,/^(?:\n)/i,/^(?:"[^\"]*")/i,/^(?:[0-9]+(\.[0-9]+)\b)/i,/^(?:[0-9]+\b)/i,/^(?:([^\t\n\r ])\b)/i,/^(?:(true|false)\b)/i,/^(?:$)/i,/^(?:.)/i],
+rules: [/^(?:print\b)/i,/^(?:;)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\/)/i,/^(?:\*)/i,/^(?:[ \r\t]+)/i,/^(?:\n)/i,/^(?:"[^\"]*")/i,/^(?:[0-9]+(\.[0-9]+)\b)/i,/^(?:[0-9]+\b)/i,/^(?:'[^\']')/i,/^(?:(true|false)\b)/i,/^(?:$)/i,/^(?:.)/i],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],"inclusive":true}}
 });
 return lexer;

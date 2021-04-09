@@ -73,7 +73,7 @@ var Aritmetica = /** @class */ (function (_super) {
         }
         switch (this.operador) {
             case Operadores.SUMA:
-                break;
+                return this.operador1Suma(izq, der);
             case Operadores.RESTA:
                 console.log("ACA LLEGA LA RESTA WIIII");
                 break;
@@ -87,11 +87,100 @@ var Aritmetica = /** @class */ (function (_super) {
                 return new Errores_1.default("ERROR SEMANTICO", "OPERADOR INVALIDO", this.fila, this.columna);
         }
     };
-    Aritmetica.prototype.funcionOperador = function (izq, der, uno) {
+    Aritmetica.prototype.operador1Suma = function (izq, der) {
+        var _a, _b;
+        var op1 = (_a = this.operando1) === null || _a === void 0 ? void 0 : _a.tipoDato.getTipo();
+        var op2 = (_b = this.operando2) === null || _b === void 0 ? void 0 : _b.tipoDato.getTipo();
+        switch (op1) { //operador 1
+            case Tipo_1.tipoDato.ENTERO:
+                return this.op2Suma(1, op2, izq, der);
+            case Tipo_1.tipoDato.DECIMAL:
+                return this.op2Suma(2, op2, izq, der);
+            case Tipo_1.tipoDato.BOOLEANO:
+                return this.op2Suma(3, op2, izq, der);
+            case Tipo_1.tipoDato.CADENA:
+                return this.op2Suma(4, op2, izq, der);
+            case Tipo_1.tipoDato.CARACTER:
+                return this.op2Suma(5, op2, izq, der);
+        }
     };
-    Aritmetica.prototype.operador1Suma = function () {
-        //  var izqDe= this.operando1?.tipoDato.getTipo();
-        //console.log(izqDe);
+    Aritmetica.prototype.op2Suma = function (numero, op2, izq, der) {
+        if (numero == 1) { //entero
+            switch (op2) { //OPERADOR 2
+                case Tipo_1.tipoDato.ENTERO: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    return parseInt(izq) + parseInt(der);
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    return parseFloat(izq) + parseFloat(der);
+                case Tipo_1.tipoDato.BOOLEANO: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    if (der == "true")
+                        return parseInt(izq) + 1;
+                    return parseInt(izq);
+                case Tipo_1.tipoDato.CADENA: //retorna cadena
+                    return izq + "" + der;
+                case Tipo_1.tipoDato.CARACTER: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    var da = der + "";
+                    var res = da.charCodeAt(1);
+                    return parseInt(izq) + res;
+            }
+        }
+        else if (numero == 2) { //decimal
+            switch (op2) { //OPERADOR 2
+                case Tipo_1.tipoDato.ENTERO: //retorna decimal
+                    break;
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    break;
+                case Tipo_1.tipoDato.BOOLEANO: //retorna decimal
+                    break;
+                case Tipo_1.tipoDato.CADENA: //retorna cadena
+                    break;
+                case Tipo_1.tipoDato.CARACTER: //retorna decimal
+                    break;
+            }
+        }
+        else if (numero == 3) { //boolean
+            switch (op2) { //OPERADOR 2
+                case Tipo_1.tipoDato.ENTERO: //retorna entero
+                    break;
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    break;
+                case Tipo_1.tipoDato.CADENA: //retorna cadena
+                    break;
+                default: //error
+                    break;
+            }
+        }
+        else if (numero == 4) { //cadena
+            switch (op2) { //OPERADOR 2
+                case Tipo_1.tipoDato.ENTERO: //retorna cadena
+                    break;
+                case Tipo_1.tipoDato.DECIMAL: //retorna cadena
+                    break;
+                case Tipo_1.tipoDato.BOOLEANO: //retorna cadena
+                    break;
+                case Tipo_1.tipoDato.CADENA: //retorna cadena
+                    break;
+                case Tipo_1.tipoDato.CARACTER: //retorna cadena
+                    break;
+            }
+        }
+        else if (numero == 5) { //caracter
+            switch (op2) { //OPERADOR 2
+                case Tipo_1.tipoDato.ENTERO:
+                    break;
+                case Tipo_1.tipoDato.DECIMAL:
+                    break;
+                case Tipo_1.tipoDato.CADENA:
+                    break;
+                case Tipo_1.tipoDato.CARACTER:
+                    break;
+                default: //error semantico
+                    break;
+            }
+        }
     };
     return Aritmetica;
 }(Instruccion_1.Instruccion));
