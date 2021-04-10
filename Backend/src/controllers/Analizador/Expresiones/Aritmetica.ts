@@ -47,9 +47,9 @@ export default class Aritmetica extends Instruccion {
       case Operadores.DIVISION:
         return this.operador1Division(izq, der);
       case Operadores.POTENCIA:
-        return console.log("ACA LLEGA LA OTENCIA WIIII");
+        return this.operador1Potencia(izq, der);
       case Operadores.MODULADOR:
-        return console.log("ACA LLEGA LA MODULACION WIIII");
+        return this.operador1Mod(izq, der);
       default:
         return new Errores(
           "ERROR SEMANTICO",
@@ -578,6 +578,184 @@ export default class Aritmetica extends Instruccion {
             this.columna
           );
       }
+    }
+  }
+  /*----------------------------------------------------------POTENCIA------------------------------------------------- */
+  private operador1Potencia(izq: any, der: any) {
+    let op1 = this.operando1?.tipoDato.getTipo();
+    let op2 = this.operando2?.tipoDato.getTipo();
+    switch (
+      op1 //operador 1
+    ) {
+      case tipoDato.ENTERO:
+        return this.op2Potencia(1, op2, izq, der);
+      case tipoDato.DECIMAL:
+        return this.op2Potencia(2, op2, izq, der);
+      case tipoDato.BOOLEANO:
+        return this.op2Potencia(3, op2, izq, der);
+      case tipoDato.CADENA:
+        return this.op2Potencia(4, op2, izq, der);
+      case tipoDato.CARACTER:
+        return this.op2Potencia(5, op2, izq, der);
+    }
+  }
+  private op2Potencia(numero: Number, op2: any, izq: any, der: any) {
+    if (numero == 1) {
+      //entero
+      switch (
+        op2 //OPERADOR 2
+      ) {
+        case tipoDato.ENTERO: //retorna entero
+          this.tipoDato = new Tipo(tipoDato.ENTERO);
+          return Math.pow(parseInt(izq), parseInt(der));
+        case tipoDato.DECIMAL: //retorna decimal
+          this.tipoDato = new Tipo(tipoDato.DECIMAL);
+          return Math.pow(parseFloat(izq), parseFloat(der));
+        default:
+          //error
+          return new Errores(
+            "SEMANTICO",
+            "TIPO DE DATO NO PERMITIDO",
+            this.fila,
+            this.columna
+          );
+      }
+    } else if (numero == 2) {
+      //decimal
+      switch (
+        op2 //OPERADOR 2
+      ) {
+        case tipoDato.ENTERO: //retorna decimal
+          this.tipoDato = new Tipo(tipoDato.DECIMAL);
+          return Math.pow(parseFloat(izq), parseFloat(der));
+        case tipoDato.DECIMAL: //retorna decimal
+          this.tipoDato = new Tipo(tipoDato.DECIMAL);
+          return Math.pow(parseFloat(izq), parseFloat(der));
+        default:
+          //error
+          return new Errores(
+            "SEMANTICO",
+            "TIPO DE DATO NO PERMITIDO",
+            this.fila,
+            this.columna
+          );
+      }
+    } else if (numero == 3) {
+      //boolean
+      //error
+      return new Errores(
+        "SEMANTICO",
+        "TIPO DE DATO NO PERMITIDO",
+        this.fila,
+        this.columna
+      );
+    } else if (numero == 4) {
+      //cadena
+      //error
+      return new Errores(
+        "SEMANTICO",
+        "TIPO DE DATO NO PERMITIDO",
+        this.fila,
+        this.columna
+      );
+    } else if (numero == 5) {
+      //caracter
+      //error
+      return new Errores(
+        "SEMANTICO",
+        "TIPO DE DATO NO PERMITIDO",
+        this.fila,
+        this.columna
+      );
+    }
+  }
+  /*----------------------------------------------------------MODULACION------------------------------------------------- */
+  private operador1Mod(izq: any, der: any) {
+    let op1 = this.operando1?.tipoDato.getTipo();
+    let op2 = this.operando2?.tipoDato.getTipo();
+    switch (
+      op1 //operador 1
+    ) {
+      case tipoDato.ENTERO:
+        return this.op2Mod(1, op2, izq, der);
+      case tipoDato.DECIMAL:
+        return this.op2Mod(2, op2, izq, der);
+      case tipoDato.BOOLEANO:
+        return this.op2Mod(3, op2, izq, der);
+      case tipoDato.CADENA:
+        return this.op2Mod(4, op2, izq, der);
+      case tipoDato.CARACTER:
+        return this.op2Mod(5, op2, izq, der);
+    }
+  }
+  private op2Mod(numero: Number, op2: any, izq: any, der: any) {
+    if (numero == 1) {
+      //entero
+      switch (
+        op2 //OPERADOR 2
+      ) {
+        case tipoDato.ENTERO: //retorna entero
+          this.tipoDato = new Tipo(tipoDato.ENTERO);
+          return parseInt(izq) % parseInt(der);
+        case tipoDato.DECIMAL: //retorna decimal
+          this.tipoDato = new Tipo(tipoDato.DECIMAL);
+          return parseFloat(izq) % parseFloat(der);
+        default:
+          //error
+          return new Errores(
+            "SEMANTICO",
+            "TIPO DE DATO NO PERMITIDO",
+            this.fila,
+            this.columna
+          );
+      }
+    } else if (numero == 2) {
+      //decimal
+      switch (
+        op2 //OPERADOR 2
+      ) {
+        case tipoDato.ENTERO: //retorna decimal
+          this.tipoDato = new Tipo(tipoDato.DECIMAL);
+          return parseFloat(izq) % parseFloat(der);
+        case tipoDato.DECIMAL: //retorna decimal
+          this.tipoDato = new Tipo(tipoDato.DECIMAL);
+          return parseFloat(izq) % parseFloat(der);
+        default:
+          //error
+          return new Errores(
+            "SEMANTICO",
+            "TIPO DE DATO NO PERMITIDO",
+            this.fila,
+            this.columna
+          );
+      }
+    } else if (numero == 3) {
+      //boolean
+      //error
+      return new Errores(
+        "SEMANTICO",
+        "TIPO DE DATO NO PERMITIDO",
+        this.fila,
+        this.columna
+      );
+    } else if (numero == 4) {
+      //cadena
+      //error
+      return new Errores(
+        "SEMANTICO",
+        "TIPO DE DATO NO PERMITIDO",
+        this.fila,
+        this.columna
+      );
+    } else if (numero == 5) {
+      //caracter
+      //error
+      return new Errores(
+        "SEMANTICO",
+        "TIPO DE DATO NO PERMITIDO",
+        this.fila,
+        this.columna
+      );
     }
   }
 }

@@ -26,6 +26,8 @@ const Tipo= require('./Simbolos/Tipo');
 "-"             return 'MENOS';
 "/"             return 'DIVI';
 "*"             return 'POR';
+"%"             return 'MOD';
+"^"             return 'POTENCIA';
 [ \r\t]+ {}
 \n {}
 //comentario simple
@@ -46,8 +48,9 @@ const Tipo= require('./Simbolos/Tipo');
 .   {inicio.listaErrores.push(new errores.default('ERROR LEXICO',yytext,this._$.first_line,this._$.first_column)); console.log("lexi "+yytext);}
 /lex
 //Precedencia
-%left 'POR' 'DIVI'
 %left 'MAS' 'MENOS'
+%left 'POR' 'DIVI' 'MOD'
+%nonassoc 'POTENCIA'
 
 %start INI
 //Inicio
@@ -145,6 +148,8 @@ EXPRESION: EXPRESION MAS EXPRESION      {$$= new aritmeticas.default(aritmeticas
     |EXPRESION MENOS EXPRESION          {$$= new aritmeticas.default(aritmeticas.Operadores.RESTA,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION POR EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.MULTIPLICACION,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION DIVI EXPRESION           {$$= new aritmeticas.default(aritmeticas.Operadores.DIVISION,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION MOD EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.MODULADOR,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION POTENCIA EXPRESION       {$$= new aritmeticas.default(aritmeticas.Operadores.POTENCIA,@1.first_line,@1.first_column,$1,$3);}
     |ENTERO                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.ENTERO),$1,@1.first_line,@1.first_column);}
     |DECIMAL                    {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.DECIMAL),$1,@1.first_line,@1.first_column);}
     |CADENA                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CADENA),$1,@1.first_line,@1.first_column);}
