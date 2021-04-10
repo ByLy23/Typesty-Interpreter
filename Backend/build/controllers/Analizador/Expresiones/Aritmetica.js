@@ -77,9 +77,9 @@ var Aritmetica = /** @class */ (function (_super) {
             case Operadores.RESTA:
                 return this.operador1Resta(izq, der);
             case Operadores.MULTIPLICACION:
-                return console.log("ACA LLEGA LA MULTI WIIII");
+                return this.operador1Multi(izq, der);
             case Operadores.DIVISION:
-                return console.log("ACA LLEGA LA DIVISION WIIII");
+                return this.operador1Division(izq, der);
             case Operadores.POTENCIA:
                 return console.log("ACA LLEGA LA OTENCIA WIIII");
             case Operadores.MODULADOR:
@@ -323,6 +323,202 @@ var Aritmetica = /** @class */ (function (_super) {
                     var da1 = izq + "";
                     var res1 = da1.charCodeAt(1);
                     return res1 - parseFloat(der);
+                default:
+                    //error semantico
+                    return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+            }
+        }
+    };
+    /*----------------------------------------------------------MULTIPLICACION------------------------------------------------- */
+    Aritmetica.prototype.operador1Multi = function (izq, der) {
+        var _a, _b;
+        var op1 = (_a = this.operando1) === null || _a === void 0 ? void 0 : _a.tipoDato.getTipo();
+        var op2 = (_b = this.operando2) === null || _b === void 0 ? void 0 : _b.tipoDato.getTipo();
+        switch (op1 //operador 1
+        ) {
+            case Tipo_1.tipoDato.ENTERO:
+                return this.op2Multi(1, op2, izq, der);
+            case Tipo_1.tipoDato.DECIMAL:
+                return this.op2Multi(2, op2, izq, der);
+            case Tipo_1.tipoDato.BOOLEANO:
+                return this.op2Multi(3, op2, izq, der);
+            case Tipo_1.tipoDato.CADENA:
+                return this.op2Multi(4, op2, izq, der);
+            case Tipo_1.tipoDato.CARACTER:
+                return this.op2Multi(5, op2, izq, der);
+        }
+    };
+    Aritmetica.prototype.op2Multi = function (numero, op2, izq, der) {
+        if (numero == 1) {
+            //entero
+            switch (op2 //OPERADOR 2
+            ) {
+                case Tipo_1.tipoDato.ENTERO: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    return parseInt(izq) * parseInt(der);
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    return parseFloat(izq) * parseFloat(der);
+                case Tipo_1.tipoDato.CARACTER: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    var da = der + "";
+                    var res = da.charCodeAt(1);
+                    return parseInt(izq) * res;
+                default:
+                    //error
+                    return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+            }
+        }
+        else if (numero == 2) {
+            //decimal
+            switch (op2 //OPERADOR 2
+            ) {
+                case Tipo_1.tipoDato.ENTERO: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    return parseFloat(izq) * parseFloat(der);
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    return parseFloat(izq) * parseFloat(der);
+                case Tipo_1.tipoDato.CARACTER: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    var da = der + "";
+                    var res = da.charCodeAt(1);
+                    return parseFloat(izq) * res;
+                default:
+                    //error
+                    return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+            }
+        }
+        else if (numero == 3) {
+            //boolean
+            //error
+            return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+        }
+        else if (numero == 4) {
+            //cadena
+            //error
+            return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+        }
+        else if (numero == 5) {
+            //caracter
+            switch (op2 //OPERADOR 2
+            ) {
+                case Tipo_1.tipoDato.ENTERO: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    var da1 = izq + "";
+                    var res1 = da1.charCodeAt(1);
+                    return res1 * parseInt(der);
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    var da1 = izq + "";
+                    var res1 = da1.charCodeAt(1);
+                    return res1 * parseFloat(der);
+                default:
+                    //error semantico
+                    return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+            }
+        }
+    };
+    /*----------------------------------------------------------DIVISION------------------------------------------------- */
+    Aritmetica.prototype.operador1Division = function (izq, der) {
+        var _a, _b;
+        var op1 = (_a = this.operando1) === null || _a === void 0 ? void 0 : _a.tipoDato.getTipo();
+        var op2 = (_b = this.operando2) === null || _b === void 0 ? void 0 : _b.tipoDato.getTipo();
+        switch (op1 //operador 1
+        ) {
+            case Tipo_1.tipoDato.ENTERO:
+                return this.op2Division(1, op2, izq, der);
+            case Tipo_1.tipoDato.DECIMAL:
+                return this.op2Division(2, op2, izq, der);
+            case Tipo_1.tipoDato.BOOLEANO:
+                return this.op2Division(3, op2, izq, der);
+            case Tipo_1.tipoDato.CADENA:
+                return this.op2Division(4, op2, izq, der);
+            case Tipo_1.tipoDato.CARACTER:
+                return this.op2Division(5, op2, izq, der);
+        }
+    };
+    Aritmetica.prototype.op2Division = function (numero, op2, izq, der) {
+        if (numero == 1) {
+            //entero
+            switch (op2 //OPERADOR 2
+            ) {
+                case Tipo_1.tipoDato.ENTERO: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    return der != 0
+                        ? parseInt(izq) / parseInt(der)
+                        : "NO SE PUEDE DIVIDIR SOBRE CERO";
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    return der != 0
+                        ? parseFloat(izq) / parseFloat(der)
+                        : "NO SE PUEDE DIVIDIR SOBRE CERO";
+                case Tipo_1.tipoDato.CARACTER: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    var da = der + "";
+                    var res = da.charCodeAt(1);
+                    return res != 0
+                        ? parseInt(izq) / res
+                        : "NO SE PUEDE DIVIDIR SOBRE CERO";
+                default:
+                    //error
+                    return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+            }
+        }
+        else if (numero == 2) {
+            //decimal
+            switch (op2 //OPERADOR 2
+            ) {
+                case Tipo_1.tipoDato.ENTERO: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    return der != 0
+                        ? parseFloat(izq) / parseFloat(der)
+                        : "NO SE PUEDE DIVIDIR SOBRE CERO";
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    return der != 0
+                        ? parseFloat(izq) * parseFloat(der)
+                        : "NO SE PUEDE DIVIDIR SOBRE CERO";
+                case Tipo_1.tipoDato.CARACTER: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    var da = der + "";
+                    var res = da.charCodeAt(1);
+                    return der != 0
+                        ? parseFloat(izq) / res
+                        : "NO SE PUEDE DIVIDIR SOBRE CERO";
+                default:
+                    //error
+                    return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+            }
+        }
+        else if (numero == 3) {
+            //boolean
+            //error
+            return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+        }
+        else if (numero == 4) {
+            //cadena
+            //error
+            return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
+        }
+        else if (numero == 5) {
+            //caracter
+            switch (op2 //OPERADOR 2
+            ) {
+                case Tipo_1.tipoDato.ENTERO: //retorna entero
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    var da1 = izq + "";
+                    var res1 = da1.charCodeAt(1);
+                    return der != 0
+                        ? res1 / parseInt(der)
+                        : "NO SE PUEDE DIVIDIR SOBRE CERO";
+                case Tipo_1.tipoDato.DECIMAL: //retorna decimal
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                    var da1 = izq + "";
+                    var res1 = da1.charCodeAt(1);
+                    return der != 0
+                        ? res1 / parseFloat(der)
+                        : "NO SE PUEDE DIVIDIR SOBRE CERO";
                 default:
                     //error semantico
                     return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
