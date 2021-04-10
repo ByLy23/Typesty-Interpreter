@@ -13,11 +13,11 @@ var IndexController = /** @class */ (function () {
     }
     IndexController.prototype.index = function (req, res) {
         //res.send('Mensaje');
-        res.json({ text: 'Hola bbsitas' });
+        res.json({ text: "Hola bbsitas" });
     };
     IndexController.prototype.interpretar = function (req, res) {
         exports.listaErrores = new Array();
-        var parser = require('./Analizador/analizador');
+        var parser = require("./Analizador/analizador");
         var entrada = req.body.entrada;
         try {
             var ast = new Arbol_1.default(parser.parse(entrada));
@@ -34,8 +34,8 @@ var IndexController = /** @class */ (function () {
                     exports.listaErrores.push(resultador);
                     ast.actualizaConsola(resultador.returnError());
                 }
-                res.json({ resultado: ast.getconsola(), errores: exports.listaErrores });
             }
+            res.send({ resultado: ast.getconsola(), errores: exports.listaErrores });
         }
         catch (err) {
             res.json({ error: err, errores: exports.listaErrores });

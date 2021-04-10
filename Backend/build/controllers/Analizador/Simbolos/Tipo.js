@@ -12,7 +12,7 @@ var Tipo = /** @class */ (function () {
         this.tipos = tipo;
     };
     Tipo.prototype.igual = function (compara) {
-        return this.tipos = compara.tipos;
+        return (this.tipos = compara.tipos);
     };
     return Tipo;
 }());
