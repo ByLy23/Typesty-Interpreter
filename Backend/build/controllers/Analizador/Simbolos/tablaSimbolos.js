@@ -26,10 +26,18 @@ var tablaSimbolos = /** @class */ (function () {
         this.tablaActual = new Map();
         this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
     }
-    tablaSimbolos.prototype.getAnterior = function () { return this.tablaAnterior; };
-    tablaSimbolos.prototype.setAnterior = function (anterior) { this.tablaAnterior = anterior; };
-    tablaSimbolos.prototype.getTabla = function () { return this.tablaActual; };
-    tablaSimbolos.prototype.setTabla = function (Tabla) { this.tablaActual = Tabla; };
+    tablaSimbolos.prototype.getAnterior = function () {
+        return this.tablaAnterior;
+    };
+    tablaSimbolos.prototype.setAnterior = function (anterior) {
+        this.tablaAnterior = anterior;
+    };
+    tablaSimbolos.prototype.getTabla = function () {
+        return this.tablaActual;
+    };
+    tablaSimbolos.prototype.setTabla = function (Tabla) {
+        this.tablaActual = Tabla;
+    };
     tablaSimbolos.prototype.setVariable = function (simbolo) {
         for (var e = this; e != null; e = e.getAnterior()) {
             var encontrado = (e.getTabla().get(simbolo.getidentificador()));
@@ -43,7 +51,7 @@ var tablaSimbolos = /** @class */ (function () {
     };
     tablaSimbolos.prototype.getVariable = function (id) {
         for (var e = this; e != null; e = e.getAnterior()) {
-            var encontrado = (e.getTabla().get(id));
+            var encontrado = e.getTabla().get(id);
             if (encontrado != null) {
                 return encontrado;
             }

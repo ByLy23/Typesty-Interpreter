@@ -8,6 +8,8 @@ const print=require('./Instrucciones/print');
 const nativo= require('./Expresiones/Nativo');
 const errores= require('./Excepciones/Errores');
 const inicio= require('../indexControllers');
+const aritmeticas= require('./Expresiones/Aritmetica');
+const Tipo= require('./Simbolos/Tipo');
 %}
 //definicion lexica
 %lex 
@@ -24,6 +26,8 @@ const inicio= require('../indexControllers');
 "-"             return 'MENOS';
 "/"             return 'DIVI';
 "*"             return 'POR';
+"%"             return 'MOD';
+"^"             return 'POTENCIA';
 [ \r\t]+ {}
 \n {}
 //comentario simple
@@ -34,10 +38,9 @@ const inicio= require('../indexControllers');
 //cadena
 \"[^\"]*\"             { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
 [0-9]+("."[0-9]+)\b     return 'DECIMAL';
-[0-9]+\b               return 'ENTERO';
-([^\t\n\r ])\b          return 'CARACTER';
+[0-9]+\b                return 'ENTERO';
+\'[^\']\'               return 'CARACTER';
 ("true"|"false")\b      return 'BOOLEANO';
-
 
 <<EOF>>                 return 'EOF';
 
@@ -45,8 +48,9 @@ const inicio= require('../indexControllers');
 .   {inicio.listaErrores.push(new errores.default('ERROR LEXICO',yytext,this._$.first_line,this._$.first_column)); console.log("lexi "+yytext);}
 /lex
 //Precedencia
-%left 'POR' 'DIVI'
 %left 'MAS' 'MENOS'
+%left 'POR' 'DIVI' 'MOD'
+%nonassoc 'POTENCIA'
 
 %start INI
 //Inicio
@@ -140,12 +144,15 @@ INSTRUCCION:
 IMPRIMIR: RESPRINT PARABRE EXPRESION PARCIERRA PTCOMA          {$$=new print.default($3,@1.first_line,@1.first_column);} 
 ;//{};
 
-EXPRESION: EXPRESION MAS EXPRESION
-    |EXPRESION MENOS EXPRESION
-    |EXPRESION POR EXPRESION
-    |EXPRESION DIVI EXPRESION
-    |ENTERO                     {$$= new nativo.default($1,@1.first_line,@1.first_column);}
-    |DECIMAL                    {$$= new nativo.default($1,@1.first_line,@1.first_column);}
-    |CADENA                     {$$= new nativo.default($1,@1.first_line,@1.first_column);}
-    |BOOLEANO                   {$$= new nativo.default($1,@1.first_line,@1.first_column);}
+EXPRESION: EXPRESION MAS EXPRESION      {$$= new aritmeticas.default(aritmeticas.Operadores.SUMA,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION MENOS EXPRESION          {$$= new aritmeticas.default(aritmeticas.Operadores.RESTA,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION POR EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.MULTIPLICACION,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION DIVI EXPRESION           {$$= new aritmeticas.default(aritmeticas.Operadores.DIVISION,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION MOD EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.MODULADOR,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION POTENCIA EXPRESION       {$$= new aritmeticas.default(aritmeticas.Operadores.POTENCIA,@1.first_line,@1.first_column,$1,$3);}
+    |ENTERO                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.ENTERO),$1,@1.first_line,@1.first_column);}
+    |DECIMAL                    {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.DECIMAL),$1,@1.first_line,@1.first_column);}
+    |CADENA                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CADENA),$1,@1.first_line,@1.first_column);}
+    |BOOLEANO                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.BOOLEANO),$1,@1.first_line,@1.first_column);}
+    |CARACTER                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CARACTER),$1,@1.first_line,@1.first_column);}
     ;

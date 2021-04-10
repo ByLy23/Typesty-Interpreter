@@ -9,7 +9,7 @@ var Simbolo = /** @class */ (function () {
         else
             this.valor = null;
     }
-    //getters y setters 
+    //getters y setters
     Simbolo.prototype.gettipo = function () {
         return this.tipo;
     };

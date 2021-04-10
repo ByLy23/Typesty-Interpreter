@@ -20,7 +20,15 @@ var Errores = /** @class */ (function () {
         return this.fila;
     };
     Errores.prototype.returnError = function () {
-        return "Se obtuvo: " + this.tipoError + " desc:{" + this.desc + "} en la fila" + this.fila + " en la columna: " + this.columna + "\n";
+        return ("Se obtuvo: " +
+            this.tipoError +
+            " desc:{" +
+            this.desc +
+            "} en la fila" +
+            this.fila +
+            " en la columna: " +
+            this.columna +
+            "\n");
     };
     return Errores;
 }());
