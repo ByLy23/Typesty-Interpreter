@@ -61,7 +61,20 @@ var Relacional = /** @class */ (function (_super) {
             return der;
         switch (this.relacion) {
             case Relacionales.IGUAL:
-                return "a";
+                console.log(izq);
+                return izq == der;
+            case Relacionales.DIFERENTE:
+                return izq != der;
+            case Relacionales.MENOR:
+                return izq < der;
+            case Relacionales.MENORIGUAL:
+                return izq <= der;
+            case Relacionales.MAYOR:
+                return izq > der;
+            case Relacionales.MAYORIGUAL:
+                return izq >= der;
+            default:
+                return "what";
         }
     };
     return Relacional;

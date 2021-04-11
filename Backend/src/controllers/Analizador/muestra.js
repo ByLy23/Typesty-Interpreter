@@ -22,3 +22,7 @@ new aritmeticas.default(operador, fila, colu, iop1);
 aritmeticas.Operadores.MODULADOR;
 
 new Tipo.default(Tipo.tipoDato.ENTERO);
+
+const relacional = require("./Expresiones/Relacional");
+
+new relacional.default(relacional.Relacionales.MAYOR, fila, columna, $1, $2);
