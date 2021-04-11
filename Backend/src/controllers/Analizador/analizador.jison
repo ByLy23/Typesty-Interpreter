@@ -10,6 +10,7 @@ const errores= require('./Excepciones/Errores');
 const inicio= require('../indexControllers');
 const aritmeticas= require('./Expresiones/Aritmetica');
 const Tipo= require('./Simbolos/Tipo');
+const relacional= require("./Expresiones/Relacional");
 %}
 //definicion lexica
 %lex 
@@ -28,6 +29,13 @@ const Tipo= require('./Simbolos/Tipo');
 "*"             return 'POR';
 "%"             return 'MOD';
 "^"             return 'POTENCIA';
+"=="            return 'COMPARACION';
+"<="            return 'MENORIGUAL';
+">="            return 'MAYORIGUAL';
+"="             return 'IGUAL';
+"!="            return 'DIFERENTE';
+"<"             return 'MENOR';
+">"             return 'MAYOR';
 [ \r\t]+ {}
 \n {}
 //comentario simple
@@ -48,6 +56,7 @@ const Tipo= require('./Simbolos/Tipo');
 .   {inicio.listaErrores.push(new errores.default('ERROR LEXICO',yytext,this._$.first_line,this._$.first_column)); console.log("lexi "+yytext);}
 /lex
 //Precedencia
+%left 'MAYOR' 'MENOR' 'MAYORIGUAL' 'MENORIGUAL' 'COMPARACION' 'DIFERENTE'
 %left 'MAS' 'MENOS'
 %left 'POR' 'DIVI' 'MOD'
 %nonassoc 'POTENCIA'
@@ -144,12 +153,23 @@ INSTRUCCION:
 IMPRIMIR: RESPRINT PARABRE EXPRESION PARCIERRA PTCOMA          {$$=new print.default($3,@1.first_line,@1.first_column);} 
 ;//{};
 
-EXPRESION: EXPRESION MAS EXPRESION      {$$= new aritmeticas.default(aritmeticas.Operadores.SUMA,@1.first_line,@1.first_column,$1,$3);}
+EXPRESION: 
+    //ARITMETICAS
+     EXPRESION MAS EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.SUMA,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION MENOS EXPRESION          {$$= new aritmeticas.default(aritmeticas.Operadores.RESTA,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION POR EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.MULTIPLICACION,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION DIVI EXPRESION           {$$= new aritmeticas.default(aritmeticas.Operadores.DIVISION,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION MOD EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.MODULADOR,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION POTENCIA EXPRESION       {$$= new aritmeticas.default(aritmeticas.Operadores.POTENCIA,@1.first_line,@1.first_column,$1,$3);}
+    //pregutnar por expresines en parentesis
+    //RELACIONALES
+    |EXPRESION COMPARACION EXPRESION    {$$= new relacional.default(relacional.Relacionales.IGUAL,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION DIFERENTE EXPRESION      {$$= new relacional.default(relacional.Relacionales.DIFERENTE,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION MAYOR EXPRESION          {$$= new relacional.default(relacional.Relacionales.MAYOR,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION MENOR EXPRESION          {$$= new relacional.default(relacional.Relacionales.MENOR,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION MAYORIGUAL EXPRESION     {$$= new relacional.default(relacional.Relacionales.MAYORIGUAL,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION MENORIGUAL EXPRESION     {$$= new relacional.default(relacional.Relacionales.MENORIGUAL,@1.first_line,@1.first_column,$1,$3);}
+    //LOGICAS
     |ENTERO                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.ENTERO),$1,@1.first_line,@1.first_column);}
     |DECIMAL                    {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.DECIMAL),$1,@1.first_line,@1.first_column);}
     |CADENA                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CADENA),$1,@1.first_line,@1.first_column);}
