@@ -59,22 +59,31 @@ var Relacional = /** @class */ (function (_super) {
         der = this.cond2.interpretar(arbol, tabla);
         if (der instanceof Errores_1.default)
             return der;
-        switch (this.relacion) {
-            case Relacionales.IGUAL:
-                console.log(izq);
-                return izq == der;
-            case Relacionales.DIFERENTE:
-                return izq != der;
-            case Relacionales.MENOR:
-                return izq < der;
-            case Relacionales.MENORIGUAL:
-                return izq <= der;
-            case Relacionales.MAYOR:
-                return izq > der;
-            case Relacionales.MAYORIGUAL:
-                return izq >= der;
-            default:
-                return "what";
+        if (this.cond1.tipoDato.getTipo() == Tipo_1.tipoDato.CADENA &&
+            this.cond2.tipoDato.getTipo() != Tipo_1.tipoDato.CADENA) {
+            return new Errores_1.default("ERROR SEMANTICO", "NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA", this.fila, this.columna);
+        }
+        else if (this.cond2.tipoDato.getTipo() == Tipo_1.tipoDato.CADENA &&
+            this.cond1.tipoDato.getTipo() != Tipo_1.tipoDato.CADENA) {
+            return new Errores_1.default("ERROR SEMANTICO", "NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA", this.fila, this.columna);
+        }
+        else {
+            switch (this.relacion) {
+                case Relacionales.IGUAL:
+                    return izq == der;
+                case Relacionales.DIFERENTE:
+                    return izq != der;
+                case Relacionales.MENOR:
+                    return izq < der;
+                case Relacionales.MENORIGUAL:
+                    return izq <= der;
+                case Relacionales.MAYOR:
+                    return izq > der;
+                case Relacionales.MAYORIGUAL:
+                    return izq >= der;
+                default:
+                    return "what";
+            }
         }
     };
     return Relacional;
