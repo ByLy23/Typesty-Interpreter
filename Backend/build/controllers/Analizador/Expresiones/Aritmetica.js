@@ -47,7 +47,7 @@ var Aritmetica = /** @class */ (function (_super) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
         _this.operador = operador;
         if (!op2)
-            _this.operandoUnico = _this.operando1;
+            _this.operandoUnico = op1;
         else {
             _this.operando1 = op1;
             _this.operando2 = op2;
@@ -120,7 +120,9 @@ var Aritmetica = /** @class */ (function (_super) {
                     return parseFloat(izq) + parseFloat(der);
                 case Tipo_1.tipoDato.BOOLEANO: //retorna entero
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
-                    return der == "true" ? parseInt(izq) + 1 : parseInt(izq);
+                    var dats = der + "";
+                    var otr = dats.toLowerCase();
+                    return otr == "true" ? parseInt(izq) + 1 : parseInt(izq);
                 case Tipo_1.tipoDato.CADENA: //retorna cadena
                     return izq + "" + der;
                 case Tipo_1.tipoDato.CARACTER: //retorna entero
@@ -142,7 +144,9 @@ var Aritmetica = /** @class */ (function (_super) {
                     return parseFloat(izq) + parseFloat(der);
                 case Tipo_1.tipoDato.BOOLEANO: //retorna decimal
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
-                    return der == "true" ? parseFloat(izq) + 1 : parseFloat(izq);
+                    var dats = der + "";
+                    var otr = dats.toLowerCase();
+                    return otr == "true" ? parseFloat(izq) + 1 : parseFloat(izq);
                 case Tipo_1.tipoDato.CADENA: //retorna cadena
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
                     return izq + "" + der;
@@ -159,12 +163,16 @@ var Aritmetica = /** @class */ (function (_super) {
             ) {
                 case Tipo_1.tipoDato.ENTERO: //retorna entero
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
-                    if (izq == "true")
+                    var dats = izq + "";
+                    var otr = dats.toLowerCase();
+                    if (otr == "true")
                         return parseInt(der) + 1;
                     return parseInt(der);
                 case Tipo_1.tipoDato.DECIMAL: //retorna decimal
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
-                    return izq == "true" ? parseFloat(der) + 1 : parseFloat(der);
+                    var dats1 = izq + "";
+                    var otr1 = dats1.toLowerCase();
+                    return otr1 == "true" ? parseFloat(der) + 1 : parseFloat(der);
                 case Tipo_1.tipoDato.CADENA: //retorna cadena
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
                     return izq + "" + der;
@@ -256,7 +264,9 @@ var Aritmetica = /** @class */ (function (_super) {
                     return parseFloat(izq) - parseFloat(der);
                 case Tipo_1.tipoDato.BOOLEANO: //retorna entero
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
-                    return der == "true" ? parseInt(izq) - 1 : parseInt(izq);
+                    var dats = der + "";
+                    var otr = dats.toLowerCase();
+                    return otr == "true" ? parseInt(izq) - 1 : parseInt(izq);
                 case Tipo_1.tipoDato.CARACTER: //retorna entero
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
                     var da = der + "";
@@ -279,7 +289,9 @@ var Aritmetica = /** @class */ (function (_super) {
                     return parseFloat(izq) - parseFloat(der);
                 case Tipo_1.tipoDato.BOOLEANO: //retorna decimal
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
-                    return der == "true" ? parseFloat(izq) - 1 : parseFloat(izq);
+                    var dats = der + "";
+                    var otr = dats.toLowerCase();
+                    return otr == "true" ? parseFloat(izq) - 1 : parseFloat(izq);
                 case Tipo_1.tipoDato.CARACTER: //retorna decimal
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
                     var da = der + "";
@@ -296,10 +308,14 @@ var Aritmetica = /** @class */ (function (_super) {
             ) {
                 case Tipo_1.tipoDato.ENTERO: //retorna entero
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
-                    return izq == "true" ? parseInt(der) - 1 : parseInt(der);
+                    var dats = izq + "";
+                    var otr = dats.toLowerCase();
+                    return otr == "true" ? parseInt(der) - 1 : parseInt(der);
                 case Tipo_1.tipoDato.DECIMAL: //retorna decimal
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
-                    return izq == "true" ? parseFloat(der) - 1 : parseFloat(der);
+                    var dats1 = izq + "";
+                    var otr1 = dats1.toLowerCase();
+                    return otr1 == "true" ? parseFloat(der) - 1 : parseFloat(der);
                 default:
                     //error
                     return new Errores_1.default("SEMANTICO", "TIPO DE DATO NO PERMITIDO", this.fila, this.columna);
