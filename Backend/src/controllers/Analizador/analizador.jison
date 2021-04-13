@@ -10,6 +10,7 @@ const errores= require('./Excepciones/Errores');
 const inicio= require('../indexControllers');
 const aritmeticas= require('./Expresiones/Aritmetica');
 const Tipo= require('./Simbolos/Tipo');
+const logicas= require("./Expresiones/Logica");
 const relacional= require("./Expresiones/Relacional");
 %}
 //definicion lexica
@@ -20,6 +21,8 @@ const relacional= require("./Expresiones/Relacional");
 //inicio analisis lexico
 %%
 "print"         return 'RESPRINT';
+"||"            return 'OR';
+"&&"            return 'AND';
 ";"             return 'PTCOMA';
 "("             return 'PARABRE';
 ")"             return 'PARCIERRA';
@@ -34,6 +37,7 @@ const relacional= require("./Expresiones/Relacional");
 ">="            return 'MAYORIGUAL';
 "="             return 'IGUAL';
 "!="            return 'DIFERENTE';
+"!"             return 'NOT';
 "<"             return 'MENOR';
 ">"             return 'MAYOR';
 [ \r\t]+ {}
@@ -56,6 +60,9 @@ const relacional= require("./Expresiones/Relacional");
 .   {inicio.listaErrores.push(new errores.default('ERROR LEXICO',yytext,this._$.first_line,this._$.first_column)); console.log("lexi "+yytext);}
 /lex
 //Precedencia
+%left 'OR'
+%left 'AND'
+%left 'NOT'
 %left 'MAYOR' 'MENOR' 'MAYORIGUAL' 'MENORIGUAL' 'COMPARACION' 'DIFERENTE'
 %left 'MAS' 'MENOS'
 %left 'POR' 'DIVI' 'MOD'
@@ -161,7 +168,6 @@ EXPRESION:
     |EXPRESION DIVI EXPRESION           {$$= new aritmeticas.default(aritmeticas.Operadores.DIVISION,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION MOD EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.MODULADOR,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION POTENCIA EXPRESION       {$$= new aritmeticas.default(aritmeticas.Operadores.POTENCIA,@1.first_line,@1.first_column,$1,$3);}
-    //pregutnar por expresines en parentesis
     |PARABRE EXPRESION PARCIERRA        {$$=$2;}
     //RELACIONALES
     |EXPRESION COMPARACION EXPRESION    {$$= new relacional.default(relacional.Relacionales.IGUAL,@1.first_line,@1.first_column,$1,$3);}
@@ -171,6 +177,10 @@ EXPRESION:
     |EXPRESION MAYORIGUAL EXPRESION     {$$= new relacional.default(relacional.Relacionales.MAYORIGUAL,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION MENORIGUAL EXPRESION     {$$= new relacional.default(relacional.Relacionales.MENORIGUAL,@1.first_line,@1.first_column,$1,$3);}
     //LOGICAS
+    |EXPRESION AND EXPRESION            {$$=new logicas.default(logicas.Logicas.AND,@1.first_line,@1.first_column,$1,$3);}
+    |EXPRESION OR EXPRESION             {$$=new logicas.default(logicas.Logicas.OR,@1.first_line,@1.first_column,$1,$3);}
+    |NOT EXPRESION                      {$$=new logicas.default(logicas.Logicas.NOT,@1.first_line,@1.first_column,$2);}
+    //NATIVO
     |ENTERO                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.ENTERO),$1,@1.first_line,@1.first_column);}
     |DECIMAL                    {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.DECIMAL),$1,@1.first_line,@1.first_column);}
     |CADENA                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CADENA),$1,@1.first_line,@1.first_column);}

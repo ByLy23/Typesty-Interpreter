@@ -19,7 +19,7 @@ export default class Aritmetica extends Instruccion {
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.operador = operador;
-    if (!op2) this.operandoUnico = this.operando1;
+    if (!op2) this.operandoUnico = op1;
     else {
       this.operando1 = op1;
       this.operando2 = op2;
@@ -93,7 +93,9 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) + parseFloat(der);
         case tipoDato.BOOLEANO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          return der == "true" ? parseInt(izq) + 1 : parseInt(izq);
+          let dats = der + "";
+          let otr = dats.toLowerCase();
+          return otr == "true" ? parseInt(izq) + 1 : parseInt(izq);
         case tipoDato.CADENA: //retorna cadena
           return izq + "" + der;
         case tipoDato.CARACTER: //retorna entero
@@ -115,7 +117,9 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) + parseFloat(der);
         case tipoDato.BOOLEANO: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          return der == "true" ? parseFloat(izq) + 1 : parseFloat(izq);
+          let dats = der + "";
+          let otr = dats.toLowerCase();
+          return otr == "true" ? parseFloat(izq) + 1 : parseFloat(izq);
         case tipoDato.CADENA: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
           return izq + "" + der;
@@ -132,11 +136,15 @@ export default class Aritmetica extends Instruccion {
       ) {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          if (izq == "true") return parseInt(der) + 1;
+          let dats = izq + "";
+          let otr = dats.toLowerCase();
+          if (otr == "true") return parseInt(der) + 1;
           return parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          return izq == "true" ? parseFloat(der) + 1 : parseFloat(der);
+          let dats1 = izq + "";
+          let otr1 = dats1.toLowerCase();
+          return otr1 == "true" ? parseFloat(der) + 1 : parseFloat(der);
         case tipoDato.CADENA: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
           return izq + "" + der;
@@ -239,7 +247,9 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) - parseFloat(der);
         case tipoDato.BOOLEANO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          return der == "true" ? parseInt(izq) - 1 : parseInt(izq);
+          let dats = der + "";
+          let otr = dats.toLowerCase();
+          return otr == "true" ? parseInt(izq) - 1 : parseInt(izq);
         case tipoDato.CARACTER: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           var da = der + "";
@@ -267,7 +277,9 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) - parseFloat(der);
         case tipoDato.BOOLEANO: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          return der == "true" ? parseFloat(izq) - 1 : parseFloat(izq);
+          let dats = der + "";
+          let otr = dats.toLowerCase();
+          return otr == "true" ? parseFloat(izq) - 1 : parseFloat(izq);
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da = der + "";
@@ -289,10 +301,14 @@ export default class Aritmetica extends Instruccion {
       ) {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          return izq == "true" ? parseInt(der) - 1 : parseInt(der);
+          let dats = izq + "";
+          let otr = dats.toLowerCase();
+          return otr == "true" ? parseInt(der) - 1 : parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          return izq == "true" ? parseFloat(der) - 1 : parseFloat(der);
+          let dats1 = izq + "";
+          let otr1 = dats1.toLowerCase();
+          return otr1 == "true" ? parseFloat(der) - 1 : parseFloat(der);
         default:
           //error
           return new Errores(

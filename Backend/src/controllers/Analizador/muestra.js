@@ -26,3 +26,7 @@ new Tipo.default(Tipo.tipoDato.ENTERO);
 const relacional = require("./Expresiones/Relacional");
 
 new relacional.default(relacional.Relacionales.MAYOR, fila, columna, $1, $2);
+
+const logicas = require("./Expresiones/Logica");
+
+new logicas.default(logicas.Logicas.AND, fila, columna, con1, con2);
