@@ -21,6 +21,11 @@ const relacional= require("./Expresiones/Relacional");
 //inicio analisis lexico
 %%
 "print"         return 'RESPRINT';
+"int"           return 'RESINT';
+"char"          return 'RESCHAR';
+"double"        return 'RESDOUBLE';
+"boolean"       return 'RESBOOL';
+"string"        return 'RESSTRING';
 "||"            return 'OR';
 "&&"            return 'AND';
 ";"             return 'PTCOMA';
