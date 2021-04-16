@@ -1,5 +1,3 @@
-import { isUndefined } from "node:util";
-import { isElementAccessExpression } from "typescript";
 import { Instruccion } from "../Abastracto/Instruccion";
 import Errores from "../Excepciones/Errores";
 import Arbol from "../Simbolos/Arbol";
