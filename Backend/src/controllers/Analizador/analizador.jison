@@ -14,6 +14,7 @@ const logicas= require("./Expresiones/Logica");
 const relacional= require("./Expresiones/Relacional");
 const declaracion= require("./Instrucciones/Declaracion");
 const identificador=require("./Expresiones/Identificador");
+const asignacion= require("./Instrucciones/Asignacion");
 %}
 //definicion lexica
 %lex 
@@ -171,6 +172,7 @@ INSTRUCCIONES: INSTRUCCIONES INSTRUCCION     {if($2!=false)$1.push($2);$$=$1;}
 INSTRUCCION: 
     IMPRIMIR                           {$$=$1;}
     |DECLARACION                        {$$=$1;}
+    |ASIGNACION                         {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -188,6 +190,9 @@ TIPODATO:
     |RESBOOL                    {$$= new Tipo.default(Tipo.tipoDato.BOOLEANO);}
     |RESDOUBLE                  {$$= new Tipo.default(Tipo.tipoDato.DECIMAL);}
     |RESSTRING                  {$$= new Tipo.default(Tipo.tipoDato.CADENA);}
+;
+ASIGNACION:
+    IDENTIFICADOR IGUAL EXPRESION PTCOMA {$$=new asignacion.default($1,$3,@1.first_line,@1.first_column);}
 ;
 EXPRESION: 
     //ARITMETICAS
@@ -230,6 +235,17 @@ EXPRESION:
         TIPODATO IDENTIFICADOR PTCMA
         |TIPODATO IDENTIFICADOR IGUAL EXPRESION PTCOMA
         |ERROR PTCOMA
-    
-    |ASIGNACION
+    a=b;
+    |ASIGNACION:
+        IDENTIFICADOR IGUAL EXPRESION PTCOMA
+
+    DECONTROL:
+        |IF
+        |SWITCH
+    CICLICAS:
+        |WHILE
+        |DOWHILE
+        |FOR
+    IF:
+        RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA
     */

@@ -38,3 +38,7 @@ new declaracion.default(tipo, fila, colu, id, valor);
 const identificador = require("./Expresiones/Identificador");
 
 new identificador.default(strngo, fila, co);
+
+const asignacion = require("./Instrucciones/Asignacion");
+
+new asignacion.default(identificador, valor, fila, col);
