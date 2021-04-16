@@ -97,11 +97,12 @@ export default class Aritmetica extends Instruccion {
           let otr = dats.toLowerCase();
           return otr == "true" ? parseInt(izq) + 1 : parseInt(izq);
         case tipoDato.CADENA: //retorna cadena
+          this.tipoDato = new Tipo(tipoDato.CADENA);
           return izq + "" + der;
         case tipoDato.CARACTER: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           var da = der + "";
-          var res = da.charCodeAt(1);
+          var res = da.charCodeAt(0);
           return parseInt(izq) + res;
       }
     } else if (numero == 2) {
@@ -126,7 +127,7 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da = der + "";
-          var res = da.charCodeAt(1);
+          var res = da.charCodeAt(0);
           return parseFloat(izq) + res;
       }
     } else if (numero == 3) {
@@ -176,7 +177,7 @@ export default class Aritmetica extends Instruccion {
           return izq + "" + der;
         case tipoDato.CARACTER: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          var dato = der.replace(/['"]+/g, "");
+          var dato = der;
           return izq + "" + dato;
       }
     } else if (numero == 5) {
@@ -187,21 +188,21 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           var da1 = izq + "";
-          var res1 = da1.charCodeAt(1);
+          var res1 = da1.charCodeAt(0);
           return res1 + parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da1 = izq + "";
-          var res1 = da1.charCodeAt(1);
+          var res1 = da1.charCodeAt(0);
           return res1 + parseFloat(der);
         case tipoDato.CADENA: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          var otro11 = izq.replace(/['"]+/g, "");
+          var otro11 = izq;
           return otro11 + "" + der;
         case tipoDato.CARACTER: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          var otro = der.replace(/['"]+/g, "");
-          var otro1 = izq.replace(/['"]+/g, "");
+          var otro = der;
+          var otro1 = izq;
           return otro1 + "" + otro;
         default:
           //error semantico
@@ -253,7 +254,7 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.CARACTER: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           var da = der + "";
-          var res = da.charCodeAt(1);
+          var res = da.charCodeAt(0);
           return parseInt(izq) - res;
         default:
           //error
@@ -283,7 +284,7 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da = der + "";
-          var res = da.charCodeAt(1);
+          var res = da.charCodeAt(0);
           return parseFloat(izq) - res;
         default:
           //error
@@ -334,12 +335,12 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           var da1 = izq + "";
-          var res1 = da1.charCodeAt(1);
+          var res1 = da1.charCodeAt(0);
           return res1 - parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da1 = izq + "";
-          var res1 = da1.charCodeAt(1);
+          var res1 = da1.charCodeAt(0);
           return res1 - parseFloat(der);
         default:
           //error semantico
@@ -386,7 +387,7 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.CARACTER: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           var da = der + "";
-          var res = da.charCodeAt(1);
+          var res = da.charCodeAt(0);
           return parseInt(izq) * res;
         default:
           //error
@@ -411,7 +412,7 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da = der + "";
-          var res = da.charCodeAt(1);
+          var res = da.charCodeAt(0);
           return parseFloat(izq) * res;
         default:
           //error
@@ -448,12 +449,12 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           var da1 = izq + "";
-          var res1 = da1.charCodeAt(1);
+          var res1 = da1.charCodeAt(0);
           return res1 * parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da1 = izq + "";
-          var res1 = da1.charCodeAt(1);
+          var res1 = da1.charCodeAt(0);
           return res1 * parseFloat(der);
         default:
           //error semantico
@@ -504,7 +505,7 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.CARACTER: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           var da = der + "";
-          var res = da.charCodeAt(1);
+          var res = da.charCodeAt(0);
           return res != 0
             ? parseInt(izq) / res
             : "NO SE PUEDE DIVIDIR SOBRE CERO";
@@ -535,7 +536,7 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da = der + "";
-          var res = da.charCodeAt(1);
+          var res = da.charCodeAt(0);
           return der != 0
             ? parseFloat(izq) / res
             : "NO SE PUEDE DIVIDIR SOBRE CERO";
@@ -574,14 +575,14 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           var da1 = izq + "";
-          var res1 = da1.charCodeAt(1);
+          var res1 = da1.charCodeAt(0);
           return der != 0
             ? res1 / parseInt(der)
             : "NO SE PUEDE DIVIDIR SOBRE CERO";
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da1 = izq + "";
-          var res1 = da1.charCodeAt(1);
+          var res1 = da1.charCodeAt(0);
           return der != 0
             ? res1 / parseFloat(der)
             : "NO SE PUEDE DIVIDIR SOBRE CERO";

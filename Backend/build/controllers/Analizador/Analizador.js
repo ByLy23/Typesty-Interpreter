@@ -183,7 +183,7 @@ case 34:
 this.$= new nativo.default(new Tipo.default(Tipo.tipoDato.BOOLEANO),$$[$0],_$[$0].first_line,_$[$0].first_column);
 break;
 case 35:
-this.$= new nativo.default(new Tipo.default(Tipo.tipoDato.CARACTER),$$[$0],_$[$0].first_line,_$[$0].first_column);
+this.$= new nativo.default(new Tipo.default(Tipo.tipoDato.CARACTER),$$[$0].replace(/['"]+/g, ""),_$[$0].first_line,_$[$0].first_column);
 break;
 case 36:
 this.$=new identificador.default($$[$0],_$[$0].first_line,_$[$0].first_column);

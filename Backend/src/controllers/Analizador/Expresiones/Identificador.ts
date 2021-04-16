@@ -13,6 +13,7 @@ export default class Identificador extends Instruccion {
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let variable = tabla.getVariable(this.identificador);
     if (variable != null) {
+      this.tipoDato = variable.gettipo();
       return variable.getvalor();
     } else {
       return new Errores(

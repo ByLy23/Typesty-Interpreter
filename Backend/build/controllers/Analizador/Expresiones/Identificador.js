@@ -50,6 +50,7 @@ var Identificador = /** @class */ (function (_super) {
     Identificador.prototype.interpretar = function (arbol, tabla) {
         var variable = tabla.getVariable(this.identificador);
         if (variable != null) {
+            this.tipoDato = variable.gettipo();
             return variable.getvalor();
         }
         else {
