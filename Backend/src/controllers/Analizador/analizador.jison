@@ -12,6 +12,8 @@ const aritmeticas= require('./Expresiones/Aritmetica');
 const Tipo= require('./Simbolos/Tipo');
 const logicas= require("./Expresiones/Logica");
 const relacional= require("./Expresiones/Relacional");
+const declaracion= require("./Instrucciones/Declaracion");
+const identificador=require("./Expresiones/Identificador");
 %}
 //definicion lexica
 %lex 
@@ -20,12 +22,20 @@ const relacional= require("./Expresiones/Relacional");
 %options case-insensitive
 //inicio analisis lexico
 %%
+
+[ \r\t]+ {}
+\n {}
+\s+ {}//espacios en blanco
+"//".*  //comentario simple
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/] //comentario multiple
+//reservadas
 "print"         return 'RESPRINT';
 "int"           return 'RESINT';
 "char"          return 'RESCHAR';
 "double"        return 'RESDOUBLE';
 "boolean"       return 'RESBOOL';
 "string"        return 'RESSTRING';
+//simbolos
 "||"            return 'OR';
 "&&"            return 'AND';
 ";"             return 'PTCOMA';
@@ -45,8 +55,8 @@ const relacional= require("./Expresiones/Relacional");
 "!"             return 'NOT';
 "<"             return 'MENOR';
 ">"             return 'MAYOR';
-[ \r\t]+ {}
-\n {}
+//expresiones regulares
+
 //comentario simple
 //"\/\/" [^\r\n]* [^\r\n]     {}
 //comentario multi
@@ -58,6 +68,7 @@ const relacional= require("./Expresiones/Relacional");
 [0-9]+\b                return 'ENTERO';
 \'[^\']\'               return 'CARACTER';
 ("true"|"false")\b      return 'BOOLEANO';
+([a-zA-Z])[a-zA-Z0-9_]* return 'IDENTIFICADOR';
 
 <<EOF>>                 return 'EOF';
 
@@ -153,18 +164,31 @@ caracter
 INI: INSTRUCCIONES EOF {return $1;}
 ;
 
-INSTRUCCIONES: INSTRUCCIONES INSTRUCCION     {$1.push($2);$$=$1;}
-|INSTRUCCION                                 {$$=[$1];}
+INSTRUCCIONES: INSTRUCCIONES INSTRUCCION     {if($2!=false)$1.push($2);$$=$1;}
+|INSTRUCCION                                 {$$=($1!=false) ?[$1]:[];}
 ;
 
 INSTRUCCION: 
-    IMPRIMIR                            {$$=$1;}
+    IMPRIMIR                           {$$=$1;}
+    |DECLARACION                        {$$=$1;}
     //|CONDICION
     //|CICLO
-    |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta ");};
-IMPRIMIR: RESPRINT PARABRE EXPRESION PARCIERRA PTCOMA          {$$=new print.default($3,@1.first_line,@1.first_column);} 
+    |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
+    ;
+IMPRIMIR: RESPRINT PARABRE EXPRESION PARCIERRA  PTCOMA         {$$=new print.default($3,@1.first_line,@1.first_column);}
 ;//{};
 
+DECLARACION:
+    TIPODATO IDENTIFICADOR PTCOMA       {$$= new declaracion.default($1,@1.first_line,@1.first_column,$2);}
+    |TIPODATO IDENTIFICADOR IGUAL EXPRESION PTCOMA  {$$= new declaracion.default($1,@1.first_line,@1.first_column,$2,$4);}
+    ;
+TIPODATO:
+    RESINT                      {$$= new Tipo.default(Tipo.tipoDato.ENTERO);}
+    |RESCHAR                    {$$= new Tipo.default(Tipo.tipoDato.CARACTER);}
+    |RESBOOL                    {$$= new Tipo.default(Tipo.tipoDato.BOOLEANO);}
+    |RESDOUBLE                  {$$= new Tipo.default(Tipo.tipoDato.DECIMAL);}
+    |RESSTRING                  {$$= new Tipo.default(Tipo.tipoDato.CADENA);}
+;
 EXPRESION: 
     //ARITMETICAS
      EXPRESION MAS EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.SUMA,@1.first_line,@1.first_column,$1,$3);}
@@ -191,4 +215,21 @@ EXPRESION:
     |CADENA                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CADENA),$1,@1.first_line,@1.first_column);}
     |BOOLEANO                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.BOOLEANO),$1,@1.first_line,@1.first_column);}
     |CARACTER                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CARACTER),$1,@1.first_line,@1.first_column);}
+    |IDENTIFICADOR              {$$=new identificador.default($1,@1.first_line,@1.first_column);}         
     ;
+    /*
+    |TIPODATO
+    TIPODATO:
+        RESINT
+        |RESCHAR
+        |RESSTRING
+        |RESBOOL
+        |RESDOUBLE
+    |DECLARACION
+    DECLARACION:
+        TIPODATO IDENTIFICADOR PTCMA
+        |TIPODATO IDENTIFICADOR IGUAL EXPRESION PTCOMA
+        |ERROR PTCOMA
+    
+    |ASIGNACION
+    */

@@ -30,3 +30,11 @@ new relacional.default(relacional.Relacionales.MAYOR, fila, columna, $1, $2);
 const logicas = require("./Expresiones/Logica");
 
 new logicas.default(logicas.Logicas.AND, fila, columna, con1, con2);
+
+const declaracion = require("./Instrucciones/Declaracion");
+
+new declaracion.default(tipo, fila, colu, id, valor);
+
+const identificador = require("./Expresiones/Identificador");
+
+new identificador.default(strngo, fila, co);
