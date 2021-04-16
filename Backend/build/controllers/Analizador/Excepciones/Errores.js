@@ -24,7 +24,7 @@ var Errores = /** @class */ (function () {
             this.tipoError +
             " desc:{" +
             this.desc +
-            "} en la fila" +
+            "} en la fila: " +
             this.fila +
             " en la columna: " +
             this.columna +
