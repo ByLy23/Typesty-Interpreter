@@ -15,6 +15,7 @@ const relacional= require("./Expresiones/Relacional");
 const declaracion= require("./Instrucciones/Declaracion");
 const identificador=require("./Expresiones/Identificador");
 const asignacion= require("./Instrucciones/Asignacion");
+const condIf= require("./Instrucciones/Condicionales/condIf");
 %}
 //definicion lexica
 %lex 
@@ -30,6 +31,8 @@ const asignacion= require("./Instrucciones/Asignacion");
 "//".*  //comentario simple
 [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/] //comentario multiple
 //reservadas
+"if"            return 'RESIF';
+"else"          return 'RESELSE';
 "print"         return 'RESPRINT';
 "int"           return 'RESINT';
 "char"          return 'RESCHAR';
@@ -37,6 +40,8 @@ const asignacion= require("./Instrucciones/Asignacion");
 "boolean"       return 'RESBOOL';
 "string"        return 'RESSTRING';
 //simbolos
+"{"             return 'LLAVEABRE';
+"}"             return 'LLAVECIERRA';
 "||"            return 'OR';
 "&&"            return 'AND';
 ";"             return 'PTCOMA';
@@ -173,6 +178,7 @@ INSTRUCCION:
     IMPRIMIR                           {$$=$1;}
     |DECLARACION                        {$$=$1;}
     |ASIGNACION                         {$$=$1;}
+    |CONDICIONIF                        {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -222,6 +228,11 @@ EXPRESION:
     |CARACTER                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CARACTER),$1.replace(/['"]+/g, ""),@1.first_line,@1.first_column);}
     |IDENTIFICADOR              {$$=new identificador.default($1,@1.first_line,@1.first_column);}         
     ;
+CONDICIONIF:
+    RESIF PARABRE EXPRESION /*COND1*/PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA       {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,false);}
+    |RESIF PARABRE EXPRESION/*COND1*/ PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE/*true*/ LLAVEABRE INSTRUCCIONES LLAVECIERRA    {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,true,$10);}
+    |RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE /*true*/CONDICIONIF     
+    ;
     /*
     |TIPODATO
     TIPODATO:
@@ -248,4 +259,6 @@ EXPRESION:
         |FOR
     IF:
         RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA
+        |RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA else lalveabre instrucciones llavecierra
+        |RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA else IF
     */

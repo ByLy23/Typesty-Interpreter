@@ -42,3 +42,7 @@ new identificador.default(strngo, fila, co);
 const asignacion = require("./Instrucciones/Asignacion");
 
 new asignacion.default(identificador, valor, fila, col);
+
+const condIf = require("./Instrucciones/Condicionales/condIf");
+
+new condIf.default(fila, columna, con1, condif, cond2, condel);
