@@ -1,4 +1,5 @@
 //aritmeticas
+import { Console } from "node:console";
 import { Instruccion } from "../Abastracto/Instruccion";
 import Errores from "../Excepciones/Errores";
 import Arbol from "../Simbolos/Arbol";
@@ -23,9 +24,9 @@ export default class Relacional extends Instruccion {
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let izq, der;
-    izq = this.cond1.interpretar(arbol, tabla);
+    izq = this.obtieneValor(this.cond1, arbol, tabla);
     if (izq instanceof Errores) return izq;
-    der = this.cond2.interpretar(arbol, tabla);
+    der = this.obtieneValor(this.cond2, arbol, tabla);
     if (der instanceof Errores) return der;
     if (
       this.cond1.tipoDato.getTipo() == tipoDato.CADENA &&
@@ -50,20 +51,46 @@ export default class Relacional extends Instruccion {
     } else {
       switch (this.relacion) {
         case Relacionales.IGUAL:
+          console.log(izq + " " + der);
           return izq == der;
         case Relacionales.DIFERENTE:
+          console.log(izq + " " + der);
           return izq != der;
         case Relacionales.MENOR:
+          console.log(izq + " " + der);
           return izq < der;
         case Relacionales.MENORIGUAL:
+          console.log(izq + " " + der);
           return izq <= der;
         case Relacionales.MAYOR:
+          console.log(izq + " " + der);
           return izq > der;
         case Relacionales.MAYORIGUAL:
+          console.log(izq + " " + der);
           return izq >= der;
         default:
           return "what";
       }
+    }
+  }
+  obtieneValor(operando: Instruccion, arbol: Arbol, tabla: tablaSimbolos): any {
+    let valor = operando.interpretar(arbol, tabla);
+    switch (operando.tipoDato.getTipo()) {
+      case tipoDato.ENTERO:
+        console.log("asd" + operando);
+        return parseInt(valor);
+      case tipoDato.DECIMAL:
+        return parseFloat(valor);
+      case tipoDato.CARACTER:
+        var da = valor + "";
+        var res = da.charCodeAt(0);
+        return res;
+      case tipoDato.BOOLEANO:
+        let dats = valor + "";
+        let otr = dats.toLowerCase();
+        return parseInt(otr);
+      case tipoDato.CADENA:
+        return "" + valor;
     }
   }
 }
