@@ -16,6 +16,7 @@ const declaracion= require("./Instrucciones/Declaracion");
 const identificador=require("./Expresiones/Identificador");
 const asignacion= require("./Instrucciones/Asignacion");
 const condIf= require("./Instrucciones/Condicionales/condIf");
+const condWhile= require("./Instrucciones/Ciclicas/condWhile");
 %}
 //definicion lexica
 %lex 
@@ -39,6 +40,7 @@ const condIf= require("./Instrucciones/Condicionales/condIf");
 "double"        return 'RESDOUBLE';
 "boolean"       return 'RESBOOL';
 "string"        return 'RESSTRING';
+"while"         return 'RESWHILE';
 //simbolos
 "{"             return 'LLAVEABRE';
 "}"             return 'LLAVECIERRA';
@@ -179,6 +181,7 @@ INSTRUCCION:
     |DECLARACION                        {$$=$1;}
     |ASIGNACION                         {$$=$1;}
     |CONDICIONIF                        {$$=$1;}
+    |CONDICIONWHILE                     {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -232,6 +235,9 @@ CONDICIONIF:
     RESIF PARABRE EXPRESION /*COND1*/PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA                                                         {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,undefined);}
     |RESIF PARABRE EXPRESION/*COND1*/ PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE/*true*/ LLAVEABRE INSTRUCCIONES LLAVECIERRA    {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,$10,undefined);}
     |RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE /*true*/CONDICIONIF                                     {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,$9);}     
+    ;
+CONDICIONWHILE:
+    RESWHILE PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA    {$$=new condWhile.default($3,$6,@1.first_line,@1.first_column);}
     ;
     /*
     |TIPODATO
