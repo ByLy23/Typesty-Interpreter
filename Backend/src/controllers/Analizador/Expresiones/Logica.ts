@@ -25,8 +25,6 @@ export default class Logica extends Instruccion {
       this.cond1 = cond1;
       this.cond2 = cond2;
     }
-
-    console.log(this.cond1 + "");
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let izq, der, unico;
@@ -43,7 +41,6 @@ export default class Logica extends Instruccion {
     //inicio comparacion
     switch (this.loogica) {
       case Logicas.AND:
-        console.log(izq + " " + der);
         return izq && der ? true : false;
       case Logicas.OR:
         return izq || der ? true : false;

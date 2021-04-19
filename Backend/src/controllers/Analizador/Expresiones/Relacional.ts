@@ -51,22 +51,16 @@ export default class Relacional extends Instruccion {
     } else {
       switch (this.relacion) {
         case Relacionales.IGUAL:
-          console.log(izq + " " + der);
           return izq == der;
         case Relacionales.DIFERENTE:
-          console.log(izq + " " + der);
           return izq != der;
         case Relacionales.MENOR:
-          console.log(izq + " " + der);
           return izq < der;
         case Relacionales.MENORIGUAL:
-          console.log(izq + " " + der);
           return izq <= der;
         case Relacionales.MAYOR:
-          console.log(izq + " " + der);
           return izq > der;
         case Relacionales.MAYORIGUAL:
-          console.log(izq + " " + der);
           return izq >= der;
         default:
           return "what";
@@ -77,7 +71,6 @@ export default class Relacional extends Instruccion {
     let valor = operando.interpretar(arbol, tabla);
     switch (operando.tipoDato.getTipo()) {
       case tipoDato.ENTERO:
-        console.log("asd" + operando);
         return parseInt(valor);
       case tipoDato.DECIMAL:
         return parseFloat(valor);

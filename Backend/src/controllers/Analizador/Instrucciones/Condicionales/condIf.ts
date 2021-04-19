@@ -26,7 +26,6 @@ export default class condIf extends Instruccion {
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let val = this.cond1.interpretar(arbol, tabla);
-    console.log(val);
     if (val) {
       let nuevaTabla = new tablaSimbolos(tabla);
       this.condIf.forEach((valor) => {

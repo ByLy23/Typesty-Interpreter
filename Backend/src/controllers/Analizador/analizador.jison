@@ -17,6 +17,7 @@ const identificador=require("./Expresiones/Identificador");
 const asignacion= require("./Instrucciones/Asignacion");
 const condIf= require("./Instrucciones/Condicionales/condIf");
 const condWhile= require("./Instrucciones/Ciclicas/condWhile");
+const condDoWhile = require("./Instrucciones/Ciclicas/condDoWhile");
 %}
 //definicion lexica
 %lex 
@@ -41,6 +42,7 @@ const condWhile= require("./Instrucciones/Ciclicas/condWhile");
 "boolean"       return 'RESBOOL';
 "string"        return 'RESSTRING';
 "while"         return 'RESWHILE';
+"do"            return 'RESDO';
 //simbolos
 "{"             return 'LLAVEABRE';
 "}"             return 'LLAVECIERRA';
@@ -182,6 +184,7 @@ INSTRUCCION:
     |ASIGNACION                         {$$=$1;}
     |CONDICIONIF                        {$$=$1;}
     |CONDICIONWHILE                     {$$=$1;}
+    |CONDICIONDOWHILE                   {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -238,6 +241,9 @@ CONDICIONIF:
     ;
 CONDICIONWHILE:
     RESWHILE PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA    {$$=new condWhile.default($3,$6,@1.first_line,@1.first_column);}
+    ;
+CONDICIONDOWHILE:
+    RESDO LLAVEABRE INSTRUCCIONES LLAVECIERRA RESWHILE PARABRE EXPRESION PARCIERRA PTCOMA {$$=new condDoWhile.default($7,$3,@1.first_line,@1.first_column);}
     ;
     /*
     |TIPODATO

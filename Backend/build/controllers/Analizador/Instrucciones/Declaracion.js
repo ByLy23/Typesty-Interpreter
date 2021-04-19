@@ -75,7 +75,6 @@ var Declaracion = /** @class */ (function (_super) {
                 }
             }
         }
-        console.log(tabla);
     };
     return Declaracion;
 }(Instruccion_1.Instruccion));

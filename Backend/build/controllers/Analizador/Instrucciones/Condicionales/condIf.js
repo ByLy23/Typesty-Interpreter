@@ -55,7 +55,6 @@ var condIf = /** @class */ (function (_super) {
     condIf.prototype.interpretar = function (arbol, tabla) {
         var _a;
         var val = this.cond1.interpretar(arbol, tabla);
-        console.log(val);
         if (val) {
             var nuevaTabla_1 = new tablaSimbolos_1.default(tabla);
             this.condIf.forEach(function (valor) {
