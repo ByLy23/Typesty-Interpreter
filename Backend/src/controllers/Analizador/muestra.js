@@ -54,3 +54,7 @@ new condWhile.default(condicion, expresion, fila, columna);
 const condDoWhile = require("./Instrucciones/Ciclicas/condDoWhile");
 
 new condDoWhile.default(condicion, expresion, fila, columna);
+
+const condTernario = require("./Instrucciones/Condicionales/condIfTernario");
+
+new condTernario.default(cond, is, lse, fila, col);
