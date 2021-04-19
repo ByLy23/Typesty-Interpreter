@@ -18,6 +18,7 @@ const asignacion= require("./Instrucciones/Asignacion");
 const condIf= require("./Instrucciones/Condicionales/condIf");
 const condWhile= require("./Instrucciones/Ciclicas/condWhile");
 const condDoWhile = require("./Instrucciones/Ciclicas/condDoWhile");
+const condTernario= require("./Instrucciones/Condicionales/condIfTernario");
 %}
 //definicion lexica
 %lex 
@@ -65,6 +66,8 @@ const condDoWhile = require("./Instrucciones/Ciclicas/condDoWhile");
 "!"             return 'NOT';
 "<"             return 'MENOR';
 ">"             return 'MAYOR';
+"?"             return 'INTERROGACION';
+":"             return 'DOSPUNTOS';
 //expresiones regulares
 
 //comentario simple
@@ -185,6 +188,7 @@ INSTRUCCION:
     |CONDICIONIF                        {$$=$1;}
     |CONDICIONWHILE                     {$$=$1;}
     |CONDICIONDOWHILE                   {$$=$1;}
+    |IFTERNARIO                         {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -244,6 +248,9 @@ CONDICIONWHILE:
     ;
 CONDICIONDOWHILE:
     RESDO LLAVEABRE INSTRUCCIONES LLAVECIERRA RESWHILE PARABRE EXPRESION PARCIERRA PTCOMA {$$=new condDoWhile.default($7,$3,@1.first_line,@1.first_column);}
+    ;
+IFTERNARIO:
+    EXPRESION INTERROGACION EXPRESION DOSPUNTOS EXPRESION PTCOMA        {$$=new condTernario.default($1,$3,$5,@1.first_line,@1.first_column);}
     ;
     /*
     |TIPODATO
