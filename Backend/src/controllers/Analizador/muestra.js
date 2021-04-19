@@ -50,3 +50,7 @@ new condIf.default(fila, columna, con1, condif, cond2, condel);
 const condWhile = require("./Instrucciones/Ciclicas/condWhile");
 
 new condWhile.default(condicion, expresion, fila, columna);
+
+const condDoWhile = require("./Instrucciones/Ciclicas/condDoWhile");
+
+new condDoWhile.default(condicion, expresion, fila, columna);

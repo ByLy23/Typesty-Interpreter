@@ -53,7 +53,6 @@ var Logica = /** @class */ (function (_super) {
             _this.cond1 = cond1;
             _this.cond2 = cond2;
         }
-        console.log(_this.cond1 + "");
         return _this;
     }
     Logica.prototype.interpretar = function (arbol, tabla) {
@@ -76,7 +75,6 @@ var Logica = /** @class */ (function (_super) {
         //inicio comparacion
         switch (this.loogica) {
             case Logicas.AND:
-                console.log(izq + " " + der);
                 return izq && der ? true : false;
             case Logicas.OR:
                 return izq || der ? true : false;

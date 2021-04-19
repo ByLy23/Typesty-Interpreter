@@ -116,6 +116,5 @@ export default class Declaracion extends Instruccion {
         }
       }
     }
-    console.log(tabla);
   }
 }
