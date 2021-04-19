@@ -229,9 +229,9 @@ EXPRESION:
     |IDENTIFICADOR              {$$=new identificador.default($1,@1.first_line,@1.first_column);}         
     ;
 CONDICIONIF:
-    RESIF PARABRE EXPRESION /*COND1*/PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA       {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,false);}
-    |RESIF PARABRE EXPRESION/*COND1*/ PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE/*true*/ LLAVEABRE INSTRUCCIONES LLAVECIERRA    {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,true,$10);}
-    |RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE /*true*/CONDICIONIF     
+    RESIF PARABRE EXPRESION /*COND1*/PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA                                                         {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,undefined);}
+    |RESIF PARABRE EXPRESION/*COND1*/ PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE/*true*/ LLAVEABRE INSTRUCCIONES LLAVECIERRA    {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,$10,undefined);}
+    |RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE /*true*/CONDICIONIF                                     {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,$9);}     
     ;
     /*
     |TIPODATO

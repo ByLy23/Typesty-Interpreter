@@ -38,7 +38,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Relacionales = void 0;
-//aritmeticas
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
@@ -53,10 +52,10 @@ var Relacional = /** @class */ (function (_super) {
     }
     Relacional.prototype.interpretar = function (arbol, tabla) {
         var izq, der;
-        izq = this.cond1.interpretar(arbol, tabla);
+        izq = this.obtieneValor(this.cond1, arbol, tabla);
         if (izq instanceof Errores_1.default)
             return izq;
-        der = this.cond2.interpretar(arbol, tabla);
+        der = this.obtieneValor(this.cond2, arbol, tabla);
         if (der instanceof Errores_1.default)
             return der;
         if (this.cond1.tipoDato.getTipo() == Tipo_1.tipoDato.CADENA &&
@@ -70,20 +69,46 @@ var Relacional = /** @class */ (function (_super) {
         else {
             switch (this.relacion) {
                 case Relacionales.IGUAL:
+                    console.log(izq + " " + der);
                     return izq == der;
                 case Relacionales.DIFERENTE:
+                    console.log(izq + " " + der);
                     return izq != der;
                 case Relacionales.MENOR:
+                    console.log(izq + " " + der);
                     return izq < der;
                 case Relacionales.MENORIGUAL:
+                    console.log(izq + " " + der);
                     return izq <= der;
                 case Relacionales.MAYOR:
+                    console.log(izq + " " + der);
                     return izq > der;
                 case Relacionales.MAYORIGUAL:
+                    console.log(izq + " " + der);
                     return izq >= der;
                 default:
                     return "what";
             }
+        }
+    };
+    Relacional.prototype.obtieneValor = function (operando, arbol, tabla) {
+        var valor = operando.interpretar(arbol, tabla);
+        switch (operando.tipoDato.getTipo()) {
+            case Tipo_1.tipoDato.ENTERO:
+                console.log("asd" + operando);
+                return parseInt(valor);
+            case Tipo_1.tipoDato.DECIMAL:
+                return parseFloat(valor);
+            case Tipo_1.tipoDato.CARACTER:
+                var da = valor + "";
+                var res = da.charCodeAt(0);
+                return res;
+            case Tipo_1.tipoDato.BOOLEANO:
+                var dats = valor + "";
+                var otr = dats.toLowerCase();
+                return parseInt(otr);
+            case Tipo_1.tipoDato.CADENA:
+                return "" + valor;
         }
     };
     return Relacional;

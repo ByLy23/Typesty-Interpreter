@@ -192,10 +192,13 @@ case 39:
 this.$=new identificador.default($$[$0],_$[$0].first_line,_$[$0].first_column);
 break;
 case 40:
-this.$= new condIf.default(_$[$0-6].first_line,_$[$0-6].first_column,$$[$0-4],$$[$0-1],false);
+this.$= new condIf.default(_$[$0-6].first_line,_$[$0-6].first_column,$$[$0-4],$$[$0-1],undefined,undefined);
 break;
 case 41:
-this.$= new condIf.default(_$[$0-10].first_line,_$[$0-10].first_column,$$[$0-8],$$[$0-5],true,$$[$0-1]);
+this.$= new condIf.default(_$[$0-10].first_line,_$[$0-10].first_column,$$[$0-8],$$[$0-5],$$[$0-1],undefined);
+break;
+case 42:
+this.$= new condIf.default(_$[$0-8].first_line,_$[$0-8].first_column,$$[$0-6],$$[$0-3],undefined,$$[$0]);
 break;
 }
 },
