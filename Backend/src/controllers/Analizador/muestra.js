@@ -46,3 +46,7 @@ new asignacion.default(identificador, valor, fila, col);
 const condIf = require("./Instrucciones/Condicionales/condIf");
 
 new condIf.default(fila, columna, con1, condif, cond2, condel);
+
+const condWhile = require("./Instrucciones/Ciclicas/condWhile");
+
+new condWhile.default(condicion, expresion, fila, columna);
