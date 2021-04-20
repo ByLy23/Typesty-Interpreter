@@ -41,14 +41,14 @@ var Instruccion_1 = require("../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Identificador_1 = __importDefault(require("../Expresiones/Identificador"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
-var Incremento = /** @class */ (function (_super) {
-    __extends(Incremento, _super);
-    function Incremento(identificador, fila, columna) {
+var Decremento = /** @class */ (function (_super) {
+    __extends(Decremento, _super);
+    function Decremento(identificador, fila, columna) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
         _this.identificador = identificador;
         return _this;
     }
-    Incremento.prototype.interpretar = function (arbol, tabla) {
+    Decremento.prototype.interpretar = function (arbol, tabla) {
         //tomar el tipoDato de la variable
         if (this.identificador instanceof Identificador_1.default) {
             var variable = tabla.getVariable(this.identificador.identificador);
@@ -89,6 +89,6 @@ var Incremento = /** @class */ (function (_super) {
             }
         }
     };
-    return Incremento;
+    return Decremento;
 }(Instruccion_1.Instruccion));
-exports.default = Incremento;
+exports.default = Decremento;

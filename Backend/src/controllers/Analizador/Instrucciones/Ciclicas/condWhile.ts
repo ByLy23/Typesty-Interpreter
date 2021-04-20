@@ -21,6 +21,7 @@ export default class condWhile extends Instruccion {
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let val = this.condicion.interpretar(arbol, tabla);
+    if (val instanceof Errores) return val;
     if (this.condicion.tipoDato.getTipo() != tipoDato.BOOLEANO) {
       return new Errores(
         'SEMANTICO',

@@ -27,6 +27,7 @@ const condDefault= require("./Instrucciones/Condicionales/condSwitchDefault");
 const condCase= require("./Instrucciones/Condicionales/condSwitchCase");
 const Incremento= require("./Instrucciones/Incremento");
 const Decremento= require("./Instrucciones/Decremento");
+const condFor= require("./Instrucciones/Ciclicas/condFor");
 %}
 //definicion lexica
 %lex 
@@ -58,6 +59,7 @@ const Decremento= require("./Instrucciones/Decremento");
 "switch"        return 'RESSWITCH';
 "case"          return 'RESCASE';
 "default"       return 'RESDEFAULT';
+"for"           return 'RESFOR';
 //simbolos
 "{"             return 'LLAVEABRE';
 "}"             return 'LLAVECIERRA';
@@ -199,8 +201,8 @@ INSTRUCCIONES: INSTRUCCIONES INSTRUCCION     {if($2!=false)$1.push($2);$$=$1;}
 
 INSTRUCCION: 
     IMPRIMIR                            {$$=$1;}
-    |DECLARACION                        {$$=$1;}
-    |ASIGNACION                         {$$=$1;}
+    |DECLARACION   PTCOMA                     {$$=$1;}
+    |ASIGNACION    PTCOMA                     {$$=$1;}
     |CONDICIONIF                        {$$=$1;}
     |CONDICIONWHILE                     {$$=$1;}
     |CONDICIONDOWHILE                   {$$=$1;}
@@ -211,6 +213,7 @@ INSTRUCCION:
     |CONDSWITCH                         {$$=$1;}
     |CONDINCREMENTO  PTCOMA             {$$=$1;}
     |CONDECREMENTO PTCOMA               {$$=$1;}
+    |CONDFOR                            {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -219,8 +222,8 @@ IMPRIMIR: RESPRINT PARABRE EXPRESION PARCIERRA  PTCOMA         {$$=new print.def
 ;//{};
 
 DECLARACION:
-    TIPODATO IDENTIFICADOR PTCOMA       {$$= new declaracion.default($1,@1.first_line,@1.first_column,$2);}
-    |TIPODATO IDENTIFICADOR IGUAL EXPRESION PTCOMA  {$$= new declaracion.default($1,@1.first_line,@1.first_column,$2,$4);}
+    TIPODATO IDENTIFICADOR        {$$= new declaracion.default($1,@1.first_line,@1.first_column,$2);}
+    |TIPODATO IDENTIFICADOR IGUAL EXPRESION   {$$= new declaracion.default($1,@1.first_line,@1.first_column,$2,$4);}
     ;
 TIPODATO:
     RESINT                      {$$= new Tipo.default(Tipo.tipoDato.ENTERO);}
@@ -230,7 +233,7 @@ TIPODATO:
     |RESSTRING                  {$$= new Tipo.default(Tipo.tipoDato.CADENA);}
 ;
 ASIGNACION:
-    IDENTIFICADOR IGUAL EXPRESION PTCOMA {$$=new asignacion.default($1,$3,@1.first_line,@1.first_column);}
+    IDENTIFICADOR IGUAL EXPRESION  {$$=new asignacion.default($1,$3,@1.first_line,@1.first_column);}
 ;
 EXPRESION: 
     //ARITMETICAS
@@ -308,6 +311,18 @@ CONDINCREMENTO:
     ;
 CONDECREMENTO:
     EXPRESION MENOS MENOS                                                           {$$=new Decremento.default($1,@1.first_line,@1.first_column);}
+    ;
+CONDFOR:
+    RESFOR PARABRE DECLASIG PTCOMA EXPRESION PTCOMA ACTUALIZACION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new condFor.default($3,$5,$7,$10,@1.first_line,@1.first_column);}
+    ;
+DECLASIG:
+    DECLARACION {$$=$1;}
+    |ASIGNACION {$$=$1;}
+    ;
+ACTUALIZACION:
+    CONDINCREMENTO {$$=$1;}
+    |CONDECREMENTO {$$=$1;}
+    |ASIGNACION    {$$=$1;}
     ;
     /*
     |TIPODATO

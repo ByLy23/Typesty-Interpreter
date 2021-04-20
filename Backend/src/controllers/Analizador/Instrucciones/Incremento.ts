@@ -5,7 +5,7 @@ import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
-export default class Incremento extends Instruccion {
+export default class Decremento extends Instruccion {
   private identificador: Identificador | Instruccion;
   constructor(
     identificador: Identificador | Instruccion,
