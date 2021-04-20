@@ -42,6 +42,7 @@ var Instruccion_1 = require("../../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../../Excepciones/Errores"));
 var tablaSimbolos_1 = __importDefault(require("../../Simbolos/tablaSimbolos"));
 var Tipo_1 = __importStar(require("../../Simbolos/Tipo"));
+var Return_1 = __importDefault(require("../Return"));
 var condIf = /** @class */ (function (_super) {
     __extends(condIf, _super);
     function condIf(fila, columna, cond1, condIf, condElse, condElseIf) {
@@ -53,32 +54,52 @@ var condIf = /** @class */ (function (_super) {
         return _this;
     }
     condIf.prototype.interpretar = function (arbol, tabla) {
-        var _a;
         var val = this.cond1.interpretar(arbol, tabla);
+        if (this.cond1.tipoDato.getTipo() != Tipo_1.tipoDato.BOOLEANO) {
+            return new Errores_1.default('SEMANTICO', 'DATO DEBE SER BOOLEANO', this.fila, this.columna);
+        }
         if (val) {
-            var nuevaTabla_1 = new tablaSimbolos_1.default(tabla);
-            this.condIf.forEach(function (valor) {
-                var a = valor.interpretar(arbol, nuevaTabla_1);
+            var nuevaTabla = new tablaSimbolos_1.default(tabla);
+            for (var i = 0; i < this.condIf.length; i++) {
+                var a = this.condIf[i].interpretar(arbol, nuevaTabla);
                 if (a instanceof Errores_1.default) {
                     indexControllers_1.listaErrores.push(a);
                     arbol.actualizaConsola(a.returnError());
                 }
-            });
+                if (a instanceof Return_1.default)
+                    return a;
+                if (a == 'ByLyContinue')
+                    return a;
+                if (a == 'ByLy23')
+                    return a;
+            }
         }
         else {
             if (this.condElse != undefined) {
-                var nuevaTabla_2 = new tablaSimbolos_1.default(tabla);
-                (_a = this.condElse) === null || _a === void 0 ? void 0 : _a.forEach(function (valor) {
-                    var a = valor.interpretar(arbol, nuevaTabla_2);
+                var nuevaTabla = new tablaSimbolos_1.default(tabla);
+                for (var i = 0; i < this.condElse.length; i++) {
+                    var a = this.condElse[i].interpretar(arbol, nuevaTabla);
                     if (a instanceof Errores_1.default) {
                         indexControllers_1.listaErrores.push(a);
                         arbol.actualizaConsola(a.returnError());
                     }
-                });
+                    if (a instanceof Return_1.default)
+                        return a;
+                    if (a == 'ByLyContinue')
+                        return a;
+                    if (a == 'ByLy23')
+                        return a;
+                }
             }
             else if (this.condElseIf != undefined) {
                 var b = this.condElseIf.interpretar(arbol, tabla);
                 if (b instanceof Errores_1.default)
+                    return b;
+                if (b instanceof Return_1.default)
+                    return b;
+                if (b == 'ByLyContinue')
+                    return b;
+                if (b == 'ByLy23')
                     return b;
             }
         }

@@ -19,6 +19,12 @@ const condIf= require("./Instrucciones/Condicionales/condIf");
 const condWhile= require("./Instrucciones/Ciclicas/condWhile");
 const condDoWhile = require("./Instrucciones/Ciclicas/condDoWhile");
 const condTernario= require("./Instrucciones/Condicionales/condIfTernario");
+const condBreak= require("./Instrucciones/Break");
+const condContinue= require("./Instrucciones/Continue");
+const condReturn= require("./Instrucciones/Return");
+const condSwitch= require("./Instrucciones/Condicionales/condSwitch");
+const condDefault= require("./Instrucciones/Condicionales/condSwitchDefault");
+const condCase= require("./Instrucciones/Condicionales/condSwitchCase");
 %}
 //definicion lexica
 %lex 
@@ -44,6 +50,12 @@ const condTernario= require("./Instrucciones/Condicionales/condIfTernario");
 "string"        return 'RESSTRING';
 "while"         return 'RESWHILE';
 "do"            return 'RESDO';
+"break"         return 'RESBREAK';
+"continue"      return 'RESCONTINUE';
+"return"        return 'RESRETURN';
+"switch"        return 'RESSWITCH';
+"case"          return 'RESCASE';
+"default"       return 'RESDEFAULT';
 //simbolos
 "{"             return 'LLAVEABRE';
 "}"             return 'LLAVECIERRA';
@@ -89,6 +101,7 @@ const condTernario= require("./Instrucciones/Condicionales/condIfTernario");
 .   {inicio.listaErrores.push(new errores.default('ERROR LEXICO',yytext,this._$.first_line,this._$.first_column)); console.log("lexi "+yytext);}
 /lex
 //Precedencia
+%left 'INTERROGACION' 'DOSPUNTOS'
 %left 'OR'
 %left 'AND'
 %left 'NOT'
@@ -96,6 +109,7 @@ const condTernario= require("./Instrucciones/Condicionales/condIfTernario");
 %left 'MAS' 'MENOS'
 %left 'POR' 'DIVI' 'MOD'
 %nonassoc 'POTENCIA'
+%right 'UMENOS'
 
 %start INI
 //Inicio
@@ -182,13 +196,17 @@ INSTRUCCIONES: INSTRUCCIONES INSTRUCCION     {if($2!=false)$1.push($2);$$=$1;}
 ;
 
 INSTRUCCION: 
-    IMPRIMIR                           {$$=$1;}
+    IMPRIMIR                            {$$=$1;}
     |DECLARACION                        {$$=$1;}
     |ASIGNACION                         {$$=$1;}
     |CONDICIONIF                        {$$=$1;}
     |CONDICIONWHILE                     {$$=$1;}
     |CONDICIONDOWHILE                   {$$=$1;}
     |IFTERNARIO                         {$$=$1;}
+    |CONDBREAK                          {$$=$1;}
+    |CODCONTINUE                        {$$=$1;}
+    |CONDRETURN                         {$$=$1;}
+    |CONDSWITCH                         {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -219,6 +237,7 @@ EXPRESION:
     |EXPRESION MOD EXPRESION            {$$= new aritmeticas.default(aritmeticas.Operadores.MODULADOR,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION POTENCIA EXPRESION       {$$= new aritmeticas.default(aritmeticas.Operadores.POTENCIA,@1.first_line,@1.first_column,$1,$3);}
     |PARABRE EXPRESION PARCIERRA        {$$=$2;}
+    |MENOS EXPRESION %prec UMENOS       {$$=new aritmeticas.default(aritmeticas.Operadores.MENOSNUM,@1.first_line,@1.first_column,$2);}
     //RELACIONALES
     |EXPRESION COMPARACION EXPRESION    {$$= new relacional.default(relacional.Relacionales.IGUAL,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION DIFERENTE EXPRESION      {$$= new relacional.default(relacional.Relacionales.DIFERENTE,@1.first_line,@1.first_column,$1,$3);}
@@ -236,6 +255,7 @@ EXPRESION:
     |CADENA                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CADENA),$1,@1.first_line,@1.first_column);}
     |BOOLEANO                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.BOOLEANO),$1,@1.first_line,@1.first_column);}
     |CARACTER                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CARACTER),$1.replace(/['"]+/g, ""),@1.first_line,@1.first_column);}
+    
     |IDENTIFICADOR              {$$=new identificador.default($1,@1.first_line,@1.first_column);}         
     ;
 CONDICIONIF:
@@ -244,13 +264,38 @@ CONDICIONIF:
     |RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE /*true*/CONDICIONIF                                     {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,$9);}     
     ;
 CONDICIONWHILE:
-    RESWHILE PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA    {$$=new condWhile.default($3,$6,@1.first_line,@1.first_column);}
+    RESWHILE PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA              {$$=new condWhile.default($3,$6,@1.first_line,@1.first_column);}
     ;
 CONDICIONDOWHILE:
     RESDO LLAVEABRE INSTRUCCIONES LLAVECIERRA RESWHILE PARABRE EXPRESION PARCIERRA PTCOMA {$$=new condDoWhile.default($7,$3,@1.first_line,@1.first_column);}
     ;
 IFTERNARIO:
     EXPRESION INTERROGACION EXPRESION DOSPUNTOS EXPRESION PTCOMA        {$$=new condTernario.default($1,$3,$5,@1.first_line,@1.first_column);}
+    ;
+CONDBREAK:
+    RESBREAK PTCOMA                                                     {$$=new condBreak.default(@1.first_line,@1.first_column); }
+    ;
+CODCONTINUE:
+    RESCONTINUE PTCOMA                                                  {$$=new condContinue.default(@1.first_line,@1.first_column); }
+    ;
+CONDRETURN:
+    RESRETURN PTCOMA                                                    {$$=new condReturn.default(@1.first_line,@1.first_column); }
+    |RESRETURN EXPRESION PTCOMA                                         {$$=new condReturn.default(@1.first_line,@1.first_column,$2); }
+    ;
+CONDSWITCH:
+    RESSWITCH PARABRE EXPRESION PARCIERRA LLAVEABRE LISTACASOS DEFECTO LLAVECIERRA    {$$=new condSwitch.default(@1.first_line,@1.first_column,$3,$6,$7);}
+    |RESSWITCH PARABRE EXPRESION PARCIERRA LLAVEABRE LISTACASOS LLAVECIERRA         {$$=new condSwitch.default(@1.first_line,@1.first_column,$3,$6,undefined);}
+    |RESSWITCH PARABRE EXPRESION PARCIERRA LLAVEABRE DEFECTO LLAVECIERRA            {$$=new condSwitch.default(@1.first_line,@1.first_column,$3,undefined,$6);}
+    ;
+LISTACASOS: 
+    LISTACASOS CASO                                 {if($2!=false)$1.push($2);$$=$1;}
+    |CASO                                             {$$=($1!=false) ?[$1]:[];}                                                                             
+    ;
+CASO:
+    RESCASE EXPRESION DOSPUNTOS INSTRUCCIONES                                     {$$=new condCase.default(@1.first_line,@1.first_column,$2,$4);} 
+    ;
+DEFECTO:
+    RESDEFAULT DOSPUNTOS INSTRUCCIONES                                              {$$=new condDefault.default(@1.first_line,@1.first_column,$3);}  
     ;
     /*
     |TIPODATO

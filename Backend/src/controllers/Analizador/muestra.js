@@ -58,3 +58,14 @@ new condDoWhile.default(condicion, expresion, fila, columna);
 const condTernario = require("./Instrucciones/Condicionales/condIfTernario");
 
 new condTernario.default(cond, is, lse, fila, col);
+
+
+const condBreak= require("./Instrucciones/Break");
+
+new condBreak.default(fila,columna)
+
+const condSwitch= require("./Instrucciones/Condicionales/condSwitch");
+
+new condSwitch.default(fla,col,ex,lisc,defa)
+
+const

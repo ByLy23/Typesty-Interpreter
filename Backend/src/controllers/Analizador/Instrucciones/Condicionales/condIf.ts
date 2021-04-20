@@ -1,9 +1,10 @@
-import { listaErrores } from "../../../indexControllers";
-import { Instruccion } from "../../Abastracto/Instruccion";
-import Errores from "../../Excepciones/Errores";
-import Arbol from "../../Simbolos/Arbol";
-import tablaSimbolos from "../../Simbolos/tablaSimbolos";
-import Tipo, { tipoDato } from "../../Simbolos/Tipo";
+import { listaErrores } from '../../../indexControllers';
+import { Instruccion } from '../../Abastracto/Instruccion';
+import Errores from '../../Excepciones/Errores';
+import Arbol from '../../Simbolos/Arbol';
+import tablaSimbolos from '../../Simbolos/tablaSimbolos';
+import Tipo, { tipoDato } from '../../Simbolos/Tipo';
+import Return from '../Return';
 
 export default class condIf extends Instruccion {
   private cond1: Instruccion;
@@ -26,28 +27,45 @@ export default class condIf extends Instruccion {
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let val = this.cond1.interpretar(arbol, tabla);
+    if (this.cond1.tipoDato.getTipo() != tipoDato.BOOLEANO) {
+      return new Errores(
+        'SEMANTICO',
+        'DATO DEBE SER BOOLEANO',
+        this.fila,
+        this.columna
+      );
+    }
     if (val) {
       let nuevaTabla = new tablaSimbolos(tabla);
-      this.condIf.forEach((valor) => {
-        let a = valor.interpretar(arbol, nuevaTabla);
+      for (let i = 0; i < this.condIf.length; i++) {
+        let a = this.condIf[i].interpretar(arbol, nuevaTabla);
         if (a instanceof Errores) {
           listaErrores.push(a);
           arbol.actualizaConsola((<Errores>a).returnError());
         }
-      });
+        if (a instanceof Return) return a;
+        if (a == 'ByLyContinue') return a;
+        if (a == 'ByLy23') return a;
+      }
     } else {
       if (this.condElse != undefined) {
         let nuevaTabla = new tablaSimbolos(tabla);
-        this.condElse?.forEach((valor) => {
-          let a = valor.interpretar(arbol, nuevaTabla);
+        for (let i = 0; i < this.condElse.length; i++) {
+          let a = this.condElse[i].interpretar(arbol, nuevaTabla);
           if (a instanceof Errores) {
             listaErrores.push(a);
             arbol.actualizaConsola((<Errores>a).returnError());
           }
-        });
+          if (a instanceof Return) return a;
+          if (a == 'ByLyContinue') return a;
+          if (a == 'ByLy23') return a;
+        }
       } else if (this.condElseIf != undefined) {
         let b = this.condElseIf.interpretar(arbol, tabla);
         if (b instanceof Errores) return b;
+        if (b instanceof Return) return b;
+        if (b == 'ByLyContinue') return b;
+        if (b == 'ByLy23') return b;
       }
     }
 

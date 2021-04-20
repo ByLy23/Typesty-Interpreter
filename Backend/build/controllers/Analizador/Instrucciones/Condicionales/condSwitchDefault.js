@@ -40,54 +40,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var indexControllers_1 = require("../../../indexControllers");
 var Instruccion_1 = require("../../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../../Excepciones/Errores"));
+var tablaSimbolos_1 = __importDefault(require("../../Simbolos/tablaSimbolos"));
 var Tipo_1 = __importStar(require("../../Simbolos/Tipo"));
 var Return_1 = __importDefault(require("../Return"));
-var condSwitch = /** @class */ (function (_super) {
-    __extends(condSwitch, _super);
-    function condSwitch(fila, columna, expresion, listaCasos, defecto) {
+var condSwitchCase = /** @class */ (function (_super) {
+    __extends(condSwitchCase, _super);
+    function condSwitchCase(fila, columna, instrucciones) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
-        _this.expresion = expresion;
-        _this.listaCasos = listaCasos;
-        _this.defecto = defecto;
+        _this.instrucciones = instrucciones;
         return _this;
     }
-    condSwitch.prototype.interpretar = function (arbol, tabla) {
-        if (this.listaCasos != undefined) {
-            for (var _i = 0, _a = this.listaCasos; _i < _a.length; _i++) {
-                var caso = _a[_i];
-                caso.expresionCase = this.expresion;
-                var a = caso.interpretar(arbol, tabla);
-                if (a instanceof Errores_1.default) {
-                    indexControllers_1.listaErrores.push(a);
-                    arbol.actualizaConsola(a.returnError());
-                }
-                if (a instanceof Return_1.default)
-                    return a;
-                if (a == 'ByLyContinue') {
-                    indexControllers_1.listaErrores.push(new Errores_1.default('SEMANTICO', 'CONTINUE FUERA DE CICLO', this.fila, this.columna));
-                    arbol.actualizaConsola(a.returnError());
-                }
-                if (a == 'ByLy23')
-                    return;
-            }
-            //caso solo casos
-        }
-        if (this.defecto != undefined) {
-            var a = this.defecto.interpretar(arbol, tabla);
+    condSwitchCase.prototype.interpretar = function (arbol, tabla) {
+        var nuevaTabla = new tablaSimbolos_1.default(tabla);
+        for (var i = 0; i < this.instrucciones.length; i++) {
+            var a = this.instrucciones[i].interpretar(arbol, nuevaTabla);
             if (a instanceof Errores_1.default) {
                 indexControllers_1.listaErrores.push(a);
                 arbol.actualizaConsola(a.returnError());
             }
             if (a instanceof Return_1.default)
                 return a;
-            if (a == 'ByLyContinue') {
-                indexControllers_1.listaErrores.push(new Errores_1.default('SEMANTICO', 'CONTINUE FUERA DE CICLO', this.fila, this.columna));
-                arbol.actualizaConsola(a.returnError());
-            }
+            if (a == 'ByLyContinue')
+                return a;
             if (a == 'ByLy23')
-                return;
+                return a;
         }
     };
-    return condSwitch;
+    return condSwitchCase;
 }(Instruccion_1.Instruccion));
-exports.default = condSwitch;
+exports.default = condSwitchCase;
