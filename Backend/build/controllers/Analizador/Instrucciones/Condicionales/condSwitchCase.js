@@ -52,22 +52,30 @@ var condSwitchCase = /** @class */ (function (_super) {
         return _this;
     }
     condSwitchCase.prototype.interpretar = function (arbol, tabla) {
+        var _a, _b;
         var val = this.expresion.interpretar(arbol, tabla);
-        if (val) {
-            var nuevaTabla = new tablaSimbolos_1.default(tabla);
-            for (var i = 0; i < this.instrucciones.length; i++) {
-                var a = this.instrucciones[i].interpretar(arbol, nuevaTabla);
-                if (a instanceof Errores_1.default) {
-                    indexControllers_1.listaErrores.push(a);
-                    arbol.actualizaConsola(a.returnError());
+        var valExpresion = (_a = this.expresionCase) === null || _a === void 0 ? void 0 : _a.interpretar(arbol, tabla);
+        if (this.expresion.tipoDato.getTipo() ==
+            ((_b = this.expresionCase) === null || _b === void 0 ? void 0 : _b.tipoDato.getTipo())) {
+            if (val == valExpresion) {
+                var nuevaTabla = new tablaSimbolos_1.default(tabla);
+                for (var i = 0; i < this.instrucciones.length; i++) {
+                    var a = this.instrucciones[i].interpretar(arbol, nuevaTabla);
+                    if (a instanceof Errores_1.default) {
+                        indexControllers_1.listaErrores.push(a);
+                        arbol.actualizaConsola(a.returnError());
+                    }
+                    if (a instanceof Return_1.default)
+                        return a;
+                    if (a == 'ByLyContinue')
+                        return a;
+                    if (a == 'ByLy23')
+                        return a;
                 }
-                if (a instanceof Return_1.default)
-                    return a;
-                if (a == 'ByLyContinue')
-                    break;
-                if (a == 'ByLy23')
-                    return;
             }
+        }
+        else {
+            return new Errores_1.default('SEMANTICO', 'VARIABLE  TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
         }
     };
     return condSwitchCase;

@@ -61,9 +61,9 @@ var condSwitchCase = /** @class */ (function (_super) {
             if (a instanceof Return_1.default)
                 return a;
             if (a == 'ByLyContinue')
-                break;
+                return a;
             if (a == 'ByLy23')
-                return;
+                return a;
         }
     };
     return condSwitchCase;

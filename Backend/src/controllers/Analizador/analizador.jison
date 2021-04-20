@@ -283,12 +283,16 @@ CONDRETURN:
     |RESRETURN EXPRESION PTCOMA                                         {$$=new condReturn.default(@1.first_line,@1.first_column,$2); }
     ;
 CONDSWITCH:
-    RESSWITCH PARABRE EXPRESION PARCIERRA LLAVEABRE LISTACASOS DEFECTO PARCIERRA    {$$=new condSwitch.default(@1.first_line,@1.first_column,$3,$6,$7);}
+    RESSWITCH PARABRE EXPRESION PARCIERRA LLAVEABRE LISTACASOS DEFECTO LLAVECIERRA    {$$=new condSwitch.default(@1.first_line,@1.first_column,$3,$6,$7);}
     |RESSWITCH PARABRE EXPRESION PARCIERRA LLAVEABRE LISTACASOS LLAVECIERRA         {$$=new condSwitch.default(@1.first_line,@1.first_column,$3,$6,undefined);}
     |RESSWITCH PARABRE EXPRESION PARCIERRA LLAVEABRE DEFECTO LLAVECIERRA            {$$=new condSwitch.default(@1.first_line,@1.first_column,$3,undefined,$6);}
     ;
-LISTACASOS:
-    RESCASE EXPRESION DOSPUNTOS INSTRUCCIONES                                       {$$=new condCase.default(@1.first_line,@1.first_column,$2,$4);}                                 
+LISTACASOS: 
+    LISTACASOS CASO                                 {if($2!=false)$1.push($2);$$=$1;}
+    |CASO                                             {$$=($1!=false) ?[$1]:[];}                                                                             
+    ;
+CASO:
+    RESCASE EXPRESION DOSPUNTOS INSTRUCCIONES                                     {$$=new condCase.default(@1.first_line,@1.first_column,$2,$4);} 
     ;
 DEFECTO:
     RESDEFAULT DOSPUNTOS INSTRUCCIONES                                              {$$=new condDefault.default(@1.first_line,@1.first_column,$3);}  

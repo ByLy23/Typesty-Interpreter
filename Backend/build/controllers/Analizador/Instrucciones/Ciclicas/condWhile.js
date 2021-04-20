@@ -52,6 +52,10 @@ var condWhile = /** @class */ (function (_super) {
         return _this;
     }
     condWhile.prototype.interpretar = function (arbol, tabla) {
+        var val = this.condicion.interpretar(arbol, tabla);
+        if (this.condicion.tipoDato.getTipo() != Tipo_1.tipoDato.BOOLEANO) {
+            return new Errores_1.default('SEMANTICO', 'DATO DEBE SER BOOLEANO', this.fila, this.columna);
+        }
         while (this.condicion.interpretar(arbol, tabla)) {
             var nuevaTabla = new tablaSimbolos_1.default(tabla);
             for (var i = 0; i < this.expresion.length; i++) {

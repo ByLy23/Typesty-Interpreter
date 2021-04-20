@@ -20,6 +20,15 @@ export default class condWhile extends Instruccion {
     this.expresion = expresion;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
+    let val = this.condicion.interpretar(arbol, tabla);
+    if (this.condicion.tipoDato.getTipo() != tipoDato.BOOLEANO) {
+      return new Errores(
+        'SEMANTICO',
+        'DATO DEBE SER BOOLEANO',
+        this.fila,
+        this.columna
+      );
+    }
     do {
       let nuevaTabla = new tablaSimbolos(tabla);
       for (let i = 0; i < this.expresion.length; i++) {

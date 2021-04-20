@@ -21,8 +21,8 @@ export default class condSwitchCase extends Instruccion {
         arbol.actualizaConsola((<Errores>a).returnError());
       }
       if (a instanceof Return) return a;
-      if (a == 'ByLyContinue') break;
-      if (a == 'ByLy23') return;
+      if (a == 'ByLyContinue') return a;
+      if (a == 'ByLy23') return a;
     }
   }
 }

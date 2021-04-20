@@ -51,7 +51,7 @@ export default class Aritmetica extends Instruccion {
       case Operadores.MODULADOR:
         return this.operador1Mod(izq, der);
       case Operadores.MENOSNUM:
-        return 'menosNum';
+        return this.opMenosUnario(uno);
       default:
         return new Errores(
           'ERROR SEMANTICO',
@@ -62,6 +62,16 @@ export default class Aritmetica extends Instruccion {
     }
   }
 
+  /*----------------------------------------------------------MENOSUNARIO------------------------------------------------- */
+  private opMenosUnario(izq: any) {
+    let opUn = this.operandoUnico?.tipoDato.getTipo();
+    switch (opUn) {
+      case tipoDato.ENTERO:
+        return parseInt(izq) * -1;
+      case tipoDato.DECIMAL:
+        return parseFloat(izq) * -1;
+    }
+  }
   /*----------------------------------------------------------SUMA------------------------------------------------- */
   private operador1Suma(izq: any, der: any) {
     let op1 = this.operando1?.tipoDato.getTipo();

@@ -27,6 +27,14 @@ export default class condIf extends Instruccion {
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let val = this.cond1.interpretar(arbol, tabla);
+    if (this.cond1.tipoDato.getTipo() != tipoDato.BOOLEANO) {
+      return new Errores(
+        'SEMANTICO',
+        'DATO DEBE SER BOOLEANO',
+        this.fila,
+        this.columna
+      );
+    }
     if (val) {
       let nuevaTabla = new tablaSimbolos(tabla);
       for (let i = 0; i < this.condIf.length; i++) {

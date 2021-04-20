@@ -85,9 +85,20 @@ var Aritmetica = /** @class */ (function (_super) {
             case Operadores.MODULADOR:
                 return this.operador1Mod(izq, der);
             case Operadores.MENOSNUM:
-                return 'menosNum';
+                return this.opMenosUnario(uno);
             default:
                 return new Errores_1.default('ERROR SEMANTICO', 'OPERADOR INVALIDO', this.fila, this.columna);
+        }
+    };
+    /*----------------------------------------------------------MENOSUNARIO------------------------------------------------- */
+    Aritmetica.prototype.opMenosUnario = function (izq) {
+        var _a;
+        var opUn = (_a = this.operandoUnico) === null || _a === void 0 ? void 0 : _a.tipoDato.getTipo();
+        switch (opUn) {
+            case Tipo_1.tipoDato.ENTERO:
+                return parseInt(izq) * -1;
+            case Tipo_1.tipoDato.DECIMAL:
+                return parseFloat(izq) * -1;
         }
     };
     /*----------------------------------------------------------SUMA------------------------------------------------- */
