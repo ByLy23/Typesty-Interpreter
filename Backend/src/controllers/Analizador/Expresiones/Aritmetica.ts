@@ -1,8 +1,8 @@
-import { Instruccion } from "../Abastracto/Instruccion";
-import Errores from "../Excepciones/Errores";
-import Arbol from "../Simbolos/Arbol";
-import tablaSimbolos from "../Simbolos/tablaSimbolos";
-import Tipo, { tipoDato } from "../Simbolos/Tipo";
+import { Instruccion } from '../Abastracto/Instruccion';
+import Errores from '../Excepciones/Errores';
+import Arbol from '../Simbolos/Arbol';
+import tablaSimbolos from '../Simbolos/tablaSimbolos';
+import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Aritmetica extends Instruccion {
   private operando1: Instruccion | undefined;
@@ -50,10 +50,12 @@ export default class Aritmetica extends Instruccion {
         return this.operador1Potencia(izq, der);
       case Operadores.MODULADOR:
         return this.operador1Mod(izq, der);
+      case Operadores.MENOSNUM:
+        return 'menosNum';
       default:
         return new Errores(
-          "ERROR SEMANTICO",
-          "OPERADOR INVALIDO",
+          'ERROR SEMANTICO',
+          'OPERADOR INVALIDO',
           this.fila,
           this.columna
         );
@@ -93,15 +95,15 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) + parseFloat(der);
         case tipoDato.BOOLEANO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          let dats = der + "";
+          let dats = der + '';
           let otr = dats.toLowerCase();
-          return otr == "true" ? parseInt(izq) + 1 : parseInt(izq);
+          return otr == 'true' ? parseInt(izq) + 1 : parseInt(izq);
         case tipoDato.CADENA: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          return izq + "" + der;
+          return izq + '' + der;
         case tipoDato.CARACTER: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          var da = der + "";
+          var da = der + '';
           var res = da.charCodeAt(0);
           return parseInt(izq) + res;
       }
@@ -118,15 +120,15 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) + parseFloat(der);
         case tipoDato.BOOLEANO: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          let dats = der + "";
+          let dats = der + '';
           let otr = dats.toLowerCase();
-          return otr == "true" ? parseFloat(izq) + 1 : parseFloat(izq);
+          return otr == 'true' ? parseFloat(izq) + 1 : parseFloat(izq);
         case tipoDato.CADENA: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          return izq + "" + der;
+          return izq + '' + der;
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          var da = der + "";
+          var da = der + '';
           var res = da.charCodeAt(0);
           return parseFloat(izq) + res;
       }
@@ -137,23 +139,23 @@ export default class Aritmetica extends Instruccion {
       ) {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          let dats = izq + "";
+          let dats = izq + '';
           let otr = dats.toLowerCase();
-          if (otr == "true") return parseInt(der) + 1;
+          if (otr == 'true') return parseInt(der) + 1;
           return parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          let dats1 = izq + "";
+          let dats1 = izq + '';
           let otr1 = dats1.toLowerCase();
-          return otr1 == "true" ? parseFloat(der) + 1 : parseFloat(der);
+          return otr1 == 'true' ? parseFloat(der) + 1 : parseFloat(der);
         case tipoDato.CADENA: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          return izq + "" + der;
+          return izq + '' + der;
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -165,20 +167,20 @@ export default class Aritmetica extends Instruccion {
       ) {
         case tipoDato.ENTERO: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          return izq + "" + der;
+          return izq + '' + der;
         case tipoDato.DECIMAL: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          return izq + "" + der;
+          return izq + '' + der;
         case tipoDato.BOOLEANO: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          return izq + "" + der;
+          return izq + '' + der;
         case tipoDato.CADENA: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
-          return izq + "" + der;
+          return izq + '' + der;
         case tipoDato.CARACTER: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
           var dato = der;
-          return izq + "" + dato;
+          return izq + '' + dato;
       }
     } else if (numero == 5) {
       //caracter
@@ -187,28 +189,28 @@ export default class Aritmetica extends Instruccion {
       ) {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          var da1 = izq + "";
+          var da1 = izq + '';
           var res1 = da1.charCodeAt(0);
           return res1 + parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          var da1 = izq + "";
+          var da1 = izq + '';
           var res1 = da1.charCodeAt(0);
           return res1 + parseFloat(der);
         case tipoDato.CADENA: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
           var otro11 = izq;
-          return otro11 + "" + der;
+          return otro11 + '' + der;
         case tipoDato.CARACTER: //retorna cadena
           this.tipoDato = new Tipo(tipoDato.CADENA);
           var otro = der;
           var otro1 = izq;
-          return otro1 + "" + otro;
+          return otro1 + '' + otro;
         default:
           //error semantico
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -248,19 +250,19 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) - parseFloat(der);
         case tipoDato.BOOLEANO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          let dats = der + "";
+          let dats = der + '';
           let otr = dats.toLowerCase();
-          return otr == "true" ? parseInt(izq) - 1 : parseInt(izq);
+          return otr == 'true' ? parseInt(izq) - 1 : parseInt(izq);
         case tipoDato.CARACTER: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          var da = der + "";
+          var da = der + '';
           var res = da.charCodeAt(0);
           return parseInt(izq) - res;
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -278,19 +280,19 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) - parseFloat(der);
         case tipoDato.BOOLEANO: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          let dats = der + "";
+          let dats = der + '';
           let otr = dats.toLowerCase();
-          return otr == "true" ? parseFloat(izq) - 1 : parseFloat(izq);
+          return otr == 'true' ? parseFloat(izq) - 1 : parseFloat(izq);
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          var da = der + "";
+          var da = der + '';
           var res = da.charCodeAt(0);
           return parseFloat(izq) - res;
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -302,19 +304,19 @@ export default class Aritmetica extends Instruccion {
       ) {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          let dats = izq + "";
+          let dats = izq + '';
           let otr = dats.toLowerCase();
-          return otr == "true" ? parseInt(der) - 1 : parseInt(der);
+          return otr == 'true' ? parseInt(der) - 1 : parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          let dats1 = izq + "";
+          let dats1 = izq + '';
           let otr1 = dats1.toLowerCase();
-          return otr1 == "true" ? parseFloat(der) - 1 : parseFloat(der);
+          return otr1 == 'true' ? parseFloat(der) - 1 : parseFloat(der);
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -322,8 +324,8 @@ export default class Aritmetica extends Instruccion {
     } else if (numero == 4) {
       //cadena
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -334,19 +336,19 @@ export default class Aritmetica extends Instruccion {
       ) {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          var da1 = izq + "";
+          var da1 = izq + '';
           var res1 = da1.charCodeAt(0);
           return res1 - parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          var da1 = izq + "";
+          var da1 = izq + '';
           var res1 = da1.charCodeAt(0);
           return res1 - parseFloat(der);
         default:
           //error semantico
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -386,14 +388,14 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) * parseFloat(der);
         case tipoDato.CARACTER: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          var da = der + "";
+          var da = der + '';
           var res = da.charCodeAt(0);
           return parseInt(izq) * res;
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -411,14 +413,14 @@ export default class Aritmetica extends Instruccion {
           return parseFloat(izq) * parseFloat(der);
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          var da = der + "";
+          var da = der + '';
           var res = da.charCodeAt(0);
           return parseFloat(izq) * res;
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -427,8 +429,8 @@ export default class Aritmetica extends Instruccion {
       //boolean
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -436,8 +438,8 @@ export default class Aritmetica extends Instruccion {
       //cadena
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -448,19 +450,19 @@ export default class Aritmetica extends Instruccion {
       ) {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          var da1 = izq + "";
+          var da1 = izq + '';
           var res1 = da1.charCodeAt(0);
           return res1 * parseInt(der);
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          var da1 = izq + "";
+          var da1 = izq + '';
           var res1 = da1.charCodeAt(0);
           return res1 * parseFloat(der);
         default:
           //error semantico
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -496,24 +498,24 @@ export default class Aritmetica extends Instruccion {
           this.tipoDato = new Tipo(tipoDato.ENTERO);
           return der != 0
             ? parseInt(izq) / parseInt(der)
-            : "NO SE PUEDE DIVIDIR SOBRE CERO";
+            : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           return der != 0
             ? parseFloat(izq) / parseFloat(der)
-            : "NO SE PUEDE DIVIDIR SOBRE CERO";
+            : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         case tipoDato.CARACTER: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          var da = der + "";
+          var da = der + '';
           var res = da.charCodeAt(0);
           return res != 0
             ? parseInt(izq) / res
-            : "NO SE PUEDE DIVIDIR SOBRE CERO";
+            : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -527,24 +529,24 @@ export default class Aritmetica extends Instruccion {
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           return der != 0
             ? parseFloat(izq) / parseFloat(der)
-            : "NO SE PUEDE DIVIDIR SOBRE CERO";
+            : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           return der != 0
             ? parseFloat(izq) * parseFloat(der)
-            : "NO SE PUEDE DIVIDIR SOBRE CERO";
+            : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          var da = der + "";
+          var da = der + '';
           var res = da.charCodeAt(0);
           return der != 0
             ? parseFloat(izq) / res
-            : "NO SE PUEDE DIVIDIR SOBRE CERO";
+            : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -553,8 +555,8 @@ export default class Aritmetica extends Instruccion {
       //boolean
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -562,8 +564,8 @@ export default class Aritmetica extends Instruccion {
       //cadena
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -574,23 +576,23 @@ export default class Aritmetica extends Instruccion {
       ) {
         case tipoDato.ENTERO: //retorna entero
           this.tipoDato = new Tipo(tipoDato.ENTERO);
-          var da1 = izq + "";
+          var da1 = izq + '';
           var res1 = da1.charCodeAt(0);
           return der != 0
             ? res1 / parseInt(der)
-            : "NO SE PUEDE DIVIDIR SOBRE CERO";
+            : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
-          var da1 = izq + "";
+          var da1 = izq + '';
           var res1 = da1.charCodeAt(0);
           return der != 0
             ? res1 / parseFloat(der)
-            : "NO SE PUEDE DIVIDIR SOBRE CERO";
+            : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         default:
           //error semantico
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -631,8 +633,8 @@ export default class Aritmetica extends Instruccion {
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -651,8 +653,8 @@ export default class Aritmetica extends Instruccion {
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -661,8 +663,8 @@ export default class Aritmetica extends Instruccion {
       //boolean
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -670,8 +672,8 @@ export default class Aritmetica extends Instruccion {
       //cadena
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -679,8 +681,8 @@ export default class Aritmetica extends Instruccion {
       //caracter
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -720,8 +722,8 @@ export default class Aritmetica extends Instruccion {
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -740,8 +742,8 @@ export default class Aritmetica extends Instruccion {
         default:
           //error
           return new Errores(
-            "SEMANTICO",
-            "TIPO DE DATO NO PERMITIDO",
+            'SEMANTICO',
+            'TIPO DE DATO NO PERMITIDO',
             this.fila,
             this.columna
           );
@@ -750,8 +752,8 @@ export default class Aritmetica extends Instruccion {
       //boolean
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -759,8 +761,8 @@ export default class Aritmetica extends Instruccion {
       //cadena
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
@@ -768,8 +770,8 @@ export default class Aritmetica extends Instruccion {
       //caracter
       //error
       return new Errores(
-        "SEMANTICO",
-        "TIPO DE DATO NO PERMITIDO",
+        'SEMANTICO',
+        'TIPO DE DATO NO PERMITIDO',
         this.fila,
         this.columna
       );
