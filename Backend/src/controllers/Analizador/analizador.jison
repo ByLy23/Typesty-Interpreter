@@ -25,6 +25,8 @@ const condReturn= require("./Instrucciones/Return");
 const condSwitch= require("./Instrucciones/Condicionales/condSwitch");
 const condDefault= require("./Instrucciones/Condicionales/condSwitchDefault");
 const condCase= require("./Instrucciones/Condicionales/condSwitchCase");
+const Incremento= require("./Instrucciones/Incremento");
+const Decremento= require("./Instrucciones/Decremento");
 %}
 //definicion lexica
 %lex 
@@ -207,6 +209,8 @@ INSTRUCCION:
     |CODCONTINUE                        {$$=$1;}
     |CONDRETURN                         {$$=$1;}
     |CONDSWITCH                         {$$=$1;}
+    |CONDINCREMENTO  PTCOMA             {$$=$1;}
+    |CONDECREMENTO PTCOMA               {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -257,6 +261,8 @@ EXPRESION:
     |CARACTER                   {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.CARACTER),$1.replace(/['"]+/g, ""),@1.first_line,@1.first_column);}
     
     |IDENTIFICADOR              {$$=new identificador.default($1,@1.first_line,@1.first_column);}         
+    |CONDINCREMENTO             {$$=$1;}
+    |CONDECREMENTO              {$$=$1;}
     ;
 CONDICIONIF:
     RESIF PARABRE EXPRESION /*COND1*/PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA                                                         {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,undefined);}
@@ -296,6 +302,12 @@ CASO:
     ;
 DEFECTO:
     RESDEFAULT DOSPUNTOS INSTRUCCIONES                                              {$$=new condDefault.default(@1.first_line,@1.first_column,$3);}  
+    ;
+CONDINCREMENTO:
+    EXPRESION MAS MAS                                                              {$$=new Incremento.default($1,@1.first_line,@1.first_column);}
+    ;
+CONDECREMENTO:
+    EXPRESION MENOS MENOS                                                           {$$=new Decremento.default($1,@1.first_line,@1.first_column);}
     ;
     /*
     |TIPODATO

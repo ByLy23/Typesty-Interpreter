@@ -60,13 +60,14 @@ var Relacional = /** @class */ (function (_super) {
             return der;
         if (this.cond1.tipoDato.getTipo() == Tipo_1.tipoDato.CADENA &&
             this.cond2.tipoDato.getTipo() != Tipo_1.tipoDato.CADENA) {
-            return new Errores_1.default("ERROR SEMANTICO", "NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA", this.fila, this.columna);
+            return new Errores_1.default('ERROR SEMANTICO', 'NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA', this.fila, this.columna);
         }
         else if (this.cond2.tipoDato.getTipo() == Tipo_1.tipoDato.CADENA &&
             this.cond1.tipoDato.getTipo() != Tipo_1.tipoDato.CADENA) {
-            return new Errores_1.default("ERROR SEMANTICO", "NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA", this.fila, this.columna);
+            return new Errores_1.default('ERROR SEMANTICO', 'NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA', this.fila, this.columna);
         }
         else {
+            this.tipoDato.setTipo(Tipo_1.tipoDato.BOOLEANO);
             switch (this.relacion) {
                 case Relacionales.IGUAL:
                     return izq == der;
@@ -81,7 +82,7 @@ var Relacional = /** @class */ (function (_super) {
                 case Relacionales.MAYORIGUAL:
                     return izq >= der;
                 default:
-                    return "what";
+                    return 'what';
             }
         }
     };
@@ -93,15 +94,15 @@ var Relacional = /** @class */ (function (_super) {
             case Tipo_1.tipoDato.DECIMAL:
                 return parseFloat(valor);
             case Tipo_1.tipoDato.CARACTER:
-                var da = valor + "";
+                var da = valor + '';
                 var res = da.charCodeAt(0);
                 return res;
             case Tipo_1.tipoDato.BOOLEANO:
-                var dats = valor + "";
+                var dats = valor + '';
                 var otr = dats.toLowerCase();
                 return parseInt(otr);
             case Tipo_1.tipoDato.CADENA:
-                return "" + valor;
+                return '' + valor;
         }
     };
     return Relacional;

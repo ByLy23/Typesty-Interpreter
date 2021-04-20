@@ -1,10 +1,10 @@
 //aritmeticas
-import { Console } from "node:console";
-import { Instruccion } from "../Abastracto/Instruccion";
-import Errores from "../Excepciones/Errores";
-import Arbol from "../Simbolos/Arbol";
-import tablaSimbolos from "../Simbolos/tablaSimbolos";
-import Tipo, { tipoDato } from "../Simbolos/Tipo";
+import { Console } from 'node:console';
+import { Instruccion } from '../Abastracto/Instruccion';
+import Errores from '../Excepciones/Errores';
+import Arbol from '../Simbolos/Arbol';
+import tablaSimbolos from '../Simbolos/tablaSimbolos';
+import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Relacional extends Instruccion {
   private cond1: Instruccion;
@@ -33,8 +33,8 @@ export default class Relacional extends Instruccion {
       this.cond2.tipoDato.getTipo() != tipoDato.CADENA
     ) {
       return new Errores(
-        "ERROR SEMANTICO",
-        "NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA",
+        'ERROR SEMANTICO',
+        'NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA',
         this.fila,
         this.columna
       );
@@ -43,12 +43,13 @@ export default class Relacional extends Instruccion {
       this.cond1.tipoDato.getTipo() != tipoDato.CADENA
     ) {
       return new Errores(
-        "ERROR SEMANTICO",
-        "NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA",
+        'ERROR SEMANTICO',
+        'NO SE PUEDE COMPARAR UNA CADENA CON OTRO TIPO DE DATO QUE NO SEA CADENA',
         this.fila,
         this.columna
       );
     } else {
+      this.tipoDato.setTipo(tipoDato.BOOLEANO);
       switch (this.relacion) {
         case Relacionales.IGUAL:
           return izq == der;
@@ -63,7 +64,7 @@ export default class Relacional extends Instruccion {
         case Relacionales.MAYORIGUAL:
           return izq >= der;
         default:
-          return "what";
+          return 'what';
       }
     }
   }
@@ -75,15 +76,15 @@ export default class Relacional extends Instruccion {
       case tipoDato.DECIMAL:
         return parseFloat(valor);
       case tipoDato.CARACTER:
-        var da = valor + "";
+        var da = valor + '';
         var res = da.charCodeAt(0);
         return res;
       case tipoDato.BOOLEANO:
-        let dats = valor + "";
+        let dats = valor + '';
         let otr = dats.toLowerCase();
         return parseInt(otr);
       case tipoDato.CADENA:
-        return "" + valor;
+        return '' + valor;
     }
   }
 }

@@ -4,7 +4,6 @@ import Errores from '../../Excepciones/Errores';
 import Arbol from '../../Simbolos/Arbol';
 import tablaSimbolos from '../../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../../Simbolos/Tipo';
-import Break from '../break';
 import Return from '../Return';
 
 export default class condWhile extends Instruccion {
