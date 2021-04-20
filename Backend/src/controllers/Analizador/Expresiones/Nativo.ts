@@ -2,7 +2,7 @@ import { Instruccion } from "../Abastracto/Instruccion";
 import Errores from "../Excepciones/Errores";
 import Arbol from "../Simbolos/Arbol";
 import tablaSimbolos from "../Simbolos/tablaSimbolos";
-import Tipo from "../Simbolos/Tipo";
+import Tipo, { tipoDato } from "../Simbolos/Tipo";
 
 export default class Nativo extends Instruccion {
   valor: any;
@@ -12,6 +12,9 @@ export default class Nativo extends Instruccion {
   }
 
   interpretar(arbol: Arbol, tabla: tablaSimbolos) {
+    if (this.tipoDato.getTipo() == tipoDato.BOOLEANO) {
+      return this.valor == "true" ? true : false;
+    }
     return this.valor;
   }
 }

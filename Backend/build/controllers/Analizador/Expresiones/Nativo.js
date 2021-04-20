@@ -16,6 +16,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var Tipo_1 = require("../Simbolos/Tipo");
 var Nativo = /** @class */ (function (_super) {
     __extends(Nativo, _super);
     function Nativo(tipo, valor, fila, columna) {
@@ -24,6 +25,9 @@ var Nativo = /** @class */ (function (_super) {
         return _this;
     }
     Nativo.prototype.interpretar = function (arbol, tabla) {
+        if (this.tipoDato.getTipo() == Tipo_1.tipoDato.BOOLEANO) {
+            return this.valor == "true" ? true : false;
+        }
         return this.valor;
     };
     return Nativo;

@@ -19,6 +19,9 @@ const condIf= require("./Instrucciones/Condicionales/condIf");
 const condWhile= require("./Instrucciones/Ciclicas/condWhile");
 const condDoWhile = require("./Instrucciones/Ciclicas/condDoWhile");
 const condTernario= require("./Instrucciones/Condicionales/condIfTernario");
+const condBreak= require("./Instrucciones/Break");
+const condContinue= require("./Instrucciones/Continue");
+const condReturn= require("./Instrucciones/Return");
 %}
 //definicion lexica
 %lex 
@@ -44,6 +47,9 @@ const condTernario= require("./Instrucciones/Condicionales/condIfTernario");
 "string"        return 'RESSTRING';
 "while"         return 'RESWHILE';
 "do"            return 'RESDO';
+"break"         return 'RESBREAK';
+"continue"      return 'RESCONTINUE';
+"return"        return 'RESRETURN';
 //simbolos
 "{"             return 'LLAVEABRE';
 "}"             return 'LLAVECIERRA';
@@ -189,6 +195,9 @@ INSTRUCCION:
     |CONDICIONWHILE                     {$$=$1;}
     |CONDICIONDOWHILE                   {$$=$1;}
     |IFTERNARIO                         {$$=$1;}
+    |CONDBREAK                          {$$=$1;}
+    |CODCONTINUE                     {$$=$1;}
+    |CONDRETURN                         {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -251,6 +260,16 @@ CONDICIONDOWHILE:
     ;
 IFTERNARIO:
     EXPRESION INTERROGACION EXPRESION DOSPUNTOS EXPRESION PTCOMA        {$$=new condTernario.default($1,$3,$5,@1.first_line,@1.first_column);}
+    ;
+CONDBREAK:
+    RESBREAK PTCOMA                                                           {$$=new condBreak.default(@1.first_line,@1.first_column); }
+    ;
+CODCONTINUE:
+    RESCONTINUE PTCOMA                                                          {$$=new condContinue.default(@1.first_line,@1.first_column); }
+    ;
+CONDRETURN:
+    RESRETURN PTCOMA                                                    {$$=new condReturn.default(@1.first_line,@1.first_column); }
+    |RESRETURN EXPRESION PTCOMA                                                    {$$=new condReturn.default(@1.first_line,@1.first_column,$2); }
     ;
     /*
     |TIPODATO

@@ -33,42 +33,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var indexControllers_1 = require("../../../indexControllers");
-var Instruccion_1 = require("../../Abastracto/Instruccion");
-var Errores_1 = __importDefault(require("../../Excepciones/Errores"));
-var tablaSimbolos_1 = __importDefault(require("../../Simbolos/tablaSimbolos"));
-var Tipo_1 = __importStar(require("../../Simbolos/Tipo"));
-var Return_1 = __importDefault(require("../Return"));
-var condWhile = /** @class */ (function (_super) {
-    __extends(condWhile, _super);
-    function condWhile(condicion, expresion, fila, columna) {
+var Instruccion_1 = require("../Abastracto/Instruccion");
+var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
+var Return = /** @class */ (function (_super) {
+    __extends(Return, _super);
+    function Return(fila, columna, expresion) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
-        _this.condicion = condicion;
-        _this.expresion = expresion;
+        _this.valor = null;
+        _this.expresionReturn = expresion;
         return _this;
     }
-    condWhile.prototype.interpretar = function (arbol, tabla) {
-        while (this.condicion.interpretar(arbol, tabla)) {
-            var nuevaTabla = new tablaSimbolos_1.default(tabla);
-            for (var i = 0; i < this.expresion.length; i++) {
-                var a = this.expresion[i].interpretar(arbol, nuevaTabla);
-                if (a instanceof Errores_1.default) {
-                    indexControllers_1.listaErrores.push(a);
-                    arbol.actualizaConsola(a.returnError());
-                }
-                if (a instanceof Return_1.default)
-                    return a;
-                if (a == 'ByLyContinue')
-                    break;
-                if (a == 'ByLy23')
-                    return;
-            }
-        }
+    Return.prototype.interpretar = function (arbol, tabla) {
+        var _a;
+        if (this.expresionReturn)
+            this.valor = (_a = this.expresionReturn) === null || _a === void 0 ? void 0 : _a.interpretar(arbol, tabla);
+        return this;
     };
-    return condWhile;
+    return Return;
 }(Instruccion_1.Instruccion));
-exports.default = condWhile;
+exports.default = Return;

@@ -1,9 +1,11 @@
-import { listaErrores } from "../../../indexControllers";
-import { Instruccion } from "../../Abastracto/Instruccion";
-import Errores from "../../Excepciones/Errores";
-import Arbol from "../../Simbolos/Arbol";
-import tablaSimbolos from "../../Simbolos/tablaSimbolos";
-import Tipo, { tipoDato } from "../../Simbolos/Tipo";
+import { listaErrores } from '../../../indexControllers';
+import { Instruccion } from '../../Abastracto/Instruccion';
+import Errores from '../../Excepciones/Errores';
+import Arbol from '../../Simbolos/Arbol';
+import tablaSimbolos from '../../Simbolos/tablaSimbolos';
+import Tipo, { tipoDato } from '../../Simbolos/Tipo';
+import Break from '../break';
+import Return from '../Return';
 
 export default class condWhile extends Instruccion {
   private condicion: Instruccion;
@@ -21,13 +23,16 @@ export default class condWhile extends Instruccion {
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     while (this.condicion.interpretar(arbol, tabla)) {
       let nuevaTabla = new tablaSimbolos(tabla);
-      this.expresion.forEach((valor) => {
-        let a = valor.interpretar(arbol, nuevaTabla);
+      for (let i = 0; i < this.expresion.length; i++) {
+        let a = this.expresion[i].interpretar(arbol, nuevaTabla);
         if (a instanceof Errores) {
           listaErrores.push(a);
           arbol.actualizaConsola((<Errores>a).returnError());
         }
-      });
+        if (a instanceof Return) return a;
+        if (a == 'ByLyContinue') break;
+        if (a == 'ByLy23') return;
+      }
     }
   }
 }

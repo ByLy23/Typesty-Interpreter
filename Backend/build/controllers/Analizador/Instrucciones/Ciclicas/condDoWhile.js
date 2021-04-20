@@ -42,6 +42,7 @@ var Instruccion_1 = require("../../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../../Excepciones/Errores"));
 var tablaSimbolos_1 = __importDefault(require("../../Simbolos/tablaSimbolos"));
 var Tipo_1 = __importStar(require("../../Simbolos/Tipo"));
+var Return_1 = __importDefault(require("../Return"));
 var condWhile = /** @class */ (function (_super) {
     __extends(condWhile, _super);
     function condWhile(condicion, expresion, fila, columna) {
@@ -51,19 +52,21 @@ var condWhile = /** @class */ (function (_super) {
         return _this;
     }
     condWhile.prototype.interpretar = function (arbol, tabla) {
-        var _loop_1 = function () {
+        do {
             var nuevaTabla = new tablaSimbolos_1.default(tabla);
-            this_1.expresion.forEach(function (valor) {
-                var a = valor.interpretar(arbol, nuevaTabla);
+            for (var i = 0; i < this.expresion.length; i++) {
+                var a = this.expresion[i].interpretar(arbol, nuevaTabla);
                 if (a instanceof Errores_1.default) {
                     indexControllers_1.listaErrores.push(a);
                     arbol.actualizaConsola(a.returnError());
                 }
-            });
-        };
-        var this_1 = this;
-        do {
-            _loop_1();
+                if (a instanceof Return_1.default)
+                    return a;
+                if (a == 'ByLyContinue')
+                    break;
+                if (a == 'ByLy23')
+                    return;
+            }
         } while (this.condicion.interpretar(arbol, tabla));
     };
     return condWhile;
