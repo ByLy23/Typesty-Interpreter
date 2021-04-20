@@ -53,6 +53,8 @@ var condWhile = /** @class */ (function (_super) {
     }
     condWhile.prototype.interpretar = function (arbol, tabla) {
         var val = this.condicion.interpretar(arbol, tabla);
+        if (val instanceof Errores_1.default)
+            return val;
         if (this.condicion.tipoDato.getTipo() != Tipo_1.tipoDato.BOOLEANO) {
             return new Errores_1.default('SEMANTICO', 'DATO DEBE SER BOOLEANO', this.fila, this.columna);
         }

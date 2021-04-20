@@ -6,21 +6,30 @@ import tablaSimbolos from '../../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../../Simbolos/Tipo';
 import Return from '../Return';
 
-export default class condWhile extends Instruccion {
+export default class condFor extends Instruccion {
+  private declaracionAsignacion: Instruccion;
   private condicion: Instruccion;
-  private expresion: Instruccion[];
+  private actualizacion: Instruccion;
+  private instrucciones: Instruccion[];
   constructor(
+    declasignacion: Instruccion,
     condicion: Instruccion,
-    expresion: Instruccion[],
+    actualizacion: Instruccion,
+    instrucciones: Instruccion[],
     fila: Number,
     columna: Number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
+    this.declaracionAsignacion = declasignacion;
+    this.actualizacion = actualizacion;
     this.condicion = condicion;
-    this.expresion = expresion;
+    this.instrucciones = instrucciones;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
-    let val = this.condicion.interpretar(arbol, tabla);
+    let nuevaTabla = new tablaSimbolos(tabla);
+    let declaAsig = this.declaracionAsignacion.interpretar(arbol, nuevaTabla);
+    if (declaAsig instanceof Errores) return declaAsig;
+    let val = this.condicion.interpretar(arbol, nuevaTabla);
     if (val instanceof Errores) return val;
     if (this.condicion.tipoDato.getTipo() != tipoDato.BOOLEANO) {
       return new Errores(
@@ -30,10 +39,10 @@ export default class condWhile extends Instruccion {
         this.columna
       );
     }
-    do {
-      let nuevaTabla = new tablaSimbolos(tabla);
-      for (let i = 0; i < this.expresion.length; i++) {
-        let a = this.expresion[i].interpretar(arbol, nuevaTabla);
+    while (this.condicion.interpretar(arbol, nuevaTabla)) {
+      let otraTabla = new tablaSimbolos(nuevaTabla);
+      for (let i = 0; i < this.instrucciones.length; i++) {
+        let a = this.instrucciones[i].interpretar(arbol, otraTabla);
         if (a instanceof Errores) {
           listaErrores.push(a);
           arbol.actualizaConsola((<Errores>a).returnError());
@@ -42,6 +51,8 @@ export default class condWhile extends Instruccion {
         if (a == 'ByLyContinue') break;
         if (a == 'ByLy23') return;
       }
-    } while (this.condicion.interpretar(arbol, tabla));
+      let valActualizacion = this.actualizacion.interpretar(arbol, nuevaTabla);
+      if (valActualizacion instanceof Errores) return valActualizacion;
+    }
   }
 }

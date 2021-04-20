@@ -1,5 +1,4 @@
 "use strict";
-//relacionales
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -38,59 +37,58 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Logicas = void 0;
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
+var Identificador_1 = __importDefault(require("../Expresiones/Identificador"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
-var Logica = /** @class */ (function (_super) {
-    __extends(Logica, _super);
-    function Logica(relacion, fila, columna, cond1, cond2) {
+var Incremento = /** @class */ (function (_super) {
+    __extends(Incremento, _super);
+    function Incremento(identificador, fila, columna) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
-        _this.loogica = relacion;
-        if (!cond2)
-            _this.condExcep = cond1;
-        else {
-            _this.cond1 = cond1;
-            _this.cond2 = cond2;
-        }
+        _this.identificador = identificador;
         return _this;
     }
-    Logica.prototype.interpretar = function (arbol, tabla) {
-        var _a, _b;
-        var izq, der, unico;
-        izq = der = unico = null;
-        if (this.condExcep != null) {
-            unico = this.condExcep.interpretar(arbol, tabla);
-            if (unico instanceof Errores_1.default)
-                return unico;
+    Incremento.prototype.interpretar = function (arbol, tabla) {
+        //tomar el tipoDato de la variable
+        if (this.identificador instanceof Identificador_1.default) {
+            var variable = tabla.getVariable(this.identificador.identificador);
+            if (variable != null) {
+                if (variable.gettipo().getTipo() == Tipo_1.tipoDato.ENTERO ||
+                    variable.gettipo().getTipo() == Tipo_1.tipoDato.DECIMAL) {
+                    this.tipoDato.setTipo(variable.gettipo().getTipo());
+                    var uno = variable.getvalor();
+                    uno--;
+                    variable.setvalor(uno);
+                }
+                else {
+                    return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' DEBE SER VALOR NUMERICO', this.fila, this.columna);
+                }
+            }
+            else {
+                return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' NO EXISTE', this.fila, this.columna);
+            }
         }
         else {
-            izq = (_a = this.cond1) === null || _a === void 0 ? void 0 : _a.interpretar(arbol, tabla);
-            if (izq instanceof Errores_1.default)
-                return izq;
-            der = (_b = this.cond2) === null || _b === void 0 ? void 0 : _b.interpretar(arbol, tabla);
-            if (der instanceof Errores_1.default)
-                return der;
-        }
-        //inicio comparacion
-        switch (this.loogica) {
-            case Logicas.AND:
-                this.tipoDato.setTipo(Tipo_1.tipoDato.BOOLEANO);
-                return izq && der ? true : false;
-            case Logicas.OR:
-                this.tipoDato.setTipo(Tipo_1.tipoDato.BOOLEANO);
-                return izq || der ? true : false;
-            case Logicas.NOT:
-                this.tipoDato.setTipo(Tipo_1.tipoDato.BOOLEANO);
-                return !unico;
+            var valE = this.identificador.interpretar(arbol, tabla);
+            if (valE instanceof Errores_1.default)
+                return valE;
+            if (this.identificador.tipoDato.getTipo() == Tipo_1.tipoDato.ENTERO) {
+                this.tipoDato.setTipo(Tipo_1.tipoDato.ENTERO);
+                var otro = parseInt(valE);
+                otro--;
+                return otro;
+            }
+            else if (this.identificador.tipoDato.getTipo() == Tipo_1.tipoDato.DECIMAL) {
+                this.tipoDato.setTipo(Tipo_1.tipoDato.DECIMAL);
+                var otro = parseFloat(valE);
+                otro--;
+                return otro;
+            }
+            else {
+                return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' DEBE SER VALOR NUMERICO', this.fila, this.columna);
+            }
         }
     };
-    return Logica;
+    return Incremento;
 }(Instruccion_1.Instruccion));
-exports.default = Logica;
-var Logicas;
-(function (Logicas) {
-    Logicas[Logicas["OR"] = 0] = "OR";
-    Logicas[Logicas["AND"] = 1] = "AND";
-    Logicas[Logicas["NOT"] = 2] = "NOT";
-})(Logicas = exports.Logicas || (exports.Logicas = {}));
+exports.default = Incremento;

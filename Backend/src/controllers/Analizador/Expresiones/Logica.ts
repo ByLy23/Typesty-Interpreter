@@ -1,10 +1,10 @@
 //relacionales
 
-import { Instruccion } from "../Abastracto/Instruccion";
-import Errores from "../Excepciones/Errores";
-import Arbol from "../Simbolos/Arbol";
-import tablaSimbolos from "../Simbolos/tablaSimbolos";
-import Tipo, { tipoDato } from "../Simbolos/Tipo";
+import { Instruccion } from '../Abastracto/Instruccion';
+import Errores from '../Excepciones/Errores';
+import Arbol from '../Simbolos/Arbol';
+import tablaSimbolos from '../Simbolos/tablaSimbolos';
+import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Logica extends Instruccion {
   private cond1: Instruccion | undefined;
@@ -41,10 +41,13 @@ export default class Logica extends Instruccion {
     //inicio comparacion
     switch (this.loogica) {
       case Logicas.AND:
+        this.tipoDato.setTipo(tipoDato.BOOLEANO);
         return izq && der ? true : false;
       case Logicas.OR:
+        this.tipoDato.setTipo(tipoDato.BOOLEANO);
         return izq || der ? true : false;
       case Logicas.NOT:
+        this.tipoDato.setTipo(tipoDato.BOOLEANO);
         return !unico;
     }
   }

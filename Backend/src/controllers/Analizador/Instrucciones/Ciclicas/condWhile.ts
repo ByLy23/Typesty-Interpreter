@@ -4,7 +4,6 @@ import Errores from '../../Excepciones/Errores';
 import Arbol from '../../Simbolos/Arbol';
 import tablaSimbolos from '../../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../../Simbolos/Tipo';
-import Break from '../break';
 import Return from '../Return';
 
 export default class condWhile extends Instruccion {
@@ -22,6 +21,7 @@ export default class condWhile extends Instruccion {
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let val = this.condicion.interpretar(arbol, tabla);
+    if (val instanceof Errores) return val;
     if (this.condicion.tipoDato.getTipo() != tipoDato.BOOLEANO) {
       return new Errores(
         'SEMANTICO',

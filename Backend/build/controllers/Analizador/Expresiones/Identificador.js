@@ -54,7 +54,7 @@ var Identificador = /** @class */ (function (_super) {
             return variable.getvalor();
         }
         else {
-            return new Errores_1.default("SEMANTICO", "VARIABLE " + this.identificador + " NO EXISTE", this.fila, this.columna);
+            return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' NO EXISTE', this.fila, this.columna);
         }
     };
     return Identificador;
