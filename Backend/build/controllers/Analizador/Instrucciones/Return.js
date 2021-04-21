@@ -46,8 +46,10 @@ var Return = /** @class */ (function (_super) {
     }
     Return.prototype.interpretar = function (arbol, tabla) {
         var _a;
-        if (this.expresionReturn)
+        if (this.expresionReturn) {
             this.valor = (_a = this.expresionReturn) === null || _a === void 0 ? void 0 : _a.interpretar(arbol, tabla);
+            this.tipoDato = this.expresionReturn.tipoDato;
+        }
         return this;
     };
     return Return;

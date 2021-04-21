@@ -1,6 +1,6 @@
-import Arbol from "../Simbolos/Arbol";
-import tablaSimbolos from "../Simbolos/tablaSimbolos";
-import Tipo from "../Simbolos/Tipo";
+import Arbol from '../Simbolos/Arbol';
+import tablaSimbolos from '../Simbolos/tablaSimbolos';
+import Tipo from '../Simbolos/Tipo';
 
 export abstract class Instruccion {
   public tipoDato: Tipo;
@@ -13,4 +13,5 @@ export abstract class Instruccion {
   }
 
   abstract interpretar(arbol: Arbol, tabla: tablaSimbolos): any;
+  //abstract getNodo():any;
 }

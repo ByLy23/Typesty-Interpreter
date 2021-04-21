@@ -82,3 +82,17 @@ new Incremento.default(identificador, valor, fila, columna);
 const condFor = require('./Instrucciones/Ciclicas/condFor');
 
 new condFor.default(declasi, cond, act, inst, fila, col);
+
+const metodos = require('./Instrucciones/Metodos');
+
+new metodos.default(tipoDatos, fila, col, id, par, inst);
+
+const llamadas = require('./Instrucciones/LlamadaFuncMetd');
+
+new llamadas.default(ide, par, fila, col);
+
+const ejecucion = require('./Instrucciones/Exec');
+
+const funciones = require('./Instrucciones/Funciones');
+
+new funciones.default(tipo, fila, col, id, par, ins);

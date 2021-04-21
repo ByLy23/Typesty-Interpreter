@@ -1,9 +1,36 @@
-import tablaSimbolos from "./tablaSimbolos";
-import { Instruccion } from "../Abastracto/Instruccion";
-import Errores from "../Excepciones/Errores";
+import tablaSimbolos from './tablaSimbolos';
+import { Instruccion } from '../Abastracto/Instruccion';
+import Errores from '../Excepciones/Errores';
+import Metodos from '../Instrucciones/Metodos';
+import Funciones from '../Instrucciones/Funciones';
 export default class Arbol {
   private instrucciones: Array<Instruccion>;
   private errores: Array<Errores>;
+  private funciones: Array<Instruccion>;
+
+  public getFuncion(identificador: String) {
+    for (let f of this.funciones) {
+      if (f instanceof Metodos) {
+        if (
+          identificador.toLowerCase() ==
+          (<Metodos>f).identificador.toLowerCase()
+        )
+          return f;
+      } else if (f instanceof Funciones) {
+        if (
+          identificador.toLowerCase() ==
+          (<Funciones>f).identificador.toLowerCase()
+        )
+          return f;
+      }
+    }
+  }
+  public getfunciones(): Array<Instruccion> {
+    return this.funciones;
+  }
+  public setfunciones(value: Array<Instruccion>) {
+    this.funciones = value;
+  }
   public geterrores(): Array<Errores> {
     return this.errores;
   }
@@ -37,8 +64,9 @@ export default class Arbol {
 
   constructor(instrucciones: Array<Instruccion>) {
     this.instrucciones = instrucciones;
-    this.consola = "";
+    this.consola = '';
     this.tablaGlobal = new tablaSimbolos();
     this.errores = new Array<Errores>();
+    this.funciones = new Array<Instruccion>();
   }
 }

@@ -21,33 +21,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Return_1 = __importDefault(require("./Return"));
-var Metodos = /** @class */ (function (_super) {
-    __extends(Metodos, _super);
-    function Metodos(tipo, fila, columna, identificador, parametros, instrucciones) {
+var Funciones = /** @class */ (function (_super) {
+    __extends(Funciones, _super);
+    function Funciones(tipo, fila, columna, identificador, parametros, instrucciones) {
         var _this = _super.call(this, tipo, fila, columna) || this;
         _this.identificador = identificador;
         _this.parametros = parametros;
         _this.instrucciones = instrucciones;
         return _this;
     }
-    Metodos.prototype.interpretar = function (arbol, tabla) {
+    Funciones.prototype.interpretar = function (arbol, tabla) {
         for (var i = 0; i < this.instrucciones.length; i++) {
             var val = this.instrucciones[i].interpretar(arbol, tabla);
             if (val instanceof Errores_1.default)
                 return val;
-            if (this.instrucciones[i] instanceof Return_1.default) {
-                if (val instanceof Return_1.default) {
-                    if (val.valor != null) {
-                        return new Errores_1.default('SEMANTICO', 'NO PUEDE DEVOLVER UN VALOR EN UN METODO', this.fila, this.columna);
-                    }
+            if (val instanceof Return_1.default) {
+                if (val.valor != null) {
+                    if (this.tipoDato.getTipo() == val.tipoDato.getTipo())
+                        return val.valor;
                     else
-                        break;
+                        return new Errores_1.default('SEMANTICO', 'TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
                 }
                 else
-                    return new Errores_1.default('SEMANTICO', 'NO PUEDE DEVOLVER UN VALOR EN UN METODO', this.fila, this.columna);
+                    return new Errores_1.default('SEMANTICO', 'DEBE DEVOLVER UN VALOR EN LA FUNCION', this.fila, this.columna);
             }
         }
     };
-    return Metodos;
+    return Funciones;
 }(Instruccion_1.Instruccion));
-exports.default = Metodos;
+exports.default = Funciones;

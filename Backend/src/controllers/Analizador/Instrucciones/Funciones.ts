@@ -6,7 +6,7 @@ import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo from '../Simbolos/Tipo';
 import Return from './Return';
 
-export default class Metodos extends Instruccion {
+export default class Funciones extends Instruccion {
   public identificador: String;
   public parametros: any;
   private instrucciones: Instruccion[];
@@ -27,20 +27,21 @@ export default class Metodos extends Instruccion {
     for (let i = 0; i < this.instrucciones.length; i++) {
       let val = this.instrucciones[i].interpretar(arbol, tabla);
       if (val instanceof Errores) return val;
-      if (this.instrucciones[i] instanceof Return) {
-        if (val instanceof Return) {
-          if (val.valor != null) {
+      if (val instanceof Return) {
+        if (val.valor != null) {
+          if (this.tipoDato.getTipo() == val.tipoDato.getTipo())
+            return val.valor;
+          else
             return new Errores(
               'SEMANTICO',
-              'NO PUEDE DEVOLVER UN VALOR EN UN METODO',
+              'TIPOS DE DATOS DIFERENTES',
               this.fila,
               this.columna
             );
-          } else break;
         } else
           return new Errores(
             'SEMANTICO',
-            'NO PUEDE DEVOLVER UN VALOR EN UN METODO',
+            'DEBE DEVOLVER UN VALOR EN LA FUNCION',
             this.fila,
             this.columna
           );
