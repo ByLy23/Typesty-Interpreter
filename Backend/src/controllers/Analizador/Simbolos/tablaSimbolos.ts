@@ -1,5 +1,5 @@
-import Simbolo from "./Simbolo";
-import Tipo, { tipoDato } from "./Tipo";
+import Simbolo from './Simbolo';
+import Tipo, { tipoDato } from './Tipo';
 
 export default class tablaSimbolos {
   private tablaAnterior: tablaSimbolos | any;
@@ -45,3 +45,4 @@ export default class tablaSimbolos {
     return null;
   }
 }
+//ARREGLO DE SOLO ID DE METODOS

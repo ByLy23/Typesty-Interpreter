@@ -61,3 +61,4 @@ var tablaSimbolos = /** @class */ (function () {
     return tablaSimbolos;
 }());
 exports.default = tablaSimbolos;
+//ARREGLO DE SOLO ID DE METODOS

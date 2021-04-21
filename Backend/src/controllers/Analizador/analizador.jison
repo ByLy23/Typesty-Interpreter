@@ -28,6 +28,10 @@ const condCase= require("./Instrucciones/Condicionales/condSwitchCase");
 const Incremento= require("./Instrucciones/Incremento");
 const Decremento= require("./Instrucciones/Decremento");
 const condFor= require("./Instrucciones/Ciclicas/condFor");
+const metodos= require("./Instrucciones/Metodos");
+const llamadas= require("./Instrucciones/LlamadaFuncMetd");
+const ejecucion= require("./Instrucciones/Exec");
+const funciones= require("./Instrucciones/Funciones");
 %}
 //definicion lexica
 %lex 
@@ -60,8 +64,11 @@ const condFor= require("./Instrucciones/Ciclicas/condFor");
 "case"          return 'RESCASE';
 "default"       return 'RESDEFAULT';
 "for"           return 'RESFOR';
+"void"          return 'RESVOID';
+"exec"          return 'RESEXEC';
 //simbolos
 "{"             return 'LLAVEABRE';
+","             return 'COMA';
 "}"             return 'LLAVECIERRA';
 "||"            return 'OR';
 "&&"            return 'AND';
@@ -201,19 +208,23 @@ INSTRUCCIONES: INSTRUCCIONES INSTRUCCION     {if($2!=false)$1.push($2);$$=$1;}
 
 INSTRUCCION: 
     IMPRIMIR                            {$$=$1;}
-    |DECLARACION   PTCOMA                     {$$=$1;}
-    |ASIGNACION    PTCOMA                     {$$=$1;}
+    |DECLARACION   PTCOMA               {$$=$1;}
+    |ASIGNACION    PTCOMA               {$$=$1;}
     |CONDICIONIF                        {$$=$1;}
     |CONDICIONWHILE                     {$$=$1;}
     |CONDICIONDOWHILE                   {$$=$1;}
     |IFTERNARIO                         {$$=$1;}
     |CONDBREAK                          {$$=$1;}
     |CODCONTINUE                        {$$=$1;}
-    |CONDRETURN                         {$$=$1;}
+    |CONDRETURN PTCOMA                         {$$=$1;}
     |CONDSWITCH                         {$$=$1;}
     |CONDINCREMENTO  PTCOMA             {$$=$1;}
     |CONDECREMENTO PTCOMA               {$$=$1;}
     |CONDFOR                            {$$=$1;}
+    |METODOS                            {$$=$1;}
+    |LLAMADA  PTCOMA                    {$$=$1;}
+    |EJECUTAR PTCOMA                    {$$=$1;}
+    |FUNCIONES                          {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -266,6 +277,8 @@ EXPRESION:
     |IDENTIFICADOR              {$$=new identificador.default($1,@1.first_line,@1.first_column);}         
     |CONDINCREMENTO             {$$=$1;}
     |CONDECREMENTO              {$$=$1;}
+    |LLAMADA                    {$$=$1;}
+ 
     ;
 CONDICIONIF:
     RESIF PARABRE EXPRESION /*COND1*/PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA                                                         {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,undefined);}
@@ -288,8 +301,8 @@ CODCONTINUE:
     RESCONTINUE PTCOMA                                                  {$$=new condContinue.default(@1.first_line,@1.first_column); }
     ;
 CONDRETURN:
-    RESRETURN PTCOMA                                                    {$$=new condReturn.default(@1.first_line,@1.first_column); }
-    |RESRETURN EXPRESION PTCOMA                                         {$$=new condReturn.default(@1.first_line,@1.first_column,$2); }
+    RESRETURN                                                     {$$=new condReturn.default(@1.first_line,@1.first_column); }
+    |RESRETURN EXPRESION                                          {$$=new condReturn.default(@1.first_line,@1.first_column,$2); }
     ;
 CONDSWITCH:
     RESSWITCH PARABRE EXPRESION PARCIERRA LLAVEABRE LISTACASOS DEFECTO LLAVECIERRA    {$$=new condSwitch.default(@1.first_line,@1.first_column,$3,$6,$7);}
@@ -323,6 +336,30 @@ ACTUALIZACION:
     CONDINCREMENTO {$$=$1;}
     |CONDECREMENTO {$$=$1;}
     |ASIGNACION    {$$=$1;}
+    ;
+METODOS:
+    RESVOID IDENTIFICADOR PARABRE PARAMETROS PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new metodos.default(new Tipo.default(Tipo.tipoDato.VOID),@1.first_line,@1.first_column,$2,$4,$7);}
+    |RESVOID IDENTIFICADOR PARABRE PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA           {$$=new metodos.default(new Tipo.default(Tipo.tipoDato.VOID),@1.first_line,@1.first_column,$2,[],$6);}
+    ;
+PARAMETROS:
+    PARAMETROS COMA TIPODATO IDENTIFICADOR    {$1.push({tipato:$3,identificador:$4});$$=$1;} 
+    |TIPODATO IDENTIFICADOR                   {$$=[{tipato:$1,identificador:$2}];} 
+    ;
+LLAMADA:
+    IDENTIFICADOR PARABRE PARLLAMADA PARCIERRA  {$$=new llamadas.default($1,$3,@1.first_line,@1.first_column);}
+    |IDENTIFICADOR PARABRE PARCIERRA            {$$=new llamadas.default($1,[],@1.first_line,@1.first_column);}
+    ;
+PARLLAMADA:
+    PARLLAMADA COMA EXPRESION               {$1.push($3);$$=$1;} 
+    |EXPRESION                               {$$=[$1];}
+    ;
+EJECUTAR:
+    RESEXEC IDENTIFICADOR PARABRE PARLLAMADA PARCIERRA  {$$=new ejecucion.default($2,$4,@1.first_line,@1.first_column);}
+    |RESEXEC IDENTIFICADOR PARABRE PARCIERRA            {$$=new ejecucion.default($2,[],@1.first_line,@1.first_column);}                        
+    ;
+FUNCIONES:
+    TIPODATO IDENTIFICADOR PARABRE PARAMETROS PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,$4,$7);}
+    |TIPODATO IDENTIFICADOR PARABRE PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA           {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,[],$6);}
     ;
     /*
     |TIPODATO

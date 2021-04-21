@@ -5,14 +5,16 @@ import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Return extends Instruccion {
   private expresionReturn?: Instruccion;
-  private valor = null;
+  public valor = null;
   constructor(fila: Number, columna: Number, expresion?: Instruccion) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.expresionReturn = expresion;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
-    if (this.expresionReturn)
+    if (this.expresionReturn) {
       this.valor = this.expresionReturn?.interpretar(arbol, tabla);
+      this.tipoDato = this.expresionReturn.tipoDato;
+    }
     return this;
   }
 }
