@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.indexController = exports.listaErrores = void 0;
+exports.indexController = exports.listaMetodos = exports.listaErrores = void 0;
 var Errores_1 = __importDefault(require("./Analizador/Excepciones/Errores"));
 var Arbol_1 = __importDefault(require("./Analizador/Simbolos/Arbol"));
 var tablaSimbolos_1 = __importDefault(require("./Analizador/Simbolos/tablaSimbolos"));
@@ -13,11 +13,12 @@ var IndexController = /** @class */ (function () {
     }
     IndexController.prototype.index = function (req, res) {
         //res.send('Mensaje');
-        res.json({ text: "Hola bbsitas" });
+        res.json({ text: 'Hola bbsitas' });
     };
     IndexController.prototype.interpretar = function (req, res) {
         exports.listaErrores = new Array();
-        var parser = require("./Analizador/analizador");
+        exports.listaMetodos = new Array();
+        var parser = require('./Analizador/analizador');
         var entrada = req.body.entrada;
         try {
             var ast = new Arbol_1.default(parser.parse(entrada));

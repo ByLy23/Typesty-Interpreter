@@ -28,6 +28,7 @@ const condCase= require("./Instrucciones/Condicionales/condSwitchCase");
 const Incremento= require("./Instrucciones/Incremento");
 const Decremento= require("./Instrucciones/Decremento");
 const condFor= require("./Instrucciones/Ciclicas/condFor");
+const metodos= require("./Instrucciones/Metodos");
 %}
 //definicion lexica
 %lex 
@@ -60,8 +61,10 @@ const condFor= require("./Instrucciones/Ciclicas/condFor");
 "case"          return 'RESCASE';
 "default"       return 'RESDEFAULT';
 "for"           return 'RESFOR';
+"void"          return 'RESVOID';
 //simbolos
 "{"             return 'LLAVEABRE';
+","             return 'COMA';
 "}"             return 'LLAVECIERRA';
 "||"            return 'OR';
 "&&"            return 'AND';
@@ -214,6 +217,8 @@ INSTRUCCION:
     |CONDINCREMENTO  PTCOMA             {$$=$1;}
     |CONDECREMENTO PTCOMA               {$$=$1;}
     |CONDFOR                            {$$=$1;}
+    |METODOS
+    //|LLAMADA
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -266,6 +271,7 @@ EXPRESION:
     |IDENTIFICADOR              {$$=new identificador.default($1,@1.first_line,@1.first_column);}         
     |CONDINCREMENTO             {$$=$1;}
     |CONDECREMENTO              {$$=$1;}
+ 
     ;
 CONDICIONIF:
     RESIF PARABRE EXPRESION /*COND1*/PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA                                                         {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,undefined);}
@@ -323,6 +329,14 @@ ACTUALIZACION:
     CONDINCREMENTO {$$=$1;}
     |CONDECREMENTO {$$=$1;}
     |ASIGNACION    {$$=$1;}
+    ;
+METODOS:
+    RESVOID IDENTIFICADOR PARABRE PARAMETROS PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new metodos.default(new Tipo.default(Tipo.tipoDato.VOID),@1.first_line,@1.first_column,$2,$4,$7);}
+    |RESVOID IDENTIFICADOR PARABRE PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA           {$$=new metodos.default(new Tipo.default(Tipo.tipoDato.VOID),@1.first_line,@1.first_column,$2,undefined,$6);}
+    ;
+PARAMETROS:
+    PARAMETROS COMA TIPODATO IDENTIFICADOR    {$1.push({tipoDato:$3,identificador:$4});$$=$1;} 
+    |TIPODATO IDENTIFICADOR                   {$$=[{tipoDato:$1,identificador:$2}];} 
     ;
     /*
     |TIPODATO

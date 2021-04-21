@@ -24,4 +24,5 @@ var tipoDato;
     tipoDato[tipoDato["BOOLEANO"] = 2] = "BOOLEANO";
     tipoDato[tipoDato["CARACTER"] = 3] = "CARACTER";
     tipoDato[tipoDato["CADENA"] = 4] = "CADENA";
+    tipoDato[tipoDato["VOID"] = 5] = "VOID";
 })(tipoDato = exports.tipoDato || (exports.tipoDato = {}));

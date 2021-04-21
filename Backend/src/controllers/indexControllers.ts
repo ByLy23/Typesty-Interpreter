@@ -1,18 +1,21 @@
-import { Request, Response } from "express";
-import Errores from "./Analizador/Excepciones/Errores";
-import Arbol from "./Analizador/Simbolos/Arbol";
-import tablaSimbolos from "./Analizador/Simbolos/tablaSimbolos";
+import { Request, Response } from 'express';
+import Errores from './Analizador/Excepciones/Errores';
+import Metodos from './Analizador/Instrucciones/Metodos';
+import Arbol from './Analizador/Simbolos/Arbol';
+import tablaSimbolos from './Analizador/Simbolos/tablaSimbolos';
 
 export let listaErrores: Array<Errores>;
+export let listaMetodos: Array<String>;
 //tablas arboles y excepcciones
 class IndexController {
   public index(req: Request, res: Response) {
     //res.send('Mensaje');
-    res.json({ text: "Hola bbsitas" });
+    res.json({ text: 'Hola bbsitas' });
   }
   public interpretar(req: Request, res: Response) {
     listaErrores = new Array<Errores>();
-    let parser = require("./Analizador/analizador");
+    listaMetodos = new Array<String>();
+    let parser = require('./Analizador/analizador');
     const { entrada } = req.body;
     try {
       let ast = new Arbol(parser.parse(entrada));

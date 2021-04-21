@@ -20,4 +20,5 @@ export enum tipoDato {
   BOOLEANO,
   CARACTER,
   CADENA,
+  VOID,
 }
