@@ -6,17 +6,16 @@ import { InicioComponent } from './paginas/inicio/inicio.component';
 import { TablaSimbolosComponent } from './paginas/tabla-simbolos/tabla-simbolos.component';
 
 const routes: Routes = [
-  {path: 'errores',component: ErroresComponent},
-  {path: 'ast',component: ArbolASTComponent},
-  {path: 'inicio',component: InicioComponent},
-  {path: 'simbolos',component: TablaSimbolosComponent},
-  {path: '', component: InicioComponent},
-  {path: '**', redirectTo:''}
+  { path: 'errores', component: ErroresComponent },
+  { path: 'ast', component: ArbolASTComponent },
+  { path: 'inicio', component: InicioComponent },
+  { path: 'simbolos', component: TablaSimbolosComponent },
+  { path: '', component: InicioComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class AppRoutingModule { }
+export class AppRoutingModule {}
