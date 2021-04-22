@@ -94,9 +94,9 @@ const funciones= require("./Instrucciones/Funciones");
 //expresiones regulares
 
 //comentario simple
-//"\/\/" [^\r\n]* [^\r\n]     {}
+"//".*     {}
 //comentario multi
-//"/""*" [^/] ~"*""/"       {}
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]       {}
 //espacios en blanco
 //cadena
 \"[^\"]*\"             { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
