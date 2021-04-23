@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/mode/markdown/markdown';
+
 import { InicioService } from 'src/app/servicios/inicio.service';
 
 @Component({

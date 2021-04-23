@@ -18,7 +18,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ContenidoInicioComponent } from './componentes/contenido-inicio/contenido-inicio.component';
 import { MatInputModule } from '@angular/material/input';
-import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
 @NgModule({
   declarations: [
@@ -43,7 +42,6 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
     MatTabsModule,
     MatButtonToggleModule,
     MatInputModule,
-    CodemirrorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

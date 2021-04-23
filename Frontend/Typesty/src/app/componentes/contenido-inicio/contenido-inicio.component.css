@@ -1,5 +1,3 @@
-@import '~codemirror/lib/codemirror';
-@import '~codemirror/theme/material';
 mat-button-toggle-group {
   margin-left: 40%;
   margin-top: 20px;
