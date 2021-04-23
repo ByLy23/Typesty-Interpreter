@@ -21,6 +21,7 @@ class IndexController {
     let parser = require('./Analizador/analizador');
     const { entrada } = req.body;
     try {
+      console.log(entrada);
       let ast = new Arbol(parser.parse(entrada));
       var tabla = new tablaSimbolos();
       ast.settablaGlobal(tabla);

@@ -25,6 +25,7 @@ var IndexController = /** @class */ (function () {
         var parser = require('./Analizador/analizador');
         var entrada = req.body.entrada;
         try {
+            console.log(entrada);
             var ast = new Arbol_1.default(parser.parse(entrada));
             var tabla = new tablaSimbolos_1.default();
             ast.settablaGlobal(tabla);

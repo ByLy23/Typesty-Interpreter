@@ -15,7 +15,11 @@ import { MatListModule } from '@angular/material/list';
 import { SideBarComponent } from './componentes/side-bar/side-bar.component';
 import { TabsinicioComponent } from './componentes/tabsinicio/tabsinicio.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ContenidoInicioComponent } from './componentes/contenido-inicio/contenido-inicio.component';
+import { MatInputModule } from '@angular/material/input';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +41,9 @@ import { ContenidoInicioComponent } from './componentes/contenido-inicio/conteni
     MatSidenavModule,
     MatListModule,
     MatTabsModule,
+    MatButtonToggleModule,
+    MatInputModule,
+    CodemirrorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

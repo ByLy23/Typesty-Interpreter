@@ -40,12 +40,10 @@ const funciones= require("./Instrucciones/Funciones");
 %options case-insensitive
 //inicio analisis lexico
 %%
-
 [ \r\t]+ {}
-\n {}
-\s+ {}//espacios en blanco
-"//".*  //comentario simple
-[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/] //comentario multiple
+\n+ {}
+"//".* {}  //comentario simple
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/] {} //comentario multiple
 //reservadas
 "if"            return 'RESIF';
 "else"          return 'RESELSE';
@@ -93,10 +91,6 @@ const funciones= require("./Instrucciones/Funciones");
 ":"             return 'DOSPUNTOS';
 //expresiones regulares
 
-//comentario simple
-"//".*     {}
-//comentario multi
-[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]       {}
 //espacios en blanco
 //cadena
 \"[^\"]*\"             { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
