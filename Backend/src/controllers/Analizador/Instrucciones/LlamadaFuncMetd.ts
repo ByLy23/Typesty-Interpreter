@@ -63,6 +63,15 @@ export default class LlamadaFuncMetd extends Instruccion {
               );
             } else {
               variable.setvalor(newVal);
+              console.log(
+                `ID:${variable.getidentificador()} Tipo:Variable Linea:${
+                  this.fila
+                } Columna:${
+                  this.columna
+                } Valor:${newVal} Tipo:${this.tipoDato.getTipo()} Ambito:${
+                  this.identificador
+                }`
+              );
             }
           } else {
             return new Errores(
@@ -119,6 +128,17 @@ export default class LlamadaFuncMetd extends Instruccion {
               );
             } else {
               variable.setvalor(newVal);
+
+              console.log(
+                `ID:${variable.getidentificador()} Tipo:Variable Linea:${
+                  this.fila
+                } Columna:${
+                  this.columna
+                } Valor:${newVal} Tipo:${this.tipoDato.getTipo()} Ambito:${
+                  this.identificador
+                }`
+              );
+              //nueva variable
             }
           } else {
             return new Errores(

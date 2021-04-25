@@ -35,7 +35,12 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          }
+          } else
+            console.log(
+              `ID:${this.identificador} tipo:Variable Linea:${
+                this.fila
+              } Columna:${this.columna} Valor:0 Tipo:${this.tipo.getTipo()} `
+            );
           break;
         case tipoDato.DECIMAL:
           if (
@@ -49,7 +54,12 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          }
+          } else
+            console.log(
+              `ID:${this.identificador} tipo:Variable Linea:${
+                this.fila
+              } Columna:${this.columna} Valor:0.0 Tipo:${this.tipo.getTipo()}`
+            );
           break;
         case tipoDato.CARACTER:
           if (
@@ -63,7 +73,12 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          }
+          } else
+            console.log(
+              `ID:${this.identificador} tipo:Variable Linea:${
+                this.fila
+              } Columna:${this.columna} Valor:0 Tipo:${this.tipo.getTipo()}`
+            );
           break;
         case tipoDato.CADENA:
           if (
@@ -76,9 +91,12 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          } else {
-            //hacer declaracion de variables
-          }
+          } else
+            console.log(
+              `ID:${this.identificador} tipo:Variable Linea:${
+                this.fila
+              } Columna:${this.columna} Valor:${''} Tipo:${this.tipo.getTipo()}`
+            );
           break;
         case tipoDato.BOOLEANO:
           if (
@@ -92,7 +110,12 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          }
+          } else
+            console.log(
+              `ID:${this.identificador} tipo:Variable Linea:${
+                this.fila
+              } Columna:${this.columna} Valor:${true} Tipo:${this.tipo}`
+            );
           break;
       }
     } else {
@@ -114,6 +137,14 @@ export default class Declaracion extends Instruccion {
             'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE',
             this.fila,
             this.columna
+          );
+        } else {
+          console.log(
+            `ID:${this.identificador} tipo:Variable Linea:${
+              this.fila
+            } Columna:${
+              this.columna
+            } Valor:${val} Tipo:${this.tipo.getTipo()} Ambito:${tabla.getTabla()}`
           );
         }
       }

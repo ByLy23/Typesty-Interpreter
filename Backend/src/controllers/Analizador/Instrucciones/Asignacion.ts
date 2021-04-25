@@ -31,7 +31,13 @@ export default class Asignacion extends Instruccion {
         );
       } else {
         variable.setvalor(val);
-        //actualizar valor de la tabla y no crear otra equis de
+        console.log(
+          `ID:${this.identificador} Tipo:Variable Linea:${this.fila} Columna:${
+            this.columna
+          } Valor:${this.valor} Tipo:${this.tipoDato.getTipo()} `
+        );
+        //identificadorm,
+        //actualizar valor de la tabla y no crear otra equis des
       }
     } else {
       return new Errores(

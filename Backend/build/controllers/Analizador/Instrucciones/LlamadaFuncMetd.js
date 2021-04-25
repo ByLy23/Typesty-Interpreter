@@ -79,6 +79,7 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
                         }
                         else {
                             variable.setvalor(newVal);
+                            console.log("ID:" + variable.getidentificador() + " Tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + newVal + " Tipo:" + this.tipoDato.getTipo() + " Ambito:" + this.identificador);
                         }
                     }
                     else {
@@ -117,6 +118,8 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
                         }
                         else {
                             variable.setvalor(newVal);
+                            console.log("ID:" + variable.getidentificador() + " Tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + newVal + " Tipo:" + this.tipoDato.getTipo() + " Ambito:" + this.identificador);
+                            //nueva variable
                         }
                     }
                     else {

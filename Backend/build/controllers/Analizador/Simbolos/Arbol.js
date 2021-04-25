@@ -19,13 +19,17 @@ var Arbol = /** @class */ (function () {
             var f = _a[_i];
             if (f instanceof Metodos_1.default) {
                 if (identificador.toLowerCase() ==
-                    f.identificador.toLowerCase())
+                    f.identificador.toLowerCase()) {
+                    console.log("ID:" + f.identificador + " Tipo:Metodo Linea:" + f.fila + " Columna:" + f.columna + " Tipo:" + f.tipoDato.getTipo());
                     return f;
+                }
             }
             else if (f instanceof Funciones_1.default) {
                 if (identificador.toLowerCase() ==
-                    f.identificador.toLowerCase())
+                    f.identificador.toLowerCase()) {
+                    console.log("ID:" + f.identificador + " Tipo:Metodo Linea:" + f.fila + " Columna:" + f.columna + " Tipo:" + f.tipoDato.getTipo());
                     return f;
+                }
             }
         }
     };

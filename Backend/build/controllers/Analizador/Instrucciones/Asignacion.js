@@ -54,14 +54,17 @@ var Asignacion = /** @class */ (function (_super) {
         if (variable != null) {
             var val = this.valor.interpretar(arbol, tabla);
             if (variable.gettipo().getTipo() != this.valor.tipoDato.getTipo()) {
-                return new Errores_1.default("SEMANTICO", "VARIABLE " + this.identificador + " TIPOS DE DATOS DIFERENTES", this.fila, this.columna);
+                return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
             }
             else {
                 variable.setvalor(val);
+                console.log("ID:" + this.identificador + " Tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + this.valor + " Tipo:" + this.tipoDato.getTipo() + " ");
+                //identificadorm,
+                //actualizar valor de la tabla y no crear otra equis des
             }
         }
         else {
-            return new Errores_1.default("SEMANTICO", "VARIABLE " + this.identificador + " NO EXISTE", this.fila, this.columna);
+            return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' NO EXISTE', this.fila, this.columna);
         }
     };
     return Asignacion;

@@ -10,7 +10,6 @@ class IndexRoutes {
   config(): void {
     this.router.get('/', indexController.index);
     this.router.post('/interpretar', indexController.interpretar);
-    this.router.get('/obtenerTabla', indexController.generarTabla);
   }
 }
 const indexRoutes = new IndexRoutes();

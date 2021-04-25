@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.indexController = exports.listaErrores = void 0;
+exports.indexController = exports.listaSimbolos = exports.listaErrores = void 0;
 var Errores_1 = __importDefault(require("./Analizador/Excepciones/Errores"));
 var Asignacion_1 = __importDefault(require("./Analizador/Instrucciones/Asignacion"));
 var Declaracion_1 = __importDefault(require("./Analizador/Instrucciones/Declaracion"));
@@ -59,7 +59,6 @@ var IndexController = /** @class */ (function () {
                 }
             }
             arbolNuevo = ast;
-            console.log(ast.gettablaGlobal());
             res.send({
                 resultado: ast.getconsola(),
                 errores: exports.listaErrores,
@@ -70,18 +69,7 @@ var IndexController = /** @class */ (function () {
             res.json({ error: err, errores: exports.listaErrores });
         }
     };
-    IndexController.prototype.generarTabla = function (req, res) {
-        if (arbolNuevo != null) {
-            res.status(200).send({
-                arbol: Array.from(arbolNuevo.gettablaGlobal().getTabla().keys()),
-            });
-        }
-        else {
-            res.status(500).send({
-                arbol: 'NO SE PUDO CONECTAR',
-            });
-        }
-    };
+    IndexController.prototype.actualizarTabla = function (identificador) { };
     return IndexController;
 }());
 exports.indexController = new IndexController();

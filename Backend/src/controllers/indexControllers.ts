@@ -61,7 +61,6 @@ class IndexController {
         }
       }
       arbolNuevo = ast;
-      console.log(ast.gettablaGlobal());
       res.send({
         resultado: ast.getconsola(),
         errores: listaErrores,
@@ -71,16 +70,6 @@ class IndexController {
       res.json({ error: err, errores: listaErrores });
     }
   }
-  public generarTabla(req: Request, res: Response) {
-    if (arbolNuevo != null) {
-      res.status(200).send({
-        arbol: Array.from(arbolNuevo.gettablaGlobal().getTabla().keys()),
-      });
-    } else {
-      res.status(500).send({
-        arbol: 'NO SE PUDO CONECTAR',
-      });
-    }
-  }
+  public actualizarTabla(identificador: String) {}
 }
 export const indexController = new IndexController();

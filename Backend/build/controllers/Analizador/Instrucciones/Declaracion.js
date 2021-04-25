@@ -36,42 +36,55 @@ var Declaracion = /** @class */ (function (_super) {
             switch (this.tipo.getTipo()) {
                 case Tipo_1.tipoDato.ENTERO:
                     if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, 0)) ==
-                        "La variable existe actualmente") {
-                        return new Errores_1.default("SEMANTICO", "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE", this.fila, this.columna);
+                        'La variable existe actualmente') {
+                        return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
+                    else
+                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:0 Tipo:" + this.tipo.getTipo() + " ");
                     break;
                 case Tipo_1.tipoDato.DECIMAL:
-                    if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, 0.0)) == "La variable existe actualmente") {
-                        return new Errores_1.default("SEMANTICO", "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE", this.fila, this.columna);
+                    if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, 0.0)) == 'La variable existe actualmente') {
+                        return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
+                    else
+                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:0.0 Tipo:" + this.tipo.getTipo());
                     break;
                 case Tipo_1.tipoDato.CARACTER:
-                    if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, "\u0000")) == "La variable existe actualmente") {
-                        return new Errores_1.default("SEMANTICO", "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE", this.fila, this.columna);
+                    if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, '\u0000')) == 'La variable existe actualmente') {
+                        return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
+                    else
+                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:0 Tipo:" + this.tipo.getTipo());
                     break;
                 case Tipo_1.tipoDato.CADENA:
-                    if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, "")) ==
-                        "La variable existe actualmente") {
-                        return new Errores_1.default("SEMANTICO", "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE", this.fila, this.columna);
+                    if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, '')) ==
+                        'La variable existe actualmente') {
+                        return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
+                    else
+                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + '' + " Tipo:" + this.tipo.getTipo());
                     break;
                 case Tipo_1.tipoDato.BOOLEANO:
-                    if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, true)) == "La variable existe actualmente") {
-                        return new Errores_1.default("SEMANTICO", "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE", this.fila, this.columna);
+                    if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, true)) == 'La variable existe actualmente') {
+                        return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
+                    else
+                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + true + " Tipo:" + this.tipo);
                     break;
             }
         }
         else {
             var val = this.valor.interpretar(arbol, tabla);
             if (this.tipo.getTipo() != this.valor.tipoDato.getTipo()) {
-                return new Errores_1.default("SEMANTICO", "TIPO DE VALOR DIFERENTE", this.fila, this.columna);
+                return new Errores_1.default('SEMANTICO', 'TIPO DE VALOR DIFERENTE', this.fila, this.columna);
             }
             else {
                 if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, val)) ==
-                    "La variable existe actualmente") {
-                    return new Errores_1.default("SEMANTICO", "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE", this.fila, this.columna);
+                    'La variable existe actualmente') {
+                    return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
+                }
+                else {
+                    console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + val + " Tipo:" + this.tipo.getTipo() + " Ambito:" + tabla.getTabla());
                 }
             }
         }

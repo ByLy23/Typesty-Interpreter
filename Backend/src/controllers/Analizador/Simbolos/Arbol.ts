@@ -14,14 +14,26 @@ export default class Arbol {
         if (
           identificador.toLowerCase() ==
           (<Metodos>f).identificador.toLowerCase()
-        )
+        ) {
+          console.log(
+            `ID:${f.identificador} Tipo:Metodo Linea:${f.fila} Columna:${
+              f.columna
+            } Tipo:${f.tipoDato.getTipo()}`
+          );
           return f;
+        }
       } else if (f instanceof Funciones) {
         if (
           identificador.toLowerCase() ==
           (<Funciones>f).identificador.toLowerCase()
-        )
+        ) {
+          console.log(
+            `ID:${f.identificador} Tipo:Metodo Linea:${f.fila} Columna:${
+              f.columna
+            } Tipo:${f.tipoDato.getTipo()}`
+          );
           return f;
+        }
       }
     }
   }
