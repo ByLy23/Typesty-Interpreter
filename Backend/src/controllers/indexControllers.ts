@@ -4,12 +4,14 @@ import Asignacion from './Analizador/Instrucciones/Asignacion';
 import Declaracion from './Analizador/Instrucciones/Declaracion';
 import Exec from './Analizador/Instrucciones/Exec';
 import Funciones from './Analizador/Instrucciones/Funciones';
-import LlamadaFuncMetd from './Analizador/Instrucciones/LlamadaFuncMetd';
 import Metodos from './Analizador/Instrucciones/Metodos';
 import Arbol from './Analizador/Simbolos/Arbol';
 import tablaSimbolos from './Analizador/Simbolos/tablaSimbolos';
+import { reporteTabla } from './Reportes/reporteTabla';
 
 export let listaErrores: Array<Errores>;
+export let listaSimbolos: Array<reporteTabla>;
+let arbolNuevo: Arbol;
 //tablas arboles y excepcciones
 class IndexController {
   public index(req: Request, res: Response) {
@@ -21,7 +23,6 @@ class IndexController {
     let parser = require('./Analizador/analizador');
     const { entrada } = req.body;
     try {
-      console.log(entrada);
       let ast = new Arbol(parser.parse(entrada));
       var tabla = new tablaSimbolos();
       ast.settablaGlobal(tabla);
@@ -59,9 +60,26 @@ class IndexController {
           ast.actualizaConsola((<Errores>error).returnError());
         }
       }
-      res.send({ resultado: ast.getconsola(), errores: listaErrores });
+      arbolNuevo = ast;
+      console.log(ast.gettablaGlobal());
+      res.send({
+        resultado: ast.getconsola(),
+        errores: listaErrores,
+        tabla: '',
+      });
     } catch (err) {
       res.json({ error: err, errores: listaErrores });
+    }
+  }
+  public generarTabla(req: Request, res: Response) {
+    if (arbolNuevo != null) {
+      res.status(200).send({
+        arbol: Array.from(arbolNuevo.gettablaGlobal().getTabla().keys()),
+      });
+    } else {
+      res.status(500).send({
+        arbol: 'NO SE PUDO CONECTAR',
+      });
     }
   }
 }

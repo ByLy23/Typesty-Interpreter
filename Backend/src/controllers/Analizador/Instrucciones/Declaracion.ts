@@ -1,9 +1,9 @@
-import { Instruccion } from "../Abastracto/Instruccion";
-import Errores from "../Excepciones/Errores";
-import Arbol from "../Simbolos/Arbol";
-import Simbolo from "../Simbolos/Simbolo";
-import tablaSimbolos from "../Simbolos/tablaSimbolos";
-import Tipo, { tipoDato } from "../Simbolos/Tipo";
+import { Instruccion } from '../Abastracto/Instruccion';
+import Errores from '../Excepciones/Errores';
+import Arbol from '../Simbolos/Arbol';
+import Simbolo from '../Simbolos/Simbolo';
+import tablaSimbolos from '../Simbolos/tablaSimbolos';
+import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Declaracion extends Instruccion {
   private tipo: Tipo;
@@ -27,11 +27,11 @@ export default class Declaracion extends Instruccion {
         case tipoDato.ENTERO:
           if (
             tabla.setVariable(new Simbolo(this.tipo, this.identificador, 0)) ==
-            "La variable existe actualmente"
+            'La variable existe actualmente'
           ) {
             return new Errores(
-              "SEMANTICO",
-              "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE",
+              'SEMANTICO',
+              'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE',
               this.fila,
               this.columna
             );
@@ -41,11 +41,11 @@ export default class Declaracion extends Instruccion {
           if (
             tabla.setVariable(
               new Simbolo(this.tipo, this.identificador, 0.0)
-            ) == "La variable existe actualmente"
+            ) == 'La variable existe actualmente'
           ) {
             return new Errores(
-              "SEMANTICO",
-              "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE",
+              'SEMANTICO',
+              'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE',
               this.fila,
               this.columna
             );
@@ -54,12 +54,12 @@ export default class Declaracion extends Instruccion {
         case tipoDato.CARACTER:
           if (
             tabla.setVariable(
-              new Simbolo(this.tipo, this.identificador, "\u0000")
-            ) == "La variable existe actualmente"
+              new Simbolo(this.tipo, this.identificador, '\u0000')
+            ) == 'La variable existe actualmente'
           ) {
             return new Errores(
-              "SEMANTICO",
-              "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE",
+              'SEMANTICO',
+              'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE',
               this.fila,
               this.columna
             );
@@ -67,26 +67,28 @@ export default class Declaracion extends Instruccion {
           break;
         case tipoDato.CADENA:
           if (
-            tabla.setVariable(new Simbolo(this.tipo, this.identificador, "")) ==
-            "La variable existe actualmente"
+            tabla.setVariable(new Simbolo(this.tipo, this.identificador, '')) ==
+            'La variable existe actualmente'
           ) {
             return new Errores(
-              "SEMANTICO",
-              "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE",
+              'SEMANTICO',
+              'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE',
               this.fila,
               this.columna
             );
+          } else {
+            //hacer declaracion de variables
           }
           break;
         case tipoDato.BOOLEANO:
           if (
             tabla.setVariable(
               new Simbolo(this.tipo, this.identificador, true)
-            ) == "La variable existe actualmente"
+            ) == 'La variable existe actualmente'
           ) {
             return new Errores(
-              "SEMANTICO",
-              "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE",
+              'SEMANTICO',
+              'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE',
               this.fila,
               this.columna
             );
@@ -97,19 +99,19 @@ export default class Declaracion extends Instruccion {
       let val = this.valor.interpretar(arbol, tabla);
       if (this.tipo.getTipo() != this.valor.tipoDato.getTipo()) {
         return new Errores(
-          "SEMANTICO",
-          "TIPO DE VALOR DIFERENTE",
+          'SEMANTICO',
+          'TIPO DE VALOR DIFERENTE',
           this.fila,
           this.columna
         );
       } else {
         if (
           tabla.setVariable(new Simbolo(this.tipo, this.identificador, val)) ==
-          "La variable existe actualmente"
+          'La variable existe actualmente'
         ) {
           return new Errores(
-            "SEMANTICO",
-            "LA VARIABLE " + this.identificador + " EXISTE ACTUALMENTE",
+            'SEMANTICO',
+            'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE',
             this.fila,
             this.columna
           );

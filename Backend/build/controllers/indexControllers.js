@@ -12,6 +12,7 @@ var Funciones_1 = __importDefault(require("./Analizador/Instrucciones/Funciones"
 var Metodos_1 = __importDefault(require("./Analizador/Instrucciones/Metodos"));
 var Arbol_1 = __importDefault(require("./Analizador/Simbolos/Arbol"));
 var tablaSimbolos_1 = __importDefault(require("./Analizador/Simbolos/tablaSimbolos"));
+var arbolNuevo;
 //tablas arboles y excepcciones
 var IndexController = /** @class */ (function () {
     function IndexController() {
@@ -25,7 +26,6 @@ var IndexController = /** @class */ (function () {
         var parser = require('./Analizador/analizador');
         var entrada = req.body.entrada;
         try {
-            console.log(entrada);
             var ast = new Arbol_1.default(parser.parse(entrada));
             var tabla = new tablaSimbolos_1.default();
             ast.settablaGlobal(tabla);
@@ -58,10 +58,28 @@ var IndexController = /** @class */ (function () {
                     ast.actualizaConsola(error.returnError());
                 }
             }
-            res.send({ resultado: ast.getconsola(), errores: exports.listaErrores });
+            arbolNuevo = ast;
+            console.log(ast.gettablaGlobal());
+            res.send({
+                resultado: ast.getconsola(),
+                errores: exports.listaErrores,
+                tabla: '',
+            });
         }
         catch (err) {
             res.json({ error: err, errores: exports.listaErrores });
+        }
+    };
+    IndexController.prototype.generarTabla = function (req, res) {
+        if (arbolNuevo != null) {
+            res.status(200).send({
+                arbol: Array.from(arbolNuevo.gettablaGlobal().getTabla().keys()),
+            });
+        }
+        else {
+            res.status(500).send({
+                arbol: 'NO SE PUDO CONECTAR',
+            });
         }
     };
     return IndexController;

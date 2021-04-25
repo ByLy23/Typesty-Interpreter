@@ -1,8 +1,8 @@
-import { Instruccion } from "../Abastracto/Instruccion";
-import Errores from "../Excepciones/Errores";
-import Arbol from "../Simbolos/Arbol";
-import tablaSimbolos from "../Simbolos/tablaSimbolos";
-import Tipo, { tipoDato } from "../Simbolos/Tipo";
+import { Instruccion } from '../Abastracto/Instruccion';
+import Errores from '../Excepciones/Errores';
+import Arbol from '../Simbolos/Arbol';
+import tablaSimbolos from '../Simbolos/tablaSimbolos';
+import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Asignacion extends Instruccion {
   private identificador: String;
@@ -24,18 +24,19 @@ export default class Asignacion extends Instruccion {
       let val = this.valor.interpretar(arbol, tabla);
       if (variable.gettipo().getTipo() != this.valor.tipoDato.getTipo()) {
         return new Errores(
-          "SEMANTICO",
-          "VARIABLE " + this.identificador + " TIPOS DE DATOS DIFERENTES",
+          'SEMANTICO',
+          'VARIABLE ' + this.identificador + ' TIPOS DE DATOS DIFERENTES',
           this.fila,
           this.columna
         );
       } else {
         variable.setvalor(val);
+        //actualizar valor de la tabla y no crear otra equis de
       }
     } else {
       return new Errores(
-        "SEMANTICO",
-        "VARIABLE " + this.identificador + " NO EXISTE",
+        'SEMANTICO',
+        'VARIABLE ' + this.identificador + ' NO EXISTE',
         this.fila,
         this.columna
       );
