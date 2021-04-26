@@ -5,10 +5,12 @@ export default class tablaSimbolos {
   private tablaAnterior: tablaSimbolos | any;
   private tipoDato: Tipo;
   private tablaActual: Map<String, Simbolo>;
+  private nombreDato: String;
   constructor(anterior?: tablaSimbolos) {
     this.tablaAnterior = anterior;
     this.tablaActual = new Map<String, Simbolo>();
     this.tipoDato = new Tipo(tipoDato.ENTERO);
+    this.nombreDato = '';
   }
   public getAnterior() {
     return this.tablaAnterior;
@@ -43,6 +45,12 @@ export default class tablaSimbolos {
       }
     }
     return null;
+  }
+  public getNombre(): String {
+    return this.nombreDato;
+  }
+  public setNombre(nombre: String) {
+    this.nombreDato = nombre;
   }
 }
 //ARREGLO DE SOLO ID DE METODOS

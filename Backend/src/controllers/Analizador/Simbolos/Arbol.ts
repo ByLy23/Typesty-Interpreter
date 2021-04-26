@@ -3,6 +3,8 @@ import { Instruccion } from '../Abastracto/Instruccion';
 import Errores from '../Excepciones/Errores';
 import Metodos from '../Instrucciones/Metodos';
 import Funciones from '../Instrucciones/Funciones';
+import { reporteTabla } from '../../Reportes/reporteTabla';
+import { listaSimbolos } from '../../indexControllers';
 export default class Arbol {
   private instrucciones: Array<Instruccion>;
   private errores: Array<Errores>;
@@ -15,11 +17,16 @@ export default class Arbol {
           identificador.toLowerCase() ==
           (<Metodos>f).identificador.toLowerCase()
         ) {
-          console.log(
-            `ID:${f.identificador} Tipo:Metodo Linea:${f.fila} Columna:${
-              f.columna
-            } Tipo:${f.tipoDato.getTipo()}`
+          let nuevoSimbolo = new reporteTabla(
+            f.identificador,
+            '',
+            'Metodo',
+            f.tipoDato.getTipo().toString(),
+            '',
+            f.fila.toString(),
+            f.columna.toString()
           );
+          listaSimbolos.push(nuevoSimbolo);
           return f;
         }
       } else if (f instanceof Funciones) {
@@ -27,11 +34,16 @@ export default class Arbol {
           identificador.toLowerCase() ==
           (<Funciones>f).identificador.toLowerCase()
         ) {
-          console.log(
-            `ID:${f.identificador} Tipo:Metodo Linea:${f.fila} Columna:${
-              f.columna
-            } Tipo:${f.tipoDato.getTipo()}`
+          let nuevoSimbolo = new reporteTabla(
+            f.identificador,
+            '',
+            'Funcion',
+            f.tipoDato.getTipo().toString(),
+            '',
+            f.fila.toString(),
+            f.columna.toString()
           );
+          listaSimbolos.push(nuevoSimbolo);
           return f;
         }
       }

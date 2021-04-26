@@ -1,3 +1,5 @@
+import { listaSimbolos } from '../../indexControllers';
+import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
@@ -63,15 +65,17 @@ export default class LlamadaFuncMetd extends Instruccion {
               );
             } else {
               variable.setvalor(newVal);
-              console.log(
-                `ID:${variable.getidentificador()} Tipo:Variable Linea:${
-                  this.fila
-                } Columna:${
-                  this.columna
-                } Valor:${newVal} Tipo:${this.tipoDato.getTipo()} Ambito:${
-                  this.identificador
-                }`
+              nuevaTabla.setNombre(metodo.identificador);
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                '',
+                'Metodo',
+                'Void',
+                '',
+                this.fila.toString(),
+                this.columna.toString()
               );
+              listaSimbolos.push(nuevoSimbolo);
             }
           } else {
             return new Errores(
@@ -128,16 +132,17 @@ export default class LlamadaFuncMetd extends Instruccion {
               );
             } else {
               variable.setvalor(newVal);
-
-              console.log(
-                `ID:${variable.getidentificador()} Tipo:Variable Linea:${
-                  this.fila
-                } Columna:${
-                  this.columna
-                } Valor:${newVal} Tipo:${this.tipoDato.getTipo()} Ambito:${
-                  this.identificador
-                }`
+              nuevaTabla.setNombre(metodo.identificador);
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                variable.getvalor(),
+                'Funcion',
+                this.tipoDato.getTipo().toString(),
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
               );
+              listaSimbolos.push(nuevoSimbolo);
               //nueva variable
             }
           } else {

@@ -505,7 +505,7 @@ export default class Aritmetica extends Instruccion {
         op2 //OPERADOR 2
       ) {
         case tipoDato.ENTERO: //retorna entero
-          this.tipoDato = new Tipo(tipoDato.ENTERO);
+          this.tipoDato = new Tipo(tipoDato.DECIMAL);
           return der != 0
             ? parseInt(izq) / parseInt(der)
             : 'NO SE PUEDE DIVIDIR SOBRE CERO';
@@ -515,7 +515,7 @@ export default class Aritmetica extends Instruccion {
             ? parseFloat(izq) / parseFloat(der)
             : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         case tipoDato.CARACTER: //retorna entero
-          this.tipoDato = new Tipo(tipoDato.ENTERO);
+          this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da = der + '';
           var res = da.charCodeAt(0);
           return res != 0
@@ -585,7 +585,7 @@ export default class Aritmetica extends Instruccion {
         op2 //OPERADOR 2
       ) {
         case tipoDato.ENTERO: //retorna entero
-          this.tipoDato = new Tipo(tipoDato.ENTERO);
+          this.tipoDato = new Tipo(tipoDato.DECIMAL);
           var da1 = izq + '';
           var res1 = da1.charCodeAt(0);
           return der != 0

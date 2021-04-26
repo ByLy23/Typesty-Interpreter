@@ -37,6 +37,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var indexControllers_1 = require("../../indexControllers");
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
@@ -58,7 +59,7 @@ var Asignacion = /** @class */ (function (_super) {
             }
             else {
                 variable.setvalor(val);
-                console.log("ID:" + this.identificador + " Tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + this.valor + " Tipo:" + this.tipoDato.getTipo() + " ");
+                indexControllers_1.indexController.actualizarTabla(this.identificador, variable.getvalor(), this.fila.toString(), this.columna.toString());
                 //identificadorm,
                 //actualizar valor de la tabla y no crear otra equis des
             }

@@ -1,3 +1,5 @@
+import { indexController, listaSimbolos } from '../../indexControllers';
+import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
@@ -5,10 +7,10 @@ import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Asignacion extends Instruccion {
-  private identificador: String;
+  private identificador: string;
   private valor: Instruccion;
   constructor(
-    identificador: String,
+    identificador: string,
     valor: Instruccion,
     fila: Number,
     columna: Number
@@ -31,10 +33,11 @@ export default class Asignacion extends Instruccion {
         );
       } else {
         variable.setvalor(val);
-        console.log(
-          `ID:${this.identificador} Tipo:Variable Linea:${this.fila} Columna:${
-            this.columna
-          } Valor:${this.valor} Tipo:${this.tipoDato.getTipo()} `
+        indexController.actualizarTabla(
+          this.identificador,
+          variable.getvalor(),
+          this.fila.toString(),
+          this.columna.toString()
         );
         //identificadorm,
         //actualizar valor de la tabla y no crear otra equis des

@@ -39,7 +39,7 @@ mat-button-toggle {
 }
 .consola {
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 100px;
   height: 250px;
   border-style: solid;
   width: 80%;
@@ -48,7 +48,7 @@ mat-button-toggle {
   color: #f9faf7;
   font-family: 'Courier New', 'Lucida Console', monospace;
   font-size: 20px;
-  resize: none;
+  resize: vertical;
   white-space: nowrap;
 }
 .consolaContainer {

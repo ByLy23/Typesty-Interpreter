@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tablaSimbolos_1 = __importDefault(require("./tablaSimbolos"));
 var Metodos_1 = __importDefault(require("../Instrucciones/Metodos"));
 var Funciones_1 = __importDefault(require("../Instrucciones/Funciones"));
+var reporteTabla_1 = require("../../Reportes/reporteTabla");
+var indexControllers_1 = require("../../indexControllers");
 var Arbol = /** @class */ (function () {
     function Arbol(instrucciones) {
         this.instrucciones = instrucciones;
@@ -20,14 +22,16 @@ var Arbol = /** @class */ (function () {
             if (f instanceof Metodos_1.default) {
                 if (identificador.toLowerCase() ==
                     f.identificador.toLowerCase()) {
-                    console.log("ID:" + f.identificador + " Tipo:Metodo Linea:" + f.fila + " Columna:" + f.columna + " Tipo:" + f.tipoDato.getTipo());
+                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'Metodo', f.tipoDato.getTipo().toString(), '', f.fila.toString(), f.columna.toString());
+                    indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                     return f;
                 }
             }
             else if (f instanceof Funciones_1.default) {
                 if (identificador.toLowerCase() ==
                     f.identificador.toLowerCase()) {
-                    console.log("ID:" + f.identificador + " Tipo:Metodo Linea:" + f.fila + " Columna:" + f.columna + " Tipo:" + f.tipoDato.getTipo());
+                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'Funcion', f.tipoDato.getTipo().toString(), '', f.fila.toString(), f.columna.toString());
+                    indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                     return f;
                 }
             }

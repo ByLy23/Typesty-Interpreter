@@ -474,7 +474,7 @@ var Aritmetica = /** @class */ (function (_super) {
             switch (op2 //OPERADOR 2
             ) {
                 case Tipo_1.tipoDato.ENTERO: //retorna entero
-                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
                     return der != 0
                         ? parseInt(izq) / parseInt(der)
                         : 'NO SE PUEDE DIVIDIR SOBRE CERO';
@@ -484,7 +484,7 @@ var Aritmetica = /** @class */ (function (_super) {
                         ? parseFloat(izq) / parseFloat(der)
                         : 'NO SE PUEDE DIVIDIR SOBRE CERO';
                 case Tipo_1.tipoDato.CARACTER: //retorna entero
-                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
                     var da = der + '';
                     var res = da.charCodeAt(0);
                     return res != 0
@@ -536,7 +536,7 @@ var Aritmetica = /** @class */ (function (_super) {
             switch (op2 //OPERADOR 2
             ) {
                 case Tipo_1.tipoDato.ENTERO: //retorna entero
-                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+                    this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
                     var da1 = izq + '';
                     var res1 = da1.charCodeAt(0);
                     return der != 0

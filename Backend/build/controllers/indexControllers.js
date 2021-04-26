@@ -23,6 +23,7 @@ var IndexController = /** @class */ (function () {
     };
     IndexController.prototype.interpretar = function (req, res) {
         exports.listaErrores = new Array();
+        exports.listaSimbolos = new Array();
         var parser = require('./Analizador/analizador');
         var entrada = req.body.entrada;
         try {
@@ -62,14 +63,26 @@ var IndexController = /** @class */ (function () {
             res.send({
                 resultado: ast.getconsola(),
                 errores: exports.listaErrores,
-                tabla: '',
+                tabla: exports.listaSimbolos,
             });
         }
         catch (err) {
+            console.error(err);
             res.json({ error: err, errores: exports.listaErrores });
         }
     };
-    IndexController.prototype.actualizarTabla = function (identificador) { };
+    IndexController.prototype.actualizarTabla = function (identificador, valor, linea, columna) {
+        for (var _i = 0, listaSimbolos_1 = exports.listaSimbolos; _i < listaSimbolos_1.length; _i++) {
+            var elemento = listaSimbolos_1[_i];
+            if (elemento.getIdentificador() == identificador) {
+                elemento.setValor(valor);
+                elemento.setLinea(linea);
+                elemento.setColumna(columna);
+                return true;
+            }
+        }
+        return false;
+    };
     return IndexController;
 }());
 exports.indexController = new IndexController();

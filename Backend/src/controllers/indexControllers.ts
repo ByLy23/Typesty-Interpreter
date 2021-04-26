@@ -20,6 +20,7 @@ class IndexController {
   }
   public interpretar(req: Request, res: Response) {
     listaErrores = new Array<Errores>();
+    listaSimbolos = new Array<reporteTabla>();
     let parser = require('./Analizador/analizador');
     const { entrada } = req.body;
     try {
@@ -64,12 +65,28 @@ class IndexController {
       res.send({
         resultado: ast.getconsola(),
         errores: listaErrores,
-        tabla: '',
+        tabla: listaSimbolos,
       });
     } catch (err) {
+      console.error(err);
       res.json({ error: err, errores: listaErrores });
     }
   }
-  public actualizarTabla(identificador: String) {}
+  public actualizarTabla(
+    identificador: string,
+    valor: string,
+    linea: string,
+    columna: string
+  ): boolean {
+    for (var elemento of listaSimbolos) {
+      if (elemento.getIdentificador() == identificador) {
+        elemento.setValor(valor);
+        elemento.setLinea(linea);
+        elemento.setColumna(columna);
+        return true;
+      }
+    }
+    return false;
+  }
 }
 export const indexController = new IndexController();

@@ -1,3 +1,5 @@
+import { indexController, listaSimbolos } from '../../indexControllers';
+import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
@@ -7,13 +9,13 @@ import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Declaracion extends Instruccion {
   private tipo: Tipo;
-  private identificador: String;
+  private identificador: string;
   private valor: Instruccion | undefined;
   constructor(
     tipo: Tipo,
     fila: Number,
     columna: Number,
-    id: String,
+    id: string,
     valor?: Instruccion
   ) {
     super(tipo, fila, columna);
@@ -35,12 +37,27 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          } else
-            console.log(
-              `ID:${this.identificador} tipo:Variable Linea:${
-                this.fila
-              } Columna:${this.columna} Valor:0 Tipo:${this.tipo.getTipo()} `
-            );
+          } else {
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                '0',
+                this.fila.toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                '0',
+                'Variable',
+                this.tipo.getTipo().toString(),
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
+          }
           break;
         case tipoDato.DECIMAL:
           if (
@@ -54,12 +71,27 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          } else
-            console.log(
-              `ID:${this.identificador} tipo:Variable Linea:${
-                this.fila
-              } Columna:${this.columna} Valor:0.0 Tipo:${this.tipo.getTipo()}`
-            );
+          } else {
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                '0.0',
+                this.fila.toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                '0.0',
+                'Variable',
+                this.tipo.getTipo().toString(),
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
+          }
           break;
         case tipoDato.CARACTER:
           if (
@@ -73,12 +105,27 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          } else
-            console.log(
-              `ID:${this.identificador} tipo:Variable Linea:${
-                this.fila
-              } Columna:${this.columna} Valor:0 Tipo:${this.tipo.getTipo()}`
-            );
+          } else {
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                '\u0000',
+                this.fila.toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                '\u0000',
+                'Variable',
+                this.tipo.getTipo().toString(),
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
+          }
           break;
         case tipoDato.CADENA:
           if (
@@ -91,12 +138,27 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          } else
-            console.log(
-              `ID:${this.identificador} tipo:Variable Linea:${
-                this.fila
-              } Columna:${this.columna} Valor:${''} Tipo:${this.tipo.getTipo()}`
-            );
+          } else {
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                '',
+                this.fila.toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                '',
+                'Variable',
+                this.tipo.getTipo().toString(),
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
+          }
           break;
         case tipoDato.BOOLEANO:
           if (
@@ -110,12 +172,27 @@ export default class Declaracion extends Instruccion {
               this.fila,
               this.columna
             );
-          } else
-            console.log(
-              `ID:${this.identificador} tipo:Variable Linea:${
-                this.fila
-              } Columna:${this.columna} Valor:${true} Tipo:${this.tipo}`
-            );
+          } else {
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                'true',
+                this.fila.toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                'true',
+                'Variable',
+                this.tipo.getTipo().toString(),
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
+          }
           break;
       }
     } else {
@@ -139,13 +216,25 @@ export default class Declaracion extends Instruccion {
             this.columna
           );
         } else {
-          console.log(
-            `ID:${this.identificador} tipo:Variable Linea:${
-              this.fila
-            } Columna:${
-              this.columna
-            } Valor:${val} Tipo:${this.tipo.getTipo()} Ambito:${tabla.getTabla()}`
-          );
+          if (
+            !indexController.actualizarTabla(
+              this.identificador,
+              val,
+              this.fila.toString(),
+              this.columna.toString()
+            )
+          ) {
+            let nuevoSimbolo = new reporteTabla(
+              this.identificador,
+              val,
+              'Variable',
+              this.tipo.getTipo().toString(),
+              tabla.getNombre(),
+              this.fila.toString(),
+              this.columna.toString()
+            );
+            listaSimbolos.push(nuevoSimbolo);
+          }
         }
       }
     }

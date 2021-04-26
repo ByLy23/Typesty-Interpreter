@@ -18,6 +18,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var indexControllers_1 = require("../../indexControllers");
+var reporteTabla_1 = require("../../Reportes/reporteTabla");
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Simbolo_1 = __importDefault(require("../Simbolos/Simbolo"));
@@ -39,37 +41,57 @@ var Declaracion = /** @class */ (function (_super) {
                         'La variable existe actualmente') {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
-                    else
-                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:0 Tipo:" + this.tipo.getTipo() + " ");
+                    else {
+                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, '0', this.fila.toString(), this.columna.toString())) {
+                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '0', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
+                        }
+                    }
                     break;
                 case Tipo_1.tipoDato.DECIMAL:
                     if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, 0.0)) == 'La variable existe actualmente') {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
-                    else
-                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:0.0 Tipo:" + this.tipo.getTipo());
+                    else {
+                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, '0.0', this.fila.toString(), this.columna.toString())) {
+                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '0.0', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
+                        }
+                    }
                     break;
                 case Tipo_1.tipoDato.CARACTER:
                     if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, '\u0000')) == 'La variable existe actualmente') {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
-                    else
-                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:0 Tipo:" + this.tipo.getTipo());
+                    else {
+                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, '\u0000', this.fila.toString(), this.columna.toString())) {
+                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '\u0000', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
+                        }
+                    }
                     break;
                 case Tipo_1.tipoDato.CADENA:
                     if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, '')) ==
                         'La variable existe actualmente') {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
-                    else
-                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + '' + " Tipo:" + this.tipo.getTipo());
+                    else {
+                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, '', this.fila.toString(), this.columna.toString())) {
+                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
+                        }
+                    }
                     break;
                 case Tipo_1.tipoDato.BOOLEANO:
                     if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, true)) == 'La variable existe actualmente') {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
-                    else
-                        console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + true + " Tipo:" + this.tipo);
+                    else {
+                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, 'true', this.fila.toString(), this.columna.toString())) {
+                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, 'true', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
+                        }
+                    }
                     break;
             }
         }
@@ -84,7 +106,10 @@ var Declaracion = /** @class */ (function (_super) {
                     return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                 }
                 else {
-                    console.log("ID:" + this.identificador + " tipo:Variable Linea:" + this.fila + " Columna:" + this.columna + " Valor:" + val + " Tipo:" + this.tipo.getTipo() + " Ambito:" + tabla.getTabla());
+                    if (!indexControllers_1.indexController.actualizarTabla(this.identificador, val, this.fila.toString(), this.columna.toString())) {
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, val, 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                        indexControllers_1.listaSimbolos.push(nuevoSimbolo);
+                    }
                 }
             }
         }
