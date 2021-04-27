@@ -55,6 +55,7 @@ var condFor = /** @class */ (function (_super) {
     }
     condFor.prototype.interpretar = function (arbol, tabla) {
         var nuevaTabla = new tablaSimbolos_1.default(tabla);
+        nuevaTabla.setNombre('For');
         var declaAsig = this.declaracionAsignacion.interpretar(arbol, nuevaTabla);
         if (declaAsig instanceof Errores_1.default)
             return declaAsig;
@@ -66,6 +67,7 @@ var condFor = /** @class */ (function (_super) {
         }
         while (this.condicion.interpretar(arbol, nuevaTabla)) {
             var otraTabla = new tablaSimbolos_1.default(nuevaTabla);
+            otraTabla.setNombre('ForDentro');
             for (var i = 0; i < this.instrucciones.length; i++) {
                 var a = this.instrucciones[i].interpretar(arbol, otraTabla);
                 if (a instanceof Errores_1.default) {

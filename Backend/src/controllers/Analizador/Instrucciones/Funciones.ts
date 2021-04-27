@@ -38,13 +38,14 @@ export default class Funciones extends Instruccion {
               this.fila,
               this.columna
             );
-        } else
+        } else {
           return new Errores(
             'SEMANTICO',
             'DEBE DEVOLVER UN VALOR EN LA FUNCION',
             this.fila,
             this.columna
           );
+        }
       }
     }
   }

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.indexController = exports.listaErrores = void 0;
+exports.indexController = exports.listaSimbolos = exports.listaErrores = void 0;
 var Errores_1 = __importDefault(require("./Analizador/Excepciones/Errores"));
 var Asignacion_1 = __importDefault(require("./Analizador/Instrucciones/Asignacion"));
 var Declaracion_1 = __importDefault(require("./Analizador/Instrucciones/Declaracion"));
@@ -12,6 +12,7 @@ var Funciones_1 = __importDefault(require("./Analizador/Instrucciones/Funciones"
 var Metodos_1 = __importDefault(require("./Analizador/Instrucciones/Metodos"));
 var Arbol_1 = __importDefault(require("./Analizador/Simbolos/Arbol"));
 var tablaSimbolos_1 = __importDefault(require("./Analizador/Simbolos/tablaSimbolos"));
+var arbolNuevo;
 //tablas arboles y excepcciones
 var IndexController = /** @class */ (function () {
     function IndexController() {
@@ -22,6 +23,7 @@ var IndexController = /** @class */ (function () {
     };
     IndexController.prototype.interpretar = function (req, res) {
         exports.listaErrores = new Array();
+        exports.listaSimbolos = new Array();
         var parser = require('./Analizador/analizador');
         var entrada = req.body.entrada;
         try {
@@ -57,11 +59,30 @@ var IndexController = /** @class */ (function () {
                     ast.actualizaConsola(error.returnError());
                 }
             }
-            res.send({ resultado: ast.getconsola(), errores: exports.listaErrores });
+            arbolNuevo = ast;
+            res.send({
+                resultado: ast.getconsola(),
+                errores: exports.listaErrores,
+                tabla: exports.listaSimbolos,
+            });
         }
         catch (err) {
+            console.error(err);
             res.json({ error: err, errores: exports.listaErrores });
         }
+    };
+    IndexController.prototype.actualizarTabla = function (identificador, valor, linea, entorno, columna) {
+        for (var _i = 0, listaSimbolos_1 = exports.listaSimbolos; _i < listaSimbolos_1.length; _i++) {
+            var elemento = listaSimbolos_1[_i];
+            if (elemento.getIdentificador() == identificador &&
+                elemento.getEntorno() == entorno) {
+                elemento.setValor(valor);
+                elemento.setLinea(linea);
+                elemento.setColumna(columna);
+                return true;
+            }
+        }
+        return false;
     };
     return IndexController;
 }());

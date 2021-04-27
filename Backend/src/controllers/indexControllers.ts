@@ -4,12 +4,14 @@ import Asignacion from './Analizador/Instrucciones/Asignacion';
 import Declaracion from './Analizador/Instrucciones/Declaracion';
 import Exec from './Analizador/Instrucciones/Exec';
 import Funciones from './Analizador/Instrucciones/Funciones';
-import LlamadaFuncMetd from './Analizador/Instrucciones/LlamadaFuncMetd';
 import Metodos from './Analizador/Instrucciones/Metodos';
 import Arbol from './Analizador/Simbolos/Arbol';
 import tablaSimbolos from './Analizador/Simbolos/tablaSimbolos';
+import { reporteTabla } from './Reportes/reporteTabla';
 
 export let listaErrores: Array<Errores>;
+export let listaSimbolos: Array<reporteTabla>;
+let arbolNuevo: Arbol;
 //tablas arboles y excepcciones
 class IndexController {
   public index(req: Request, res: Response) {
@@ -18,6 +20,7 @@ class IndexController {
   }
   public interpretar(req: Request, res: Response) {
     listaErrores = new Array<Errores>();
+    listaSimbolos = new Array<reporteTabla>();
     let parser = require('./Analizador/analizador');
     const { entrada } = req.body;
     try {
@@ -58,10 +61,36 @@ class IndexController {
           ast.actualizaConsola((<Errores>error).returnError());
         }
       }
-      res.send({ resultado: ast.getconsola(), errores: listaErrores });
+      arbolNuevo = ast;
+      res.send({
+        resultado: ast.getconsola(),
+        errores: listaErrores,
+        tabla: listaSimbolos,
+      });
     } catch (err) {
+      console.error(err);
       res.json({ error: err, errores: listaErrores });
     }
+  }
+  public actualizarTabla(
+    identificador: string,
+    valor: string,
+    linea: string,
+    entorno: string,
+    columna: string
+  ): boolean {
+    for (var elemento of listaSimbolos) {
+      if (
+        elemento.getIdentificador() == identificador &&
+        elemento.getEntorno() == entorno
+      ) {
+        elemento.setValor(valor);
+        elemento.setLinea(linea);
+        elemento.setColumna(columna);
+        return true;
+      }
+    }
+    return false;
   }
 }
 export const indexController = new IndexController();

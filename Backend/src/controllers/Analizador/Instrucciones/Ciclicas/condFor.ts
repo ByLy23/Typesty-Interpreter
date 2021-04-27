@@ -27,6 +27,7 @@ export default class condFor extends Instruccion {
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let nuevaTabla = new tablaSimbolos(tabla);
+    nuevaTabla.setNombre('For');
     let declaAsig = this.declaracionAsignacion.interpretar(arbol, nuevaTabla);
     if (declaAsig instanceof Errores) return declaAsig;
     let val = this.condicion.interpretar(arbol, nuevaTabla);
@@ -41,6 +42,7 @@ export default class condFor extends Instruccion {
     }
     while (this.condicion.interpretar(arbol, nuevaTabla)) {
       let otraTabla = new tablaSimbolos(nuevaTabla);
+      otraTabla.setNombre('ForDentro');
       for (let i = 0; i < this.instrucciones.length; i++) {
         let a = this.instrucciones[i].interpretar(arbol, otraTabla);
         if (a instanceof Errores) {

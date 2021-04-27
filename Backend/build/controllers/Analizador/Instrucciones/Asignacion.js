@@ -37,6 +37,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var indexControllers_1 = require("../../indexControllers");
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
@@ -54,14 +55,17 @@ var Asignacion = /** @class */ (function (_super) {
         if (variable != null) {
             var val = this.valor.interpretar(arbol, tabla);
             if (variable.gettipo().getTipo() != this.valor.tipoDato.getTipo()) {
-                return new Errores_1.default("SEMANTICO", "VARIABLE " + this.identificador + " TIPOS DE DATOS DIFERENTES", this.fila, this.columna);
+                return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
             }
             else {
                 variable.setvalor(val);
+                indexControllers_1.indexController.actualizarTabla(this.identificador, variable.getvalor(), this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
+                //identificadorm,
+                //actualizar valor de la tabla y no crear otra equis des
             }
         }
         else {
-            return new Errores_1.default("SEMANTICO", "VARIABLE " + this.identificador + " NO EXISTE", this.fila, this.columna);
+            return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' NO EXISTE', this.fila, this.columna);
         }
     };
     return Asignacion;

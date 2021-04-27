@@ -1,4 +1,4 @@
-import Tipo from "./Tipo";
+import Tipo from './Tipo';
 
 export default class Simbolo {
   private tipo: Tipo;

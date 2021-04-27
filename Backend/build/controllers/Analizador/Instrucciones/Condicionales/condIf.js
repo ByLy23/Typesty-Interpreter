@@ -60,6 +60,7 @@ var condIf = /** @class */ (function (_super) {
         }
         if (val) {
             var nuevaTabla = new tablaSimbolos_1.default(tabla);
+            nuevaTabla.setNombre('If');
             for (var i = 0; i < this.condIf.length; i++) {
                 var a = this.condIf[i].interpretar(arbol, nuevaTabla);
                 if (a instanceof Errores_1.default) {
@@ -77,6 +78,7 @@ var condIf = /** @class */ (function (_super) {
         else {
             if (this.condElse != undefined) {
                 var nuevaTabla = new tablaSimbolos_1.default(tabla);
+                nuevaTabla.setNombre('else');
                 for (var i = 0; i < this.condElse.length; i++) {
                     var a = this.condElse[i].interpretar(arbol, nuevaTabla);
                     if (a instanceof Errores_1.default) {

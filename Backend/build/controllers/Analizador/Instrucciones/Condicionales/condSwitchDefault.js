@@ -52,6 +52,7 @@ var condSwitchCase = /** @class */ (function (_super) {
     }
     condSwitchCase.prototype.interpretar = function (arbol, tabla) {
         var nuevaTabla = new tablaSimbolos_1.default(tabla);
+        nuevaTabla.setNombre('default');
         for (var i = 0; i < this.instrucciones.length; i++) {
             var a = this.instrucciones[i].interpretar(arbol, nuevaTabla);
             if (a instanceof Errores_1.default) {

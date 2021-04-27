@@ -42,8 +42,9 @@ var Funciones = /** @class */ (function (_super) {
                     else
                         return new Errores_1.default('SEMANTICO', 'TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
                 }
-                else
+                else {
                     return new Errores_1.default('SEMANTICO', 'DEBE DEVOLVER UN VALOR EN LA FUNCION', this.fila, this.columna);
+                }
             }
         }
     };

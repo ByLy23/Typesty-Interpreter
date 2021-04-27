@@ -37,6 +37,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var indexControllers_1 = require("../../indexControllers");
+var reporteTabla_1 = require("../../Reportes/reporteTabla");
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var tablaSimbolos_1 = __importDefault(require("../Simbolos/tablaSimbolos"));
@@ -79,6 +81,9 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
                         }
                         else {
                             variable.setvalor(newVal);
+                            nuevaTabla.setNombre(metodo.identificador);
+                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '', 'Metodo', 'Void', '', this.fila.toString(), this.columna.toString());
+                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                         }
                     }
                     else {
@@ -117,6 +122,10 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
                         }
                         else {
                             variable.setvalor(newVal);
+                            nuevaTabla.setNombre(metodo.identificador);
+                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, variable.getvalor(), 'Funcion', this.tipoDato.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
+                            //nueva variable
                         }
                     }
                     else {

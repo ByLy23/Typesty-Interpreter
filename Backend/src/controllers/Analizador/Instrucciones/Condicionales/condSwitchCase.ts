@@ -29,6 +29,7 @@ export default class condSwitchCase extends Instruccion {
     ) {
       if (val == valExpresion) {
         let nuevaTabla = new tablaSimbolos(tabla);
+        nuevaTabla.setNombre('Case');
         for (let i = 0; i < this.instrucciones.length; i++) {
           let a = this.instrucciones[i].interpretar(arbol, nuevaTabla);
           if (a instanceof Errores) {

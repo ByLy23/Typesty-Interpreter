@@ -62,6 +62,7 @@ export default class Exec extends Instruccion {
               );
             } else {
               variable.setvalor(newVal);
+              nuevaTabla.setNombre(funcion.identificador);
             }
           } else {
             return new Errores(

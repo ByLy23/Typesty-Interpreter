@@ -25,6 +25,7 @@ var tablaSimbolos = /** @class */ (function () {
         this.tablaAnterior = anterior;
         this.tablaActual = new Map();
         this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
+        this.nombreDato = '';
     }
     tablaSimbolos.prototype.getAnterior = function () {
         return this.tablaAnterior;
@@ -57,6 +58,12 @@ var tablaSimbolos = /** @class */ (function () {
             }
         }
         return null;
+    };
+    tablaSimbolos.prototype.getNombre = function () {
+        return this.nombreDato;
+    };
+    tablaSimbolos.prototype.setNombre = function (nombre) {
+        this.nombreDato = nombre;
     };
     return tablaSimbolos;
 }());

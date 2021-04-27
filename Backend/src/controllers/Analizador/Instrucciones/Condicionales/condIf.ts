@@ -37,6 +37,7 @@ export default class condIf extends Instruccion {
     }
     if (val) {
       let nuevaTabla = new tablaSimbolos(tabla);
+      nuevaTabla.setNombre('If');
       for (let i = 0; i < this.condIf.length; i++) {
         let a = this.condIf[i].interpretar(arbol, nuevaTabla);
         if (a instanceof Errores) {
@@ -50,6 +51,7 @@ export default class condIf extends Instruccion {
     } else {
       if (this.condElse != undefined) {
         let nuevaTabla = new tablaSimbolos(tabla);
+        nuevaTabla.setNombre('else');
         for (let i = 0; i < this.condElse.length; i++) {
           let a = this.condElse[i].interpretar(arbol, nuevaTabla);
           if (a instanceof Errores) {
