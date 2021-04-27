@@ -18,6 +18,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ContenidoInicioComponent } from './componentes/contenido-inicio/contenido-inicio.component';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MatInputModule } from '@angular/material/input';
     MatTabsModule,
     MatButtonToggleModule,
     MatInputModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

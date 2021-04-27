@@ -14,6 +14,7 @@ export default class condSwitchCase extends Instruccion {
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let nuevaTabla = new tablaSimbolos(tabla);
+    nuevaTabla.setNombre('default');
     for (let i = 0; i < this.instrucciones.length; i++) {
       let a = this.instrucciones[i].interpretar(arbol, nuevaTabla);
       if (a instanceof Errores) {

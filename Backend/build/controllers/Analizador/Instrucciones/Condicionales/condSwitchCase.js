@@ -59,6 +59,7 @@ var condSwitchCase = /** @class */ (function (_super) {
             ((_b = this.expresionCase) === null || _b === void 0 ? void 0 : _b.tipoDato.getTipo())) {
             if (val == valExpresion) {
                 var nuevaTabla = new tablaSimbolos_1.default(tabla);
+                nuevaTabla.setNombre('Case');
                 for (var i = 0; i < this.instrucciones.length; i++) {
                     var a = this.instrucciones[i].interpretar(arbol, nuevaTabla);
                     if (a instanceof Errores_1.default) {

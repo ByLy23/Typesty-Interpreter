@@ -59,7 +59,7 @@ var Asignacion = /** @class */ (function (_super) {
             }
             else {
                 variable.setvalor(val);
-                indexControllers_1.indexController.actualizarTabla(this.identificador, variable.getvalor(), this.fila.toString(), this.columna.toString());
+                indexControllers_1.indexController.actualizarTabla(this.identificador, variable.getvalor(), this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
                 //identificadorm,
                 //actualizar valor de la tabla y no crear otra equis des
             }

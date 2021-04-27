@@ -42,10 +42,8 @@ var Declaracion = /** @class */ (function (_super) {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
                     else {
-                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, '0', this.fila.toString(), this.columna.toString())) {
-                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '0', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
-                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
-                        }
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '0', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                        indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                     }
                     break;
                 case Tipo_1.tipoDato.DECIMAL:
@@ -53,10 +51,8 @@ var Declaracion = /** @class */ (function (_super) {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
                     else {
-                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, '0.0', this.fila.toString(), this.columna.toString())) {
-                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '0.0', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
-                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
-                        }
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '0.0', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                        indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                     }
                     break;
                 case Tipo_1.tipoDato.CARACTER:
@@ -64,10 +60,8 @@ var Declaracion = /** @class */ (function (_super) {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
                     else {
-                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, '\u0000', this.fila.toString(), this.columna.toString())) {
-                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '\u0000', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
-                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
-                        }
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '\u0000', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                        indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                     }
                     break;
                 case Tipo_1.tipoDato.CADENA:
@@ -76,10 +70,8 @@ var Declaracion = /** @class */ (function (_super) {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
                     else {
-                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, '', this.fila.toString(), this.columna.toString())) {
-                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
-                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
-                        }
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                        indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                     }
                     break;
                 case Tipo_1.tipoDato.BOOLEANO:
@@ -87,10 +79,8 @@ var Declaracion = /** @class */ (function (_super) {
                         return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                     }
                     else {
-                        if (!indexControllers_1.indexController.actualizarTabla(this.identificador, 'true', this.fila.toString(), this.columna.toString())) {
-                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, 'true', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
-                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
-                        }
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, 'true', 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                        indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                     }
                     break;
             }
@@ -106,10 +96,8 @@ var Declaracion = /** @class */ (function (_super) {
                     return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                 }
                 else {
-                    if (!indexControllers_1.indexController.actualizarTabla(this.identificador, val, this.fila.toString(), this.columna.toString())) {
-                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, val, 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
-                        indexControllers_1.listaSimbolos.push(nuevoSimbolo);
-                    }
+                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, val, 'Variable', this.tipo.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                    indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                 }
             }
         }

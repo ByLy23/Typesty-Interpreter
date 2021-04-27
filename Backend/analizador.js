@@ -99,7 +99,7 @@ case 5: case 6: case 13: case 15: case 16: case 19: case 20: case 38:
 this.$=$$[$0-1];
 break;
 case 22:
-inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"",_$[$0-1].first_line,_$[$0-1].first_column));console.log("sinta "); this.$=false;
+inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"Se esperaba un token en esta linea",_$[$0-1].first_line,_$[$0-1].first_column));console.log("sinta "); this.$=false;
 break;
 case 23:
 this.$=new print.default($$[$0-2],_$[$0-4].first_line,_$[$0-4].first_column);

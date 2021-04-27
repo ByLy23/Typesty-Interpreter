@@ -71,10 +71,11 @@ var IndexController = /** @class */ (function () {
             res.json({ error: err, errores: exports.listaErrores });
         }
     };
-    IndexController.prototype.actualizarTabla = function (identificador, valor, linea, columna) {
+    IndexController.prototype.actualizarTabla = function (identificador, valor, linea, entorno, columna) {
         for (var _i = 0, listaSimbolos_1 = exports.listaSimbolos; _i < listaSimbolos_1.length; _i++) {
             var elemento = listaSimbolos_1[_i];
-            if (elemento.getIdentificador() == identificador) {
+            if (elemento.getIdentificador() == identificador &&
+                elemento.getEntorno() == entorno) {
                 elemento.setValor(valor);
                 elemento.setLinea(linea);
                 elemento.setColumna(columna);

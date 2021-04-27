@@ -60,6 +60,7 @@ var condWhile = /** @class */ (function (_super) {
         }
         do {
             var nuevaTabla = new tablaSimbolos_1.default(tabla);
+            nuevaTabla.setNombre('Do_While');
             for (var i = 0; i < this.expresion.length; i++) {
                 var a = this.expresion[i].interpretar(arbol, nuevaTabla);
                 if (a instanceof Errores_1.default) {

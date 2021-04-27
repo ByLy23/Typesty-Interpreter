@@ -37,6 +37,7 @@ export default class Asignacion extends Instruccion {
           this.identificador,
           variable.getvalor(),
           this.fila.toString(),
+          tabla.getNombre().toString(),
           this.columna.toString()
         );
         //identificadorm,

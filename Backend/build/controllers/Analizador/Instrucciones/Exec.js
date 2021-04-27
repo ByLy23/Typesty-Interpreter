@@ -78,6 +78,7 @@ var Exec = /** @class */ (function (_super) {
                         }
                         else {
                             variable.setvalor(newVal);
+                            nuevaTabla.setNombre(funcion.identificador);
                         }
                     }
                     else {

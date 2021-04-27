@@ -76,10 +76,14 @@ class IndexController {
     identificador: string,
     valor: string,
     linea: string,
+    entorno: string,
     columna: string
   ): boolean {
     for (var elemento of listaSimbolos) {
-      if (elemento.getIdentificador() == identificador) {
+      if (
+        elemento.getIdentificador() == identificador &&
+        elemento.getEntorno() == entorno
+      ) {
         elemento.setValor(valor);
         elemento.setLinea(linea);
         elemento.setColumna(columna);

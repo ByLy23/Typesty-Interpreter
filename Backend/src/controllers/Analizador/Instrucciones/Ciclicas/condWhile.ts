@@ -32,6 +32,7 @@ export default class condWhile extends Instruccion {
     }
     while (this.condicion.interpretar(arbol, tabla)) {
       let nuevaTabla = new tablaSimbolos(tabla);
+      nuevaTabla.setNombre('While');
       for (let i = 0; i < this.expresion.length; i++) {
         let a = this.expresion[i].interpretar(arbol, nuevaTabla);
         if (a instanceof Errores) {
