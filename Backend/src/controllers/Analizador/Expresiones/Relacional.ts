@@ -27,7 +27,7 @@ export default class Relacional extends Instruccion {
   public getNodo(): nodoAST {
     let nodo = new nodoAST('RELACIONAL');
     nodo.agregarHijoAST(this.cond1.getNodo());
-    nodo.agregarHijo(this.relacion + '');
+    nodo.agregarHijo(this.relacion + '', 'rel', this.relacion);
     nodo.agregarHijoAST(this.cond2.getNodo());
     return nodo;
   }

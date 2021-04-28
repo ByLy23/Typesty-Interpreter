@@ -64,7 +64,7 @@ var Aritmetica = /** @class */ (function (_super) {
         }
         else {
             nodo.agregarHijoAST((_a = this.operando1) === null || _a === void 0 ? void 0 : _a.getNodo());
-            nodo.agregarHijo(this.operador + '');
+            nodo.agregarHijo(this.operador + '', 'ar', this.operador);
             nodo.agregarHijoAST((_b = this.operando2) === null || _b === void 0 ? void 0 : _b.getNodo());
         }
         return nodo;

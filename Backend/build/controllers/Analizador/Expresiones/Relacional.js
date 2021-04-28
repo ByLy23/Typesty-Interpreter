@@ -54,7 +54,7 @@ var Relacional = /** @class */ (function (_super) {
     Relacional.prototype.getNodo = function () {
         var nodo = new nodoAST_1.default('RELACIONAL');
         nodo.agregarHijoAST(this.cond1.getNodo());
-        nodo.agregarHijo(this.relacion + '');
+        nodo.agregarHijo(this.relacion + '', 'rel', this.relacion);
         nodo.agregarHijoAST(this.cond2.getNodo());
         return nodo;
     };

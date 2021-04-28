@@ -13,7 +13,10 @@ var Funciones_1 = __importDefault(require("./Analizador/Instrucciones/Funciones"
 var Metodos_1 = __importDefault(require("./Analizador/Instrucciones/Metodos"));
 var Arbol_1 = __importDefault(require("./Analizador/Simbolos/Arbol"));
 var tablaSimbolos_1 = __importDefault(require("./Analizador/Simbolos/tablaSimbolos"));
+var graficar_1 = __importDefault(require("./Reportes/graficar"));
 var arbolNuevo;
+var contador;
+var cuerpo;
 //tablas arboles y excepcciones
 var IndexController = /** @class */ (function () {
     function IndexController() {
@@ -29,6 +32,7 @@ var IndexController = /** @class */ (function () {
         var parser = require('./Analizador/analizador');
         var entrada = req.body.entrada;
         try {
+            console.log(entrada);
             var ast = new Arbol_1.default(parser.parse(entrada));
             var tabla = new tablaSimbolos_1.default();
             ast.settablaGlobal(tabla);
@@ -38,17 +42,18 @@ var IndexController = /** @class */ (function () {
                     ast.getfunciones().push(i);
                 }
             }
-            var _loop_1 = function (i) {
+            for (var _b = 0, _c = ast.getinstrucciones(); _b < _c.length; _b++) {
+                var i = _c[_b];
                 if (i instanceof Errores_1.default) {
                     exports.listaErrores.push(i);
                     ast.actualizaConsola(i.returnError());
                 }
                 if (i instanceof Metodos_1.default || i instanceof Funciones_1.default)
-                    return "continue";
+                    continue;
                 if (i instanceof Declaracion_1.default ||
                     i instanceof Asignacion_1.default ||
                     i instanceof Exec_1.default) {
-                    resultador = i.interpretar(ast, tabla);
+                    var resultador = i.interpretar(ast, tabla);
                     if (resultador instanceof Errores_1.default) {
                         exports.listaErrores.push(resultador);
                         ast.actualizaConsola(resultador.returnError());
@@ -59,21 +64,15 @@ var IndexController = /** @class */ (function () {
                     exports.listaErrores.push(error);
                     ast.actualizaConsola(error.returnError());
                 }
-                var arbolAst = new nodoAST_1.default('RAIZ');
-                var nodoINS = new nodoAST_1.default('INSTRUCCIONES');
-                ast.getinstrucciones().forEach(function (element) {
-                    nodoINS.agregarHijoAST(element.getNodo());
-                });
-                arbolAst.agregarHijoAST(nodoINS);
-                arbolito = arbolAst;
-                //graficar
-                console.log(arbolAst);
-            };
-            var resultador;
-            for (var _b = 0, _c = ast.getinstrucciones(); _b < _c.length; _b++) {
-                var i = _c[_b];
-                _loop_1(i);
+                //graficars
             }
+            var arbolAst = new nodoAST_1.default('RAIZ');
+            var nodoINS_1 = new nodoAST_1.default('INSTRUCCIONES');
+            ast.getinstrucciones().forEach(function (element) {
+                nodoINS_1.agregarHijoAST(element.getNodo());
+            });
+            arbolAst.agregarHijoAST(nodoINS_1);
+            graficar_1.default(arbolAst);
             arbolNuevo = ast;
             res.send({
                 resultado: ast.getconsola(),

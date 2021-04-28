@@ -9,10 +9,13 @@ import Metodos from './Analizador/Instrucciones/Metodos';
 import Arbol from './Analizador/Simbolos/Arbol';
 import tablaSimbolos from './Analizador/Simbolos/tablaSimbolos';
 import { reporteTabla } from './Reportes/reporteTabla';
+import graficarArbol from './Reportes/graficar';
 
 export let listaErrores: Array<Errores>;
 export let listaSimbolos: Array<reporteTabla>;
 let arbolNuevo: Arbol;
+let contador: number;
+let cuerpo: string;
 //tablas arboles y excepcciones
 class IndexController {
   public index(req: Request, res: Response) {
@@ -26,6 +29,7 @@ class IndexController {
     let parser = require('./Analizador/analizador');
     const { entrada } = req.body;
     try {
+      console.log(entrada);
       let ast = new Arbol(parser.parse(entrada));
       var tabla = new tablaSimbolos();
       ast.settablaGlobal(tabla);
@@ -62,17 +66,16 @@ class IndexController {
           listaErrores.push(error);
           ast.actualizaConsola((<Errores>error).returnError());
         }
-
-        let arbolAst = new nodoAST('RAIZ');
-        let nodoINS = new nodoAST('INSTRUCCIONES');
-        ast.getinstrucciones().forEach((element) => {
-          nodoINS.agregarHijoAST(element.getNodo());
-        });
-        arbolAst.agregarHijoAST(nodoINS);
-        arbolito = arbolAst;
-        //graficar
-        console.log(arbolAst);
+        //graficars
       }
+
+      let arbolAst = new nodoAST('RAIZ');
+      let nodoINS = new nodoAST('INSTRUCCIONES');
+      ast.getinstrucciones().forEach((element) => {
+        nodoINS.agregarHijoAST(element.getNodo());
+      });
+      arbolAst.agregarHijoAST(nodoINS);
+      graficarArbol(<nodoAST>arbolAst);
       arbolNuevo = ast;
       res.send({
         resultado: ast.getconsola(),
@@ -85,6 +88,7 @@ class IndexController {
       res.json({ error: err, errores: listaErrores });
     }
   }
+
   public actualizarTabla(
     identificador: string,
     valor: string,

@@ -33,7 +33,7 @@ export default class Aritmetica extends Instruccion {
       nodo.agregarHijoAST(this.operandoUnico.getNodo());
     } else {
       nodo.agregarHijoAST(this.operando1?.getNodo());
-      nodo.agregarHijo(this.operador + '');
+      nodo.agregarHijo(this.operador + '', 'ar', this.operador);
       nodo.agregarHijoAST(this.operando2?.getNodo());
     }
     return nodo;
