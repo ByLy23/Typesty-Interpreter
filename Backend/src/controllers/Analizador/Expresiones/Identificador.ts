@@ -1,4 +1,5 @@
 import { Instruccion } from '../Abastracto/Instruccion';
+import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
@@ -10,6 +11,18 @@ export default class Identificador extends Instruccion {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador;
   }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('IDENTIFICADOR');
+    nodo.agregarHijo(this.identificador + '');
+    return nodo;
+  }
+
+  /*
+  public getNodo():nodoAST{
+    let nodo= new nodoAST("");
+    return nodo;
+  }
+  */
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let variable = tabla.getVariable(this.identificador);
     if (variable != null) {

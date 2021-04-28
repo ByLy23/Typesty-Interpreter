@@ -1,4 +1,6 @@
+import obtenerValor from '../../reportes/cambiarTipo';
 import { Instruccion } from '../Abastracto/Instruccion';
+import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
 import Simbolo from '../Simbolos/Simbolo';
@@ -22,6 +24,20 @@ export default class Funciones extends Instruccion {
     this.identificador = identificador;
     this.parametros = parametros;
     this.instrucciones = instrucciones;
+  }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('FUNCION');
+    nodo.agregarHijo(obtenerValor(this.tipoDato.getTipo()) + '');
+    nodo.agregarHijo(this.identificador + '');
+    nodo.agregarHijo('(');
+    nodo.agregarHijoAST(this.parametros.getNodo());
+    nodo.agregarHijo(')');
+    nodo.agregarHijo('{');
+    this.instrucciones.forEach((element) => {
+      nodo.agregarHijoAST(element.getNodo());
+    });
+    nodo.agregarHijo('}');
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     for (let i = 0; i < this.instrucciones.length; i++) {

@@ -1,5 +1,6 @@
 import { listaErrores } from '../../../indexControllers';
 import { Instruccion } from '../../Abastracto/Instruccion';
+import nodoAST from '../../Abastracto/nodoAST';
 import Errores from '../../Excepciones/Errores';
 import Arbol from '../../Simbolos/Arbol';
 import tablaSimbolos from '../../Simbolos/tablaSimbolos';
@@ -24,6 +25,34 @@ export default class condIf extends Instruccion {
     this.condIf = condIf;
     this.condElse = condElse;
     this.condElseIf = condElseIf;
+  }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('IF');
+    nodo.agregarHijo('if');
+    nodo.agregarHijo('(');
+    nodo.agregarHijoAST(this.cond1.getNodo());
+    nodo.agregarHijo(')');
+    nodo.agregarHijo('{');
+    this.condIf.forEach((element) => {
+      nodo.agregarHijoAST(element.getNodo());
+    });
+    nodo.agregarHijo('}');
+    if (this.condElse != undefined) {
+      nodo.agregarHijo('else');
+      nodo.agregarHijo('{');
+      this.condElse.forEach((element) => {
+        nodo.agregarHijoAST(element.getNodo());
+      });
+      nodo.agregarHijo('}');
+    }
+    if (this.condElseIf != undefined) {
+      nodo.agregarHijo('else');
+      nodo.agregarHijo('if');
+      nodo.agregarHijo('{');
+      nodo.agregarHijoAST(this.condElseIf.getNodo());
+      nodo.agregarHijo('}');
+    }
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let val = this.cond1.interpretar(arbol, tabla);

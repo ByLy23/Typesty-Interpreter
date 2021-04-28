@@ -1,5 +1,6 @@
 import { listaErrores } from '../../../indexControllers';
 import { Instruccion } from '../../Abastracto/Instruccion';
+import nodoAST from '../../Abastracto/nodoAST';
 import Errores from '../../Excepciones/Errores';
 import Arbol from '../../Simbolos/Arbol';
 import tablaSimbolos from '../../Simbolos/tablaSimbolos';
@@ -24,6 +25,24 @@ export default class condFor extends Instruccion {
     this.actualizacion = actualizacion;
     this.condicion = condicion;
     this.instrucciones = instrucciones;
+  }
+
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('FOR');
+    nodo.agregarHijo('for');
+    nodo.agregarHijo('(');
+    nodo.agregarHijoAST(this.declaracionAsignacion.getNodo());
+    nodo.agregarHijo(';');
+    nodo.agregarHijoAST(this.condicion.getNodo());
+    nodo.agregarHijo(';');
+    nodo.agregarHijoAST(this.actualizacion.getNodo());
+    nodo.agregarHijo(')');
+    nodo.agregarHijo('{');
+    this.instrucciones.forEach((element) => {
+      nodo.agregarHijoAST(element.getNodo());
+    });
+    nodo.agregarHijo('}');
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let nuevaTabla = new tablaSimbolos(tabla);

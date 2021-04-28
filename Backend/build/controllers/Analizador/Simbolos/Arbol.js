@@ -8,6 +8,7 @@ var Metodos_1 = __importDefault(require("../Instrucciones/Metodos"));
 var Funciones_1 = __importDefault(require("../Instrucciones/Funciones"));
 var reporteTabla_1 = require("../../Reportes/reporteTabla");
 var indexControllers_1 = require("../../indexControllers");
+var cambiarTipo_1 = __importDefault(require("../../reportes/cambiarTipo"));
 var Arbol = /** @class */ (function () {
     function Arbol(instrucciones) {
         this.instrucciones = instrucciones;
@@ -22,7 +23,7 @@ var Arbol = /** @class */ (function () {
             if (f instanceof Metodos_1.default) {
                 if (identificador.toLowerCase() ==
                     f.identificador.toLowerCase()) {
-                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'Metodo', f.tipoDato.getTipo().toString(), '', f.fila.toString(), f.columna.toString());
+                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'Metodo', 'Void', '', f.fila.toString(), f.columna.toString());
                     indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                     return f;
                 }
@@ -30,7 +31,7 @@ var Arbol = /** @class */ (function () {
             else if (f instanceof Funciones_1.default) {
                 if (identificador.toLowerCase() ==
                     f.identificador.toLowerCase()) {
-                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'Funcion', f.tipoDato.getTipo().toString(), '', f.fila.toString(), f.columna.toString());
+                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'Funcion', cambiarTipo_1.default(f.tipoDato.getTipo()) + '', '', f.fila.toString(), f.columna.toString());
                     indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                     return f;
                 }

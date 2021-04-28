@@ -1,6 +1,7 @@
 //relacionales
 
 import { Instruccion } from '../Abastracto/Instruccion';
+import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
@@ -25,6 +26,19 @@ export default class Logica extends Instruccion {
       this.cond1 = cond1;
       this.cond2 = cond2;
     }
+  }
+
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('LOGICO');
+    if (this.condExcep != null) {
+      nodo.agregarHijo(this.loogica + '');
+      nodo.agregarHijoAST(this.condExcep.getNodo());
+    } else {
+      nodo.agregarHijoAST(this.cond1?.getNodo());
+      nodo.agregarHijo(this.loogica + '');
+      nodo.agregarHijoAST(this.cond2?.getNodo());
+    }
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let izq, der, unico;

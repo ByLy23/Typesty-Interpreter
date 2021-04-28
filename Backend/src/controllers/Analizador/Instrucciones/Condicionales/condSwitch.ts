@@ -1,5 +1,6 @@
 import { listaErrores } from '../../../indexControllers';
 import { Instruccion } from '../../Abastracto/Instruccion';
+import nodoAST from '../../Abastracto/nodoAST';
 import Errores from '../../Excepciones/Errores';
 import Arbol from '../../Simbolos/Arbol';
 import tablaSimbolos from '../../Simbolos/tablaSimbolos';
@@ -22,6 +23,24 @@ export default class condSwitch extends Instruccion {
     this.expresion = expresion;
     this.listaCasos = listaCasos;
     this.defecto = defecto;
+  }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('SWITCH');
+    nodo.agregarHijo('switch');
+    nodo.agregarHijo('(');
+    nodo.agregarHijoAST(this.expresion.getNodo());
+    nodo.agregarHijo(')');
+    nodo.agregarHijo('{');
+    if (this.listaCasos != undefined) {
+      this.listaCasos.forEach((element) => {
+        nodo.agregarHijoAST(element.getNodo());
+      });
+    }
+    if (this.defecto != undefined) {
+      nodo.agregarHijoAST(this.defecto.getNodo());
+    }
+    nodo.agregarHijo('}');
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     if (this.listaCasos != undefined) {

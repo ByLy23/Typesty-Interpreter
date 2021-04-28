@@ -1,12 +1,13 @@
-import { indexController, listaSimbolos } from '../../indexControllers';
+import { listaSimbolos } from '../../indexControllers';
 import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
+import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
 import Simbolo from '../Simbolos/Simbolo';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../Simbolos/Tipo';
-
+import obtenerValor from '../../reportes/cambiarTipo';
 export default class Declaracion extends Instruccion {
   private tipo: Tipo;
   private identificador: string;
@@ -22,6 +23,17 @@ export default class Declaracion extends Instruccion {
     this.tipo = tipo;
     this.identificador = id;
     this.valor = valor;
+  }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('DECLARACION');
+    nodo.agregarHijo(obtenerValor(this.tipo.getTipo()) + '');
+    nodo.agregarHijo(this.identificador);
+    if (this.valor != undefined) {
+      nodo.agregarHijo('=');
+      nodo.agregarHijoAST(this.valor.getNodo());
+    }
+    nodo.agregarHijo(';');
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     if (this.valor === undefined) {
@@ -42,7 +54,7 @@ export default class Declaracion extends Instruccion {
               this.identificador,
               '0',
               'Variable',
-              this.tipo.getTipo().toString(),
+              obtenerValor(this.tipo.getTipo()) + '',
               tabla.getNombre(),
               this.fila.toString(),
               this.columna.toString()
@@ -67,7 +79,7 @@ export default class Declaracion extends Instruccion {
               this.identificador,
               '0.0',
               'Variable',
-              this.tipo.getTipo().toString(),
+              obtenerValor(this.tipo.getTipo()) + '',
               tabla.getNombre(),
               this.fila.toString(),
               this.columna.toString()
@@ -92,7 +104,7 @@ export default class Declaracion extends Instruccion {
               this.identificador,
               '\u0000',
               'Variable',
-              this.tipo.getTipo().toString(),
+              obtenerValor(this.tipo.getTipo()) + '',
               tabla.getNombre(),
               this.fila.toString(),
               this.columna.toString()
@@ -116,7 +128,7 @@ export default class Declaracion extends Instruccion {
               this.identificador,
               '',
               'Variable',
-              this.tipo.getTipo().toString(),
+              obtenerValor(this.tipo.getTipo()) + '',
               tabla.getNombre(),
               this.fila.toString(),
               this.columna.toString()
@@ -141,7 +153,7 @@ export default class Declaracion extends Instruccion {
               this.identificador,
               'true',
               'Variable',
-              this.tipo.getTipo().toString(),
+              obtenerValor(this.tipo.getTipo()) + '',
               tabla.getNombre(),
               this.fila.toString(),
               this.columna.toString()
@@ -175,7 +187,7 @@ export default class Declaracion extends Instruccion {
             this.identificador,
             val,
             'Variable',
-            this.tipo.getTipo().toString(),
+            obtenerValor(this.tipo.getTipo()) + '',
             tabla.getNombre(),
             this.fila.toString(),
             this.columna.toString()

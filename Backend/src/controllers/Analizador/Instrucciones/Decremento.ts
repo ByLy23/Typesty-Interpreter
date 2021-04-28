@@ -1,4 +1,5 @@
 import { Instruccion } from '../Abastracto/Instruccion';
+import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Identificador from '../Expresiones/Identificador';
 import Arbol from '../Simbolos/Arbol';
@@ -14,6 +15,13 @@ export default class Incremento extends Instruccion {
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador;
+  }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('DECREMENTO');
+    nodo.agregarHijoAST(this.identificador.getNodo());
+    nodo.agregarHijo('-');
+    nodo.agregarHijo('-');
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     //tomar el tipoDato de la variable

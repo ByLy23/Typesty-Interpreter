@@ -38,6 +38,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
 var Identificador = /** @class */ (function (_super) {
@@ -47,6 +48,17 @@ var Identificador = /** @class */ (function (_super) {
         _this.identificador = identificador;
         return _this;
     }
+    Identificador.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('IDENTIFICADOR');
+        nodo.agregarHijo(this.identificador + '');
+        return nodo;
+    };
+    /*
+    public getNodo():nodoAST{
+      let nodo= new nodoAST("");
+      return nodo;
+    }
+    */
     Identificador.prototype.interpretar = function (arbol, tabla) {
         var variable = tabla.getVariable(this.identificador);
         if (variable != null) {

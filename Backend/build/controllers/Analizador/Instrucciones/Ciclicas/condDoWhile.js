@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var indexControllers_1 = require("../../../indexControllers");
 var Instruccion_1 = require("../../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../../Excepciones/Errores"));
 var tablaSimbolos_1 = __importDefault(require("../../Simbolos/tablaSimbolos"));
 var Tipo_1 = __importStar(require("../../Simbolos/Tipo"));
@@ -51,6 +52,19 @@ var condWhile = /** @class */ (function (_super) {
         _this.expresion = expresion;
         return _this;
     }
+    condWhile.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('DO_WHILE');
+        nodo.agregarHijo('do');
+        nodo.agregarHijo('{');
+        this.expresion.forEach(function (element) {
+            nodo.agregarHijoAST(element.getNodo());
+        });
+        nodo.agregarHijo('(');
+        nodo.agregarHijoAST(this.condicion.getNodo());
+        nodo.agregarHijo(')');
+        nodo.agregarHijo('}');
+        return nodo;
+    };
     condWhile.prototype.interpretar = function (arbol, tabla) {
         var val = this.condicion.interpretar(arbol, tabla);
         if (val instanceof Errores_1.default)

@@ -1,4 +1,5 @@
 import { Instruccion } from '../Abastracto/Instruccion';
+import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
@@ -24,6 +25,18 @@ export default class Aritmetica extends Instruccion {
       this.operando1 = op1;
       this.operando2 = op2;
     }
+  }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('ARITMETICA');
+    if (this.operandoUnico != null) {
+      nodo.agregarHijo(this.operador + '');
+      nodo.agregarHijoAST(this.operandoUnico.getNodo());
+    } else {
+      nodo.agregarHijoAST(this.operando1?.getNodo());
+      nodo.agregarHijo(this.operador + '');
+      nodo.agregarHijoAST(this.operando2?.getNodo());
+    }
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let izq, der, uno;

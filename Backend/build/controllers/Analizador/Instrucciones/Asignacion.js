@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var indexControllers_1 = require("../../indexControllers");
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
 var Asignacion = /** @class */ (function (_super) {
@@ -49,6 +50,14 @@ var Asignacion = /** @class */ (function (_super) {
         _this.valor = valor;
         return _this;
     }
+    Asignacion.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('ASIGNACION');
+        nodo.agregarHijo(this.identificador);
+        nodo.agregarHijo('=');
+        nodo.agregarHijoAST(this.valor.getNodo());
+        nodo.agregarHijo(';');
+        return nodo;
+    };
     Asignacion.prototype.interpretar = function (arbol, tabla) {
         //tomar el tipoDato de la variable
         var variable = tabla.getVariable(this.identificador);

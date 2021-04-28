@@ -1,5 +1,6 @@
 import { listaErrores } from '../../../indexControllers';
 import { Instruccion } from '../../Abastracto/Instruccion';
+import nodoAST from '../../Abastracto/nodoAST';
 import Errores from '../../Excepciones/Errores';
 import Arbol from '../../Simbolos/Arbol';
 import tablaSimbolos from '../../Simbolos/tablaSimbolos';
@@ -19,6 +20,16 @@ export default class condSwitchCase extends Instruccion {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.expresion = expresion;
     this.instrucciones = instrucciones;
+  }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('CASE');
+    nodo.agregarHijo('case');
+    nodo.agregarHijoAST(this.expresion.getNodo());
+    nodo.agregarHijo(':');
+    this.instrucciones.forEach((element) => {
+      nodo.agregarHijoAST(element.getNodo());
+    });
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let val = this.expresion.interpretar(arbol, tabla);

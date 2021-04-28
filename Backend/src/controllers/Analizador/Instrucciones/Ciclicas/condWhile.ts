@@ -1,5 +1,6 @@
 import { listaErrores } from '../../../indexControllers';
 import { Instruccion } from '../../Abastracto/Instruccion';
+import nodoAST from '../../Abastracto/nodoAST';
 import Errores from '../../Excepciones/Errores';
 import Arbol from '../../Simbolos/Arbol';
 import tablaSimbolos from '../../Simbolos/tablaSimbolos';
@@ -18,6 +19,19 @@ export default class condWhile extends Instruccion {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.condicion = condicion;
     this.expresion = expresion;
+  }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('DO_WHILE');
+    nodo.agregarHijo('while');
+    nodo.agregarHijo('(');
+    nodo.agregarHijoAST(this.condicion.getNodo());
+    nodo.agregarHijo(')');
+    nodo.agregarHijo('{');
+    this.expresion.forEach((element) => {
+      nodo.agregarHijoAST(element.getNodo());
+    });
+    nodo.agregarHijo('}');
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let val = this.condicion.interpretar(arbol, tabla);

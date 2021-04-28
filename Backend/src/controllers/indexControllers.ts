@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import nodoAST from './Analizador/Abastracto/nodoAST';
 import Errores from './Analizador/Excepciones/Errores';
 import Asignacion from './Analizador/Instrucciones/Asignacion';
 import Declaracion from './Analizador/Instrucciones/Declaracion';
@@ -19,6 +20,7 @@ class IndexController {
     res.json({ text: 'Hola bbsitas' });
   }
   public interpretar(req: Request, res: Response) {
+    let arbolito;
     listaErrores = new Array<Errores>();
     listaSimbolos = new Array<reporteTabla>();
     let parser = require('./Analizador/analizador');
@@ -60,12 +62,23 @@ class IndexController {
           listaErrores.push(error);
           ast.actualizaConsola((<Errores>error).returnError());
         }
+
+        let arbolAst = new nodoAST('RAIZ');
+        let nodoINS = new nodoAST('INSTRUCCIONES');
+        ast.getinstrucciones().forEach((element) => {
+          nodoINS.agregarHijoAST(element.getNodo());
+        });
+        arbolAst.agregarHijoAST(nodoINS);
+        arbolito = arbolAst;
+        //graficar
+        console.log(arbolAst);
       }
       arbolNuevo = ast;
       res.send({
         resultado: ast.getconsola(),
         errores: listaErrores,
         tabla: listaSimbolos,
+        arbol: arbolito,
       });
     } catch (err) {
       console.error(err);

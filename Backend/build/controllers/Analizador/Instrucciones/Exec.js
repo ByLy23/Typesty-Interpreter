@@ -38,6 +38,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var tablaSimbolos_1 = __importDefault(require("../Simbolos/tablaSimbolos"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
@@ -51,6 +52,18 @@ var Exec = /** @class */ (function (_super) {
         _this.parametros = parametros;
         return _this;
     }
+    Exec.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('EXEC');
+        nodo.agregarHijo('exec');
+        nodo.agregarHijo(this.identificador + '');
+        nodo.agregarHijo('(');
+        this.parametros.forEach(function (element) {
+            nodo.agregarHijoAST(element.getNodo());
+        });
+        nodo.agregarHijo(')');
+        nodo.agregarHijo(';');
+        return nodo;
+    };
     Exec.prototype.interpretar = function (arbol, tabla) {
         var _a;
         var funcion = arbol.getFuncion(this.identificador);

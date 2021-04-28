@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Operadores = void 0;
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
 var Aritmetica = /** @class */ (function (_super) {
@@ -54,6 +55,20 @@ var Aritmetica = /** @class */ (function (_super) {
         }
         return _this;
     }
+    Aritmetica.prototype.getNodo = function () {
+        var _a, _b;
+        var nodo = new nodoAST_1.default('ARITMETICA');
+        if (this.operandoUnico != null) {
+            nodo.agregarHijo(this.operador + '');
+            nodo.agregarHijoAST(this.operandoUnico.getNodo());
+        }
+        else {
+            nodo.agregarHijoAST((_a = this.operando1) === null || _a === void 0 ? void 0 : _a.getNodo());
+            nodo.agregarHijo(this.operador + '');
+            nodo.agregarHijoAST((_b = this.operando2) === null || _b === void 0 ? void 0 : _b.getNodo());
+        }
+        return nodo;
+    };
     Aritmetica.prototype.interpretar = function (arbol, tabla) {
         var _a, _b;
         var izq, der, uno;

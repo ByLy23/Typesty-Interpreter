@@ -1,7 +1,7 @@
 import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo from '../Simbolos/Tipo';
-
+import nodoAST from './nodoAST';
 export abstract class Instruccion {
   public tipoDato: Tipo;
   public fila: Number;
@@ -13,5 +13,5 @@ export abstract class Instruccion {
   }
 
   abstract interpretar(arbol: Arbol, tabla: tablaSimbolos): any;
-  //abstract getNodo():any;
+  abstract getNodo(): nodoAST;
 }

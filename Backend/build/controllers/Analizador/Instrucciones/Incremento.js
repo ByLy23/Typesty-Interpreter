@@ -38,6 +38,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Identificador_1 = __importDefault(require("../Expresiones/Identificador"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
@@ -48,6 +49,13 @@ var Decremento = /** @class */ (function (_super) {
         _this.identificador = identificador;
         return _this;
     }
+    Decremento.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('INCREMENTO');
+        nodo.agregarHijoAST(this.identificador.getNodo());
+        nodo.agregarHijo('-');
+        nodo.agregarHijo('-');
+        return nodo;
+    };
     Decremento.prototype.interpretar = function (arbol, tabla) {
         //tomar el tipoDato de la variable
         if (this.identificador instanceof Identificador_1.default) {

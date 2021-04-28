@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Relacionales = void 0;
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
 var Relacional = /** @class */ (function (_super) {
@@ -50,6 +51,13 @@ var Relacional = /** @class */ (function (_super) {
         _this.cond2 = cond2;
         return _this;
     }
+    Relacional.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('RELACIONAL');
+        nodo.agregarHijoAST(this.cond1.getNodo());
+        nodo.agregarHijo(this.relacion + '');
+        nodo.agregarHijoAST(this.cond2.getNodo());
+        return nodo;
+    };
     Relacional.prototype.interpretar = function (arbol, tabla) {
         var izq, der;
         izq = this.obtieneValor(this.cond1, arbol, tabla);

@@ -1,6 +1,8 @@
 import { listaSimbolos } from '../../indexControllers';
+import obtenerValor from '../../reportes/cambiarTipo';
 import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
+import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
@@ -21,6 +23,17 @@ export default class LlamadaFuncMetd extends Instruccion {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador;
     this.parametros = parametros;
+  }
+
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('LLAMADA');
+    nodo.agregarHijo(this.identificador + '');
+    nodo.agregarHijo('(');
+    this.parametros.forEach((element) => {
+      nodo.agregarHijoAST(element.getNodo());
+    });
+    nodo.agregarHijo(')');
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let funcion = arbol.getFuncion(this.identificador);
@@ -137,7 +150,7 @@ export default class LlamadaFuncMetd extends Instruccion {
                 this.identificador,
                 variable.getvalor(),
                 'Funcion',
-                this.tipoDato.getTipo().toString(),
+                obtenerValor(this.tipoDato.getTipo()) + '',
                 tabla.getNombre(),
                 this.fila.toString(),
                 this.columna.toString()

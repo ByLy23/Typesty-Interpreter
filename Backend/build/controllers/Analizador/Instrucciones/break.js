@@ -33,16 +33,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
 var Break = /** @class */ (function (_super) {
     __extends(Break, _super);
     function Break(fila, columna) {
         return _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
     }
+    Break.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('BREAK');
+        nodo.agregarHijo('break');
+        nodo.agregarHijo(';');
+        return nodo;
+    };
     Break.prototype.interpretar = function (arbol, tabla) {
-        return "ByLy23";
+        return 'ByLy23';
     };
     return Break;
 }(Instruccion_1.Instruccion));

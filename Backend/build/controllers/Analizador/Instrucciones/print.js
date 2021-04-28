@@ -38,6 +38,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
 var Print = /** @class */ (function (_super) {
@@ -47,11 +48,20 @@ var Print = /** @class */ (function (_super) {
         _this.expresion = expresion;
         return _this;
     }
+    Print.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('IMPRESION');
+        nodo.agregarHijo('print');
+        nodo.agregarHijo('(');
+        nodo.agregarHijoAST(this.expresion.getNodo());
+        nodo.agregarHijo(')');
+        nodo.agregarHijo(';');
+        return nodo;
+    };
     Print.prototype.interpretar = function (arbol, tabla) {
         var valor = this.expresion.interpretar(arbol, tabla);
         if (valor instanceof Errores_1.default)
             return valor;
-        arbol.actualizaConsola(valor + "");
+        arbol.actualizaConsola(valor + '');
     };
     return Print;
 }(Instruccion_1.Instruccion));

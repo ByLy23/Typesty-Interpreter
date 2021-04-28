@@ -5,6 +5,7 @@ import Metodos from '../Instrucciones/Metodos';
 import Funciones from '../Instrucciones/Funciones';
 import { reporteTabla } from '../../Reportes/reporteTabla';
 import { listaSimbolos } from '../../indexControllers';
+import obtenerValor from '../../reportes/cambiarTipo';
 export default class Arbol {
   private instrucciones: Array<Instruccion>;
   private errores: Array<Errores>;
@@ -21,7 +22,7 @@ export default class Arbol {
             f.identificador,
             '',
             'Metodo',
-            f.tipoDato.getTipo().toString(),
+            'Void',
             '',
             f.fila.toString(),
             f.columna.toString()
@@ -38,7 +39,7 @@ export default class Arbol {
             f.identificador,
             '',
             'Funcion',
-            f.tipoDato.getTipo().toString(),
+            obtenerValor(f.tipoDato.getTipo()) + '',
             '',
             f.fila.toString(),
             f.columna.toString()

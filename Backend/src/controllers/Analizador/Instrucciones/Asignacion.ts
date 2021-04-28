@@ -1,6 +1,7 @@
 import { indexController, listaSimbolos } from '../../indexControllers';
 import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
+import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
@@ -18,6 +19,14 @@ export default class Asignacion extends Instruccion {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador;
     this.valor = valor;
+  }
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('ASIGNACION');
+    nodo.agregarHijo(this.identificador);
+    nodo.agregarHijo('=');
+    nodo.agregarHijoAST(this.valor.getNodo());
+    nodo.agregarHijo(';');
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     //tomar el tipoDato de la variable

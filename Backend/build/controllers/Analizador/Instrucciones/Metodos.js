@@ -19,6 +19,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Return_1 = __importDefault(require("./Return"));
 var Metodos = /** @class */ (function (_super) {
@@ -30,6 +31,19 @@ var Metodos = /** @class */ (function (_super) {
         _this.instrucciones = instrucciones;
         return _this;
     }
+    Metodos.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('METODO');
+        nodo.agregarHijo('void');
+        nodo.agregarHijo(this.identificador + '');
+        nodo.agregarHijo('(');
+        nodo.agregarHijo(')');
+        nodo.agregarHijo('{');
+        this.instrucciones.forEach(function (element) {
+            nodo.agregarHijoAST(element.getNodo());
+        });
+        nodo.agregarHijo('}');
+        return nodo;
+    };
     Metodos.prototype.interpretar = function (arbol, tabla) {
         for (var i = 0; i < this.instrucciones.length; i++) {
             var val = this.instrucciones[i].interpretar(arbol, tabla);

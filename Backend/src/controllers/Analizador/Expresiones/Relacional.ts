@@ -1,6 +1,7 @@
 //aritmeticas
 import { Console } from 'node:console';
 import { Instruccion } from '../Abastracto/Instruccion';
+import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
@@ -21,6 +22,14 @@ export default class Relacional extends Instruccion {
     this.relacion = relacion;
     this.cond1 = cond1;
     this.cond2 = cond2;
+  }
+
+  public getNodo(): nodoAST {
+    let nodo = new nodoAST('RELACIONAL');
+    nodo.agregarHijoAST(this.cond1.getNodo());
+    nodo.agregarHijo(this.relacion + '');
+    nodo.agregarHijoAST(this.cond2.getNodo());
+    return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let izq, der;

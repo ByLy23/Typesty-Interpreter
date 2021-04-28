@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var indexControllers_1 = require("../../../indexControllers");
 var Instruccion_1 = require("../../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../../Excepciones/Errores"));
 var tablaSimbolos_1 = __importDefault(require("../../Simbolos/tablaSimbolos"));
 var Tipo_1 = __importStar(require("../../Simbolos/Tipo"));
@@ -53,6 +54,34 @@ var condIf = /** @class */ (function (_super) {
         _this.condElseIf = condElseIf;
         return _this;
     }
+    condIf.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('IF');
+        nodo.agregarHijo('if');
+        nodo.agregarHijo('(');
+        nodo.agregarHijoAST(this.cond1.getNodo());
+        nodo.agregarHijo(')');
+        nodo.agregarHijo('{');
+        this.condIf.forEach(function (element) {
+            nodo.agregarHijoAST(element.getNodo());
+        });
+        nodo.agregarHijo('}');
+        if (this.condElse != undefined) {
+            nodo.agregarHijo('else');
+            nodo.agregarHijo('{');
+            this.condElse.forEach(function (element) {
+                nodo.agregarHijoAST(element.getNodo());
+            });
+            nodo.agregarHijo('}');
+        }
+        if (this.condElseIf != undefined) {
+            nodo.agregarHijo('else');
+            nodo.agregarHijo('if');
+            nodo.agregarHijo('{');
+            nodo.agregarHijoAST(this.condElseIf.getNodo());
+            nodo.agregarHijo('}');
+        }
+        return nodo;
+    };
     condIf.prototype.interpretar = function (arbol, tabla) {
         var val = this.cond1.interpretar(arbol, tabla);
         if (this.cond1.tipoDato.getTipo() != Tipo_1.tipoDato.BOOLEANO) {

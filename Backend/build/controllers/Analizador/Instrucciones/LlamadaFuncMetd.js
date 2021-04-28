@@ -38,8 +38,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var indexControllers_1 = require("../../indexControllers");
+var cambiarTipo_1 = __importDefault(require("../../reportes/cambiarTipo"));
 var reporteTabla_1 = require("../../Reportes/reporteTabla");
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var tablaSimbolos_1 = __importDefault(require("../Simbolos/tablaSimbolos"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
@@ -54,6 +56,16 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
         _this.parametros = parametros;
         return _this;
     }
+    LlamadaFuncMetd.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('LLAMADA');
+        nodo.agregarHijo(this.identificador + '');
+        nodo.agregarHijo('(');
+        this.parametros.forEach(function (element) {
+            nodo.agregarHijoAST(element.getNodo());
+        });
+        nodo.agregarHijo(')');
+        return nodo;
+    };
     LlamadaFuncMetd.prototype.interpretar = function (arbol, tabla) {
         var _a, _b;
         var funcion = arbol.getFuncion(this.identificador);
@@ -123,7 +135,7 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
                         else {
                             variable.setvalor(newVal);
                             nuevaTabla.setNombre(metodo.identificador);
-                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, variable.getvalor(), 'Funcion', this.tipoDato.getTipo().toString(), tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, variable.getvalor(), 'Funcion', cambiarTipo_1.default(this.tipoDato.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
                             indexControllers_1.listaSimbolos.push(nuevoSimbolo);
                             //nueva variable
                         }

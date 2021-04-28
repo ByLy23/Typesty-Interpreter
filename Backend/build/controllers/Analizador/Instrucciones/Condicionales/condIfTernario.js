@@ -38,6 +38,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../../Simbolos/Tipo"));
 var condIfTernario = /** @class */ (function (_super) {
@@ -49,6 +50,15 @@ var condIfTernario = /** @class */ (function (_super) {
         _this.condElse = conElse;
         return _this;
     }
+    condIfTernario.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('TERNARIO');
+        nodo.agregarHijoAST(this.condicion.getNodo());
+        nodo.agregarHijo('?');
+        nodo.agregarHijoAST(this.condIf.getNodo());
+        nodo.agregarHijo(':');
+        nodo.agregarHijoAST(this.condElse.getNodo());
+        return nodo;
+    };
     condIfTernario.prototype.interpretar = function (arbol, tabla) {
         var val = this.condicion.interpretar(arbol, tabla);
         if (val instanceof Errores_1.default)

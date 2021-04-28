@@ -33,8 +33,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
+var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
 var Return = /** @class */ (function (_super) {
     __extends(Return, _super);
@@ -44,6 +48,15 @@ var Return = /** @class */ (function (_super) {
         _this.expresionReturn = expresion;
         return _this;
     }
+    Return.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('RETURN');
+        nodo.agregarHijo('return');
+        if (this.expresionReturn != undefined) {
+            nodo.agregarHijoAST(this.expresionReturn.getNodo());
+        }
+        nodo.agregarHijo(';');
+        return nodo;
+    };
     Return.prototype.interpretar = function (arbol, tabla) {
         var _a;
         if (this.expresionReturn) {
