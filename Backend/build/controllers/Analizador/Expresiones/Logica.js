@@ -60,12 +60,12 @@ var Logica = /** @class */ (function (_super) {
         var _a, _b;
         var nodo = new nodoAST_1.default('LOGICO');
         if (this.condExcep != null) {
-            nodo.agregarHijo(this.loogica + '');
+            nodo.agregarHijo(this.loogica + '', 'log', this.loogica);
             nodo.agregarHijoAST(this.condExcep.getNodo());
         }
         else {
             nodo.agregarHijoAST((_a = this.cond1) === null || _a === void 0 ? void 0 : _a.getNodo());
-            nodo.agregarHijo(this.loogica + '');
+            nodo.agregarHijo(this.loogica + '', 'log', this.loogica);
             nodo.agregarHijoAST((_b = this.cond2) === null || _b === void 0 ? void 0 : _b.getNodo());
         }
         return nodo;

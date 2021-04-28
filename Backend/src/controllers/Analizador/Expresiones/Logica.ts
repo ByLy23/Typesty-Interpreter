@@ -31,11 +31,11 @@ export default class Logica extends Instruccion {
   public getNodo(): nodoAST {
     let nodo = new nodoAST('LOGICO');
     if (this.condExcep != null) {
-      nodo.agregarHijo(this.loogica + '');
+      nodo.agregarHijo(this.loogica + '', 'log', this.loogica);
       nodo.agregarHijoAST(this.condExcep.getNodo());
     } else {
       nodo.agregarHijoAST(this.cond1?.getNodo());
-      nodo.agregarHijo(this.loogica + '');
+      nodo.agregarHijo(this.loogica + '', 'log', this.loogica);
       nodo.agregarHijoAST(this.cond2?.getNodo());
     }
     return nodo;
@@ -62,6 +62,7 @@ export default class Logica extends Instruccion {
         return izq || der ? true : false;
       case Logicas.NOT:
         this.tipoDato.setTipo(tipoDato.BOOLEANO);
+
         return !unico;
     }
   }

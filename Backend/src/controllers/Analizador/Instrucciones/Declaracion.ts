@@ -1,4 +1,4 @@
-import { listaSimbolos } from '../../indexControllers';
+import { indexController, listaSimbolos } from '../../indexControllers';
 import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
 import nodoAST from '../Abastracto/nodoAST';
@@ -50,16 +50,26 @@ export default class Declaracion extends Instruccion {
               this.columna
             );
           } else {
-            let nuevoSimbolo = new reporteTabla(
-              this.identificador,
-              '0',
-              'Variable',
-              obtenerValor(this.tipo.getTipo()) + '',
-              tabla.getNombre(),
-              this.fila.toString(),
-              this.columna.toString()
-            );
-            listaSimbolos.push(nuevoSimbolo);
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                '0',
+                this.fila.toString(),
+                tabla.getNombre().toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                '0',
+                'Variable',
+                obtenerValor(this.tipo.getTipo()) + '',
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
           }
           break;
         case tipoDato.DECIMAL:
@@ -75,16 +85,26 @@ export default class Declaracion extends Instruccion {
               this.columna
             );
           } else {
-            let nuevoSimbolo = new reporteTabla(
-              this.identificador,
-              '0.0',
-              'Variable',
-              obtenerValor(this.tipo.getTipo()) + '',
-              tabla.getNombre(),
-              this.fila.toString(),
-              this.columna.toString()
-            );
-            listaSimbolos.push(nuevoSimbolo);
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                '0.0',
+                this.fila.toString(),
+                tabla.getNombre().toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                '0.0',
+                'Variable',
+                obtenerValor(this.tipo.getTipo()) + '',
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
           }
           break;
         case tipoDato.CARACTER:
@@ -100,16 +120,26 @@ export default class Declaracion extends Instruccion {
               this.columna
             );
           } else {
-            let nuevoSimbolo = new reporteTabla(
-              this.identificador,
-              '\u0000',
-              'Variable',
-              obtenerValor(this.tipo.getTipo()) + '',
-              tabla.getNombre(),
-              this.fila.toString(),
-              this.columna.toString()
-            );
-            listaSimbolos.push(nuevoSimbolo);
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                '\u0000',
+                this.fila.toString(),
+                tabla.getNombre().toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                '\u0000',
+                'Variable',
+                obtenerValor(this.tipo.getTipo()) + '',
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
           }
           break;
         case tipoDato.CADENA:
@@ -124,16 +154,26 @@ export default class Declaracion extends Instruccion {
               this.columna
             );
           } else {
-            let nuevoSimbolo = new reporteTabla(
-              this.identificador,
-              '',
-              'Variable',
-              obtenerValor(this.tipo.getTipo()) + '',
-              tabla.getNombre(),
-              this.fila.toString(),
-              this.columna.toString()
-            );
-            listaSimbolos.push(nuevoSimbolo);
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                '',
+                this.fila.toString(),
+                tabla.getNombre().toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                '',
+                'Variable',
+                obtenerValor(this.tipo.getTipo()) + '',
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
           }
           break;
         case tipoDato.BOOLEANO:
@@ -149,16 +189,26 @@ export default class Declaracion extends Instruccion {
               this.columna
             );
           } else {
-            let nuevoSimbolo = new reporteTabla(
-              this.identificador,
-              'true',
-              'Variable',
-              obtenerValor(this.tipo.getTipo()) + '',
-              tabla.getNombre(),
-              this.fila.toString(),
-              this.columna.toString()
-            );
-            listaSimbolos.push(nuevoSimbolo);
+            if (
+              !indexController.actualizarTabla(
+                this.identificador,
+                'true',
+                this.fila.toString(),
+                tabla.getNombre().toString(),
+                this.columna.toString()
+              )
+            ) {
+              let nuevoSimbolo = new reporteTabla(
+                this.identificador,
+                'true',
+                'Variable',
+                obtenerValor(this.tipo.getTipo()) + '',
+                tabla.getNombre(),
+                this.fila.toString(),
+                this.columna.toString()
+              );
+              listaSimbolos.push(nuevoSimbolo);
+            }
           }
           break;
       }
@@ -183,16 +233,26 @@ export default class Declaracion extends Instruccion {
             this.columna
           );
         } else {
-          let nuevoSimbolo = new reporteTabla(
-            this.identificador,
-            val,
-            'Variable',
-            obtenerValor(this.tipo.getTipo()) + '',
-            tabla.getNombre(),
-            this.fila.toString(),
-            this.columna.toString()
-          );
-          listaSimbolos.push(nuevoSimbolo);
+          if (
+            !indexController.actualizarTabla(
+              this.identificador,
+              val,
+              this.fila.toString(),
+              tabla.getNombre().toString(),
+              this.columna.toString()
+            )
+          ) {
+            let nuevoSimbolo = new reporteTabla(
+              this.identificador,
+              val,
+              'Variable',
+              obtenerValor(this.tipo.getTipo()) + '',
+              tabla.getNombre(),
+              this.fila.toString(),
+              this.columna.toString()
+            );
+            listaSimbolos.push(nuevoSimbolo);
+          }
         }
       }
     }
