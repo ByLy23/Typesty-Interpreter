@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.indexController = exports.listaSimbolos = exports.listaErrores = void 0;
+exports.indexController = exports.listaErrores = void 0;
 var nodoAST_1 = __importDefault(require("./Analizador/Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("./Analizador/Excepciones/Errores"));
 var Asignacion_1 = __importDefault(require("./Analizador/Instrucciones/Asignacion"));
@@ -28,12 +28,12 @@ var IndexController = /** @class */ (function () {
     IndexController.prototype.interpretar = function (req, res) {
         var arbolito;
         exports.listaErrores = new Array();
-        exports.listaSimbolos = new Array();
         var parser = require('./Analizador/analizador');
         var entrada = req.body.entrada;
         try {
-            console.log(entrada);
             var ast = new Arbol_1.default(parser.parse(entrada));
+            // res.json({ resultado: ast });
+            // return;
             var tabla = new tablaSimbolos_1.default();
             ast.settablaGlobal(tabla);
             for (var _i = 0, _a = ast.getinstrucciones(); _i < _a.length; _i++) {
@@ -77,27 +77,13 @@ var IndexController = /** @class */ (function () {
             res.send({
                 resultado: ast.getconsola(),
                 errores: exports.listaErrores,
-                tabla: exports.listaSimbolos,
+                tabla: ast.getSimbolos(),
                 arbol: arbolito,
             });
         }
         catch (err) {
-            console.error(err);
             res.json({ error: err, errores: exports.listaErrores });
         }
-    };
-    IndexController.prototype.actualizarTabla = function (identificador, valor, linea, entorno, columna) {
-        for (var _i = 0, listaSimbolos_1 = exports.listaSimbolos; _i < listaSimbolos_1.length; _i++) {
-            var elemento = listaSimbolos_1[_i];
-            if (elemento.getIdentificador() == identificador &&
-                elemento.getEntorno() == entorno) {
-                elemento.setValor(valor);
-                elemento.setLinea(linea);
-                elemento.setColumna(columna);
-                return true;
-            }
-        }
-        return false;
     };
     return IndexController;
 }());

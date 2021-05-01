@@ -33,8 +33,24 @@ export default class condIfTernario extends Instruccion {
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let val = this.condicion.interpretar(arbol, tabla);
     if (val instanceof Errores) return val;
-    return val
-      ? this.condIf.interpretar(arbol, tabla)
-      : this.condElse.interpretar(arbol, tabla);
+    if (this.condicion.tipoDato.getTipo() != tipoDato.BOOLEANO) {
+      return new Errores(
+        'SEMANTICO',
+        'DATO DEBE SER BOOLEANO',
+        this.fila,
+        this.columna
+      );
+    }
+    if (Boolean(val)) {
+      let ifc = this.condIf.interpretar(arbol, tabla);
+      if (ifc instanceof Errores) return ifc;
+      this.tipoDato.setTipo(this.condIf.tipoDato.getTipo());
+      return ifc;
+    } else {
+      let elsec = this.condElse.interpretar(arbol, tabla);
+      if (elsec instanceof Errores) return elsec;
+      this.tipoDato.setTipo(this.condElse.tipoDato.getTipo());
+      return elsec;
+    }
   }
 }

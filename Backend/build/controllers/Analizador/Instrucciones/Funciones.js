@@ -18,7 +18,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var cambiarTipo_1 = __importDefault(require("../../reportes/cambiarTipo"));
+var cambiarTipo_1 = __importDefault(require("../../Reportes/cambiarTipo"));
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
@@ -37,7 +37,7 @@ var Funciones = /** @class */ (function (_super) {
         nodo.agregarHijo(cambiarTipo_1.default(this.tipoDato.getTipo()) + '');
         nodo.agregarHijo(this.identificador + '');
         nodo.agregarHijo('(');
-        nodo.agregarHijoAST(this.parametros.getNodo());
+        //nodo.agregarHijoAST(this.parametros.getNodo());
         nodo.agregarHijo(')');
         nodo.agregarHijo('{');
         this.instrucciones.forEach(function (element) {

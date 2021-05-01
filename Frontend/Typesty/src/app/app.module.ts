@@ -19,6 +19,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ContenidoInicioComponent } from './componentes/contenido-inicio/contenido-inicio.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { CodemirrorModule } from 'ng2-codemirror';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatTableModule } from '@angular/material/table';
     HttpClientModule,
     MatToolbarModule,
     MatIconModule,
+    CodemirrorModule,
     BrowserAnimationsModule,
     MatSidenavModule,
     MatListModule,

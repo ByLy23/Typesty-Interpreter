@@ -37,7 +37,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var indexControllers_1 = require("../../indexControllers");
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
@@ -68,7 +67,7 @@ var Asignacion = /** @class */ (function (_super) {
             }
             else {
                 variable.setvalor(val);
-                indexControllers_1.indexController.actualizarTabla(this.identificador, variable.getvalor(), this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
+                arbol.actualizarTabla(this.identificador, variable.getvalor(), this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
                 //identificadorm,
                 //actualizar valor de la tabla y no crear otra equis des
             }

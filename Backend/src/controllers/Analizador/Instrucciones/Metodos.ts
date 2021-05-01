@@ -1,4 +1,4 @@
-import obtenerValor from '../../reportes/cambiarTipo';
+import obtenerValor from '../../Reportes/cambiarTipo';
 import { Instruccion } from '../Abastracto/Instruccion';
 import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';

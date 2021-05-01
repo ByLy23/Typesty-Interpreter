@@ -4,13 +4,36 @@ import Errores from '../Excepciones/Errores';
 import Metodos from '../Instrucciones/Metodos';
 import Funciones from '../Instrucciones/Funciones';
 import { reporteTabla } from '../../Reportes/reporteTabla';
-import { listaSimbolos } from '../../indexControllers';
-import obtenerValor from '../../reportes/cambiarTipo';
+import obtenerValor from '../../Reportes/cambiarTipo';
 export default class Arbol {
   private instrucciones: Array<Instruccion>;
   private errores: Array<Errores>;
   private funciones: Array<Instruccion>;
+  public listaSimbolos: Array<reporteTabla>;
 
+  public getSimbolos(): Array<reporteTabla> {
+    return this.listaSimbolos;
+  }
+  public actualizarTabla(
+    identificador: string,
+    valor: string,
+    linea: string,
+    entorno: string,
+    columna: string
+  ): boolean {
+    for (var elemento of this.listaSimbolos) {
+      if (
+        elemento.getIdentificador().toString() == identificador &&
+        elemento.getEntorno().toString() == entorno.toString()
+      ) {
+        elemento.setValor(valor);
+        elemento.setLinea(linea);
+        elemento.setColumna(columna);
+        return true;
+      }
+    }
+    return false;
+  }
   public getFuncion(identificador: String) {
     for (let f of this.funciones) {
       if (f instanceof Metodos) {
@@ -27,7 +50,7 @@ export default class Arbol {
             f.fila.toString(),
             f.columna.toString()
           );
-          listaSimbolos.push(nuevoSimbolo);
+          this.listaSimbolos.push(nuevoSimbolo);
           return f;
         }
       } else if (f instanceof Funciones) {
@@ -44,7 +67,7 @@ export default class Arbol {
             f.fila.toString(),
             f.columna.toString()
           );
-          listaSimbolos.push(nuevoSimbolo);
+          this.listaSimbolos.push(nuevoSimbolo);
           return f;
         }
       }
@@ -69,7 +92,7 @@ export default class Arbol {
   public setinstrucciones(value: Array<Instruccion>) {
     this.instrucciones = value;
   }
-  private consola: String;
+  private consola: String = '';
   public getconsola(): String {
     return this.consola;
   }
@@ -93,5 +116,6 @@ export default class Arbol {
     this.tablaGlobal = new tablaSimbolos();
     this.errores = new Array<Errores>();
     this.funciones = new Array<Instruccion>();
+    this.listaSimbolos = new Array<reporteTabla>();
   }
 }

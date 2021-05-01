@@ -111,9 +111,12 @@ var Aritmetica = /** @class */ (function (_super) {
         var opUn = (_a = this.operandoUnico) === null || _a === void 0 ? void 0 : _a.tipoDato.getTipo();
         switch (opUn) {
             case Tipo_1.tipoDato.ENTERO:
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
                 return parseInt(izq) * -1;
             case Tipo_1.tipoDato.DECIMAL:
-                return parseFloat(izq) * -1;
+                console.log(izq + " as");
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
+                return parseFloat(izq) * -1.0;
         }
     };
     /*----------------------------------------------------------SUMA------------------------------------------------- */

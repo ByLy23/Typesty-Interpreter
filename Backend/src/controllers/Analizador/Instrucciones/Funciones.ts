@@ -1,4 +1,4 @@
-import obtenerValor from '../../reportes/cambiarTipo';
+import obtenerValor from '../../Reportes/cambiarTipo';
 import { Instruccion } from '../Abastracto/Instruccion';
 import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
@@ -30,7 +30,7 @@ export default class Funciones extends Instruccion {
     nodo.agregarHijo(obtenerValor(this.tipoDato.getTipo()) + '');
     nodo.agregarHijo(this.identificador + '');
     nodo.agregarHijo('(');
-    nodo.agregarHijoAST(this.parametros.getNodo());
+    //nodo.agregarHijoAST(this.parametros.getNodo());
     nodo.agregarHijo(')');
     nodo.agregarHijo('{');
     this.instrucciones.forEach((element) => {

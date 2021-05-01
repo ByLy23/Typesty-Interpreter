@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-
 import { InicioService } from 'src/app/servicios/inicio.service';
 
 @Component({
@@ -8,8 +7,11 @@ import { InicioService } from 'src/app/servicios/inicio.service';
   styleUrls: ['./contenido-inicio.component.css'],
 })
 export class ContenidoInicioComponent implements OnInit {
-  constructor(private inicioSrv: InicioService) {}
-
+  constructor(private inicioSrv: InicioService) {
+    this.code = 'asd';
+  }
+  code = '';
+  contenido = '';
   ngOnInit(): void {}
   ngAfterViewInit(): void {
     this.data = JSON.parse(localStorage.getItem('contenido'));
@@ -35,6 +37,7 @@ export class ContenidoInicioComponent implements OnInit {
   }
   interpretarContenido(texto) {
     this.inicioSrv.compilarCodigo(texto).subscribe((mensaje) => {
+      console.log(mensaje);
       this.mostrarContenido(mensaje.resultado, 'consolas');
       let tabL = JSON.stringify(mensaje.tabla);
       let res = mensaje.resultado;
