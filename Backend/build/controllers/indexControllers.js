@@ -71,6 +71,7 @@ var IndexController = /** @class */ (function () {
             ast.getinstrucciones().forEach(function (element) {
                 nodoINS_1.agregarHijoAST(element.getNodo());
             });
+            console.log(arbolAst);
             arbolAst.agregarHijoAST(nodoINS_1);
             graficar_1.default(arbolAst);
             arbolNuevo = ast;

@@ -37,7 +37,24 @@ var Funciones = /** @class */ (function (_super) {
         nodo.agregarHijo(cambiarTipo_1.default(this.tipoDato.getTipo()) + '');
         nodo.agregarHijo(this.identificador + '');
         nodo.agregarHijo('(');
-        //nodo.agregarHijoAST(this.parametros.getNodo());
+        var nuevo = null;
+        if (this.parametros.length > 0) {
+            nuevo = new nodoAST_1.default('PARAMETROS');
+        }
+        for (var param = 0; param < this.parametros.length; param++) {
+            if (nuevo == null)
+                break;
+            var vari = cambiarTipo_1.default(this.parametros[param].tipato.getTipo());
+            var ide = this.parametros[param].identificador;
+            if (vari != null)
+                nuevo.agregarHijo(vari);
+            if (ide != null)
+                nuevo.agregarHijo(ide);
+            if (param != this.parametros.length - 1)
+                nuevo.agregarHijo(',');
+        }
+        if (nuevo != null)
+            nodo.agregarHijoAST(nuevo);
         nodo.agregarHijo(')');
         nodo.agregarHijo('{');
         this.instrucciones.forEach(function (element) {
