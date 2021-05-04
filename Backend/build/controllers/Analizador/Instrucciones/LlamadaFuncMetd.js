@@ -136,8 +136,8 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
                         else {
                             variable.setvalor(newVal);
                             nuevaTabla.setNombre(metodo.identificador);
-                            if (!arbol.actualizarTabla(this.identificador.toString(), '', this.fila.toString(), nuevaTabla.getNombre().toString(), this.columna.toString())) {
-                                var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, variable.getvalor(), 'Funcion', cambiarTipo_1.default(this.tipoDato.getTipo()) + '', nuevaTabla.getNombre(), this.fila.toString(), this.columna.toString());
+                            if (!arbol.actualizarTabla(metodo.identificador.toString(), newVal, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString())) {
+                                var nuevoSimbolo = new reporteTabla_1.reporteTabla(metodo.identificador, newVal, 'Funcion', cambiarTipo_1.default(this.tipoDato.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
                                 arbol.listaSimbolos.push(nuevoSimbolo);
                             }
                             //nueva variable

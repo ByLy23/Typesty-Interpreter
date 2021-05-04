@@ -3,7 +3,6 @@ import { Instruccion } from '../Abastracto/Instruccion';
 import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
 import Arbol from '../Simbolos/Arbol';
-import Simbolo from '../Simbolos/Simbolo';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo from '../Simbolos/Tipo';
 import Return from './Return';

@@ -9,21 +9,15 @@ function graficarArbol(arbolitos) {
     cuerpo = '';
     graphAST('n0', arbolitos);
     var principal = "digraph arbolAST{ \n      n0[label=\"" + arbolitos.getValor().replace('"', '\\"') + "\"];\n      " + cuerpo + "\n    }";
-    fs.writeFile('arbolAST.dot', principal, function () {
-        console.log('Creado');
-    });
+    fs.writeFile('arbolAST.dot', principal, function () { });
     child_process_1.exec('dot -Tsvg arbolAST.dot -o ../Frontend/Typesty/src/assets/arbolAST.svg', function (error, stdout, stderr) {
         if (error) {
-            console.log("error: " + error.message);
             return;
         }
         if (stderr) {
-            console.log("stderr:" + stderr);
             return;
         }
-        console.log("stdout:" + stdout);
     });
-    //console.log(principal);
 }
 exports.default = graficarArbol;
 function graphAST(texto, padre) {
