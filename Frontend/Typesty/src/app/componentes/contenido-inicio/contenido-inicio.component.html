@@ -4,6 +4,7 @@
             <mat-button-toggle value="Abrir Archivo" (click)="textInput.click()">Abrir Archivo</mat-button-toggle>
             <input type="file" hidden="true" #textInput onclick="this.value=null"(change)="textInputChange($event)" accept=".ty"/>
             <mat-button-toggle value="Generar AST">Generar AST</mat-button-toggle>
+            
           </mat-button-toggle-group>
     <div class="texto">
         <label>Editor de Texto</label>

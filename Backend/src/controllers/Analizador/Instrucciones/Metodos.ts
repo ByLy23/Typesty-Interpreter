@@ -30,6 +30,7 @@ export default class Metodos extends Instruccion {
     nodo.agregarHijo('void');
     nodo.agregarHijo(this.identificador + '');
     nodo.agregarHijo('(');
+    // nodo.agregarHijoAST((<Instruccion>this.parametros).getNodo());
     nodo.agregarHijo(')');
     nodo.agregarHijo('{');
     this.instrucciones.forEach((element) => {

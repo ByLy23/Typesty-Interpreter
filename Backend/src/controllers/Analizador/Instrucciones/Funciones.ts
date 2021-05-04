@@ -30,7 +30,7 @@ export default class Funciones extends Instruccion {
     nodo.agregarHijo(obtenerValor(this.tipoDato.getTipo()) + '');
     nodo.agregarHijo(this.identificador + '');
     nodo.agregarHijo('(');
-    //nodo.agregarHijoAST(this.parametros.getNodo());
+    // nodo.agregarHijoAST((<Instruccion>this.parametros).getNodo());
     nodo.agregarHijo(')');
     nodo.agregarHijo('{');
     this.instrucciones.forEach((element) => {
