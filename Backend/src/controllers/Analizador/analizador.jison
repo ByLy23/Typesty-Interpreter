@@ -32,6 +32,7 @@ const metodos= require("./Instrucciones/Metodos");
 const llamadas= require("./Instrucciones/LlamadaFuncMetd");
 const ejecucion= require("./Instrucciones/Exec");
 const funciones= require("./Instrucciones/Funciones");
+const vectores=require('./Instrucciones/declaracionVectores');
 %}
 //definicion lexica
 %lex 
@@ -64,6 +65,7 @@ const funciones= require("./Instrucciones/Funciones");
 "for"           return 'RESFOR';
 "void"          return 'RESVOID';
 "exec"          return 'RESEXEC';
+"new"           return 'RESNUEVO';
 //simbolos
 "{"             return 'LLAVEABRE';
 ","             return 'COMA';
@@ -73,6 +75,8 @@ const funciones= require("./Instrucciones/Funciones");
 ";"             return 'PTCOMA';
 "("             return 'PARABRE';
 ")"             return 'PARCIERRA';
+"["             return 'CORCHABRE';
+"]"             return 'CORCHCIERRA';
 "+"             return 'MAS';
 "-"             return 'MENOS';
 "/"             return 'DIVI';
@@ -93,7 +97,7 @@ const funciones= require("./Instrucciones/Funciones");
 
 //espacios en blanco
 //cadena
-\"[^\"]*\"             { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
+\"[^]*\"             { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
 [0-9]+("."[0-9]+)\b     return 'DECIMAL';
 [0-9]+\b                return 'ENTERO';
 \'[^\']\'               return 'CARACTER';
@@ -220,6 +224,7 @@ INSTRUCCION:
     |LLAMADA  PTCOMA                    {$$=$1;}
     |EJECUTAR PTCOMA                    {$$=$1;}
     |FUNCIONES                          {$$=$1;}
+    |VECTORES PTCOMA                     {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"Se esperaba un token en esta linea",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -358,6 +363,14 @@ FUNCIONES:
     TIPODATO IDENTIFICADOR PARABRE PARAMETROS PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,$4,$7);}
     |TIPODATO IDENTIFICADOR PARABRE PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA           {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,[],$6);}
     ;
+VECTORES:
+    TIPODATO CORCHABRE CORCHCIERRA IDENTIFICADOR IGUAL RESNUEVO TIPODATO CORCHABRE EXPRESION CORCHCIERRA {$$=new vectores.default($1,$4,true,@1.first_line,@1.first_column,$9,$7);}
+    |TIPODATO CORCHABRE CORCHCIERRA IDENTIFICADOR IGUAL LLAVEABRE LISTAVALORES LLAVECIERRA  {$$=new vectores.default($1,$4,false,@1.first_line,@1.first_column,undefined,undefined,$7);}
+    ;
+LISTAVALORES:
+    LISTAVALORES COMA EXPRESION         {$1.push($3);$$=$1;} 
+    |EXPRESION                          {$$=[$1];}
+    ;
     /*
     |TIPODATO
     TIPODATO:
@@ -368,7 +381,7 @@ FUNCIONES:
         |RESDOUBLE
     |DECLARACION
     DECLARACION:
-        TIPODATO IDENTIFICADOR PTCMA
+        TIPODATO IDENTIFICADOR 
         |TIPODATO IDENTIFICADOR IGUAL EXPRESION PTCOMA
         |ERROR PTCOMA
     a=b;

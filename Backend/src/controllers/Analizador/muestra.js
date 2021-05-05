@@ -96,3 +96,7 @@ const ejecucion = require('./Instrucciones/Exec');
 const funciones = require('./Instrucciones/Funciones');
 
 new funciones.default(tipo, fila, col, id, par, ins);
+
+const vectores = require('./Instrucciones/declaracionVectores');
+
+new vectores.default(tipo, id, tipo, fila, col, cant, vec, lis);
