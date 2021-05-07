@@ -63,9 +63,23 @@ var condIfTernario = /** @class */ (function (_super) {
         var val = this.condicion.interpretar(arbol, tabla);
         if (val instanceof Errores_1.default)
             return val;
-        return val
-            ? this.condIf.interpretar(arbol, tabla)
-            : this.condElse.interpretar(arbol, tabla);
+        if (this.condicion.tipoDato.getTipo() != Tipo_1.tipoDato.BOOLEANO) {
+            return new Errores_1.default('SEMANTICO', 'DATO DEBE SER BOOLEANO', this.fila, this.columna);
+        }
+        if (Boolean(val)) {
+            var ifc = this.condIf.interpretar(arbol, tabla);
+            if (ifc instanceof Errores_1.default)
+                return ifc;
+            this.tipoDato.setTipo(this.condIf.tipoDato.getTipo());
+            return ifc;
+        }
+        else {
+            var elsec = this.condElse.interpretar(arbol, tabla);
+            if (elsec instanceof Errores_1.default)
+                return elsec;
+            this.tipoDato.setTipo(this.condElse.tipoDato.getTipo());
+            return elsec;
+        }
     };
     return condIfTernario;
 }(Instruccion_1.Instruccion));

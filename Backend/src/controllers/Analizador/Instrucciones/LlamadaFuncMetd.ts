@@ -1,5 +1,4 @@
-import { listaSimbolos } from '../../indexControllers';
-import obtenerValor from '../../reportes/cambiarTipo';
+import obtenerValor from '../../Reportes/cambiarTipo';
 import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
 import nodoAST from '../Abastracto/nodoAST';
@@ -79,16 +78,26 @@ export default class LlamadaFuncMetd extends Instruccion {
             } else {
               variable.setvalor(newVal);
               nuevaTabla.setNombre(metodo.identificador);
-              let nuevoSimbolo = new reporteTabla(
-                this.identificador,
-                '',
-                'Metodo',
-                'Void',
-                '',
-                this.fila.toString(),
-                this.columna.toString()
-              );
-              listaSimbolos.push(nuevoSimbolo);
+              if (
+                !arbol.actualizarTabla(
+                  this.identificador.toString(),
+                  '',
+                  this.fila.toString(),
+                  nuevaTabla.getNombre().toString(),
+                  this.columna.toString()
+                )
+              ) {
+                let nuevoSimbolo = new reporteTabla(
+                  this.identificador,
+                  '',
+                  'Metodo',
+                  'Void',
+                  nuevaTabla.getNombre(),
+                  this.fila.toString(),
+                  this.columna.toString()
+                );
+                arbol.listaSimbolos.push(nuevoSimbolo);
+              }
             }
           } else {
             return new Errores(
@@ -146,16 +155,26 @@ export default class LlamadaFuncMetd extends Instruccion {
             } else {
               variable.setvalor(newVal);
               nuevaTabla.setNombre(metodo.identificador);
-              let nuevoSimbolo = new reporteTabla(
-                this.identificador,
-                variable.getvalor(),
-                'Funcion',
-                obtenerValor(this.tipoDato.getTipo()) + '',
-                tabla.getNombre(),
-                this.fila.toString(),
-                this.columna.toString()
-              );
-              listaSimbolos.push(nuevoSimbolo);
+              if (
+                !arbol.actualizarTabla(
+                  metodo.identificador.toString(),
+                  newVal,
+                  this.fila.toString(),
+                  tabla.getNombre().toString(),
+                  this.columna.toString()
+                )
+              ) {
+                let nuevoSimbolo = new reporteTabla(
+                  metodo.identificador,
+                  newVal,
+                  'Funcion',
+                  obtenerValor(this.tipoDato.getTipo()) + '',
+                  tabla.getNombre(),
+                  this.fila.toString(),
+                  this.columna.toString()
+                );
+                arbol.listaSimbolos.push(nuevoSimbolo);
+              }
               //nueva variable
             }
           } else {

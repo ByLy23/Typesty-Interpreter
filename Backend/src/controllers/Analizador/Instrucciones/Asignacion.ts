@@ -1,5 +1,3 @@
-import { indexController, listaSimbolos } from '../../indexControllers';
-import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
 import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
@@ -42,7 +40,7 @@ export default class Asignacion extends Instruccion {
         );
       } else {
         variable.setvalor(val);
-        indexController.actualizarTabla(
+        arbol.actualizarTabla(
           this.identificador,
           variable.getvalor(),
           this.fila.toString(),

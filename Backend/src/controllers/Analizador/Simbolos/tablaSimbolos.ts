@@ -27,14 +27,14 @@ export default class tablaSimbolos {
   public setVariable(simbolo: Simbolo) {
     for (let e: tablaSimbolos = this; e != null; e = e.getAnterior()) {
       let encontrado: Simbolo = <Simbolo>(
-        e.getTabla().get(simbolo.getidentificador())
+        e.getTabla().get(simbolo.getidentificador().toLowerCase())
       );
       if (encontrado != null) {
         return `La variable existe actualmente`;
       }
       break;
     }
-    this.tablaActual.set(simbolo.getidentificador(), simbolo);
+    this.tablaActual.set(simbolo.getidentificador().toLowerCase(), simbolo);
     return `creada con exito`;
   }
   public getVariable(id: String) {

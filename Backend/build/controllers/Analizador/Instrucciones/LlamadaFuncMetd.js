@@ -37,8 +37,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var indexControllers_1 = require("../../indexControllers");
-var cambiarTipo_1 = __importDefault(require("../../reportes/cambiarTipo"));
+var cambiarTipo_1 = __importDefault(require("../../Reportes/cambiarTipo"));
 var reporteTabla_1 = require("../../Reportes/reporteTabla");
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
@@ -94,8 +93,10 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
                         else {
                             variable.setvalor(newVal);
                             nuevaTabla.setNombre(metodo.identificador);
-                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '', 'Metodo', 'Void', '', this.fila.toString(), this.columna.toString());
-                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
+                            if (!arbol.actualizarTabla(this.identificador.toString(), '', this.fila.toString(), nuevaTabla.getNombre().toString(), this.columna.toString())) {
+                                var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, '', 'Metodo', 'Void', nuevaTabla.getNombre(), this.fila.toString(), this.columna.toString());
+                                arbol.listaSimbolos.push(nuevoSimbolo);
+                            }
                         }
                     }
                     else {
@@ -135,8 +136,10 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
                         else {
                             variable.setvalor(newVal);
                             nuevaTabla.setNombre(metodo.identificador);
-                            var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, variable.getvalor(), 'Funcion', cambiarTipo_1.default(this.tipoDato.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
-                            indexControllers_1.listaSimbolos.push(nuevoSimbolo);
+                            if (!arbol.actualizarTabla(metodo.identificador.toString(), newVal, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString())) {
+                                var nuevoSimbolo = new reporteTabla_1.reporteTabla(metodo.identificador, newVal, 'Funcion', cambiarTipo_1.default(this.tipoDato.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                                arbol.listaSimbolos.push(nuevoSimbolo);
+                            }
                             //nueva variable
                         }
                     }

@@ -41,41 +41,35 @@ var Instruccion_1 = require("../Abastracto/Instruccion");
 var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
-var Asignacion = /** @class */ (function (_super) {
-    __extends(Asignacion, _super);
-    function Asignacion(identificador, valor, fila, columna) {
+var accesoVector = /** @class */ (function (_super) {
+    __extends(accesoVector, _super);
+    function accesoVector(identificador, expresion, fila, columna) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
         _this.identificador = identificador;
-        _this.valor = valor;
+        _this.expresion = expresion;
         return _this;
     }
-    Asignacion.prototype.getNodo = function () {
-        var nodo = new nodoAST_1.default('ASIGNACION');
+    accesoVector.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('ACCESO-VECTOR');
         nodo.agregarHijo(this.identificador);
-        nodo.agregarHijo('=');
-        nodo.agregarHijoAST(this.valor.getNodo());
-        nodo.agregarHijo(';');
+        nodo.agregarHijo('[');
+        nodo.agregarHijoAST(this.expresion.getNodo());
+        nodo.agregarHijo(']');
         return nodo;
     };
-    Asignacion.prototype.interpretar = function (arbol, tabla) {
-        //tomar el tipoDato de la variable
-        var variable = tabla.getVariable(this.identificador);
-        if (variable != null) {
-            var val = this.valor.interpretar(arbol, tabla);
-            if (variable.gettipo().getTipo() != this.valor.tipoDato.getTipo()) {
-                return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
-            }
-            else {
-                variable.setvalor(val);
-                arbol.actualizarTabla(this.identificador, variable.getvalor(), this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
-                //identificadorm,
-                //actualizar valor de la tabla y no crear otra equis des
-            }
+    accesoVector.prototype.interpretar = function (arbol, tabla) {
+        var exp = this.expresion.interpretar(arbol, tabla);
+        if (exp instanceof Errores_1.default)
+            return exp;
+        if (this.expresion.tipoDato.getTipo() != Tipo_1.tipoDato.ENTERO)
+            return new Errores_1.default('SEMANTICO', 'TIPO DE DATO DIFERENTE', this.fila, this.columna);
+        var ide = tabla.getVariable(this.identificador);
+        if (ide != null) {
+            this.tipoDato = new Tipo_1.default(ide.gettipo().getTipo());
+            return ide.getvalor()[exp];
         }
-        else {
-            return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' NO EXISTE', this.fila, this.columna);
-        }
+        return null;
     };
-    return Asignacion;
+    return accesoVector;
 }(Instruccion_1.Instruccion));
-exports.default = Asignacion;
+exports.default = accesoVector;

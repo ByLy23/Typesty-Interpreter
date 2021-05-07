@@ -8,8 +8,7 @@ export default class Simbolo {
   constructor(tipo: Tipo, identificador: String, valor?: any) {
     this.tipo = tipo;
     this.identificador = identificador;
-    if (valor) this.valor = valor;
-    else this.valor = null;
+    this.valor = valor;
   }
   //getters y setters
   public gettipo(): Tipo {

@@ -12,7 +12,6 @@ import { reporteTabla } from './Reportes/reporteTabla';
 import graficarArbol from './Reportes/graficar';
 
 export let listaErrores: Array<Errores>;
-export let listaSimbolos: Array<reporteTabla>;
 let arbolNuevo: Arbol;
 let contador: number;
 let cuerpo: string;
@@ -25,12 +24,12 @@ class IndexController {
   public interpretar(req: Request, res: Response) {
     let arbolito;
     listaErrores = new Array<Errores>();
-    listaSimbolos = new Array<reporteTabla>();
     let parser = require('./Analizador/analizador');
     const { entrada } = req.body;
     try {
-      console.log(entrada);
       let ast = new Arbol(parser.parse(entrada));
+      // res.json({ resultado: ast });
+      // return;
       var tabla = new tablaSimbolos();
       ast.settablaGlobal(tabla);
 
@@ -68,7 +67,6 @@ class IndexController {
         }
         //graficars
       }
-
       let arbolAst = new nodoAST('RAIZ');
       let nodoINS = new nodoAST('INSTRUCCIONES');
       ast.getinstrucciones().forEach((element) => {
@@ -80,34 +78,12 @@ class IndexController {
       res.send({
         resultado: ast.getconsola(),
         errores: listaErrores,
-        tabla: listaSimbolos,
+        tabla: ast.getSimbolos(),
         arbol: arbolito,
       });
     } catch (err) {
-      console.error(err);
       res.json({ error: err, errores: listaErrores });
     }
-  }
-
-  public actualizarTabla(
-    identificador: string,
-    valor: string,
-    linea: string,
-    entorno: string,
-    columna: string
-  ): boolean {
-    for (var elemento of listaSimbolos) {
-      if (
-        elemento.getIdentificador() == identificador &&
-        elemento.getEntorno() == entorno
-      ) {
-        elemento.setValor(valor);
-        elemento.setLinea(linea);
-        elemento.setColumna(columna);
-        return true;
-      }
-    }
-    return false;
   }
 }
 export const indexController = new IndexController();

@@ -1,4 +1,3 @@
-import { indexController, listaSimbolos } from '../../indexControllers';
 import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
 import nodoAST from '../Abastracto/nodoAST';
@@ -7,7 +6,7 @@ import Arbol from '../Simbolos/Arbol';
 import Simbolo from '../Simbolos/Simbolo';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../Simbolos/Tipo';
-import obtenerValor from '../../reportes/cambiarTipo';
+import obtenerValor from '../../Reportes/cambiarTipo';
 export default class Declaracion extends Instruccion {
   private tipo: Tipo;
   private identificador: string;
@@ -51,7 +50,7 @@ export default class Declaracion extends Instruccion {
             );
           } else {
             if (
-              !indexController.actualizarTabla(
+              !arbol.actualizarTabla(
                 this.identificador,
                 '0',
                 this.fila.toString(),
@@ -68,7 +67,7 @@ export default class Declaracion extends Instruccion {
                 this.fila.toString(),
                 this.columna.toString()
               );
-              listaSimbolos.push(nuevoSimbolo);
+              arbol.listaSimbolos.push(nuevoSimbolo);
             }
           }
           break;
@@ -86,7 +85,7 @@ export default class Declaracion extends Instruccion {
             );
           } else {
             if (
-              !indexController.actualizarTabla(
+              !arbol.actualizarTabla(
                 this.identificador,
                 '0.0',
                 this.fila.toString(),
@@ -103,7 +102,7 @@ export default class Declaracion extends Instruccion {
                 this.fila.toString(),
                 this.columna.toString()
               );
-              listaSimbolos.push(nuevoSimbolo);
+              arbol.listaSimbolos.push(nuevoSimbolo);
             }
           }
           break;
@@ -121,7 +120,7 @@ export default class Declaracion extends Instruccion {
             );
           } else {
             if (
-              !indexController.actualizarTabla(
+              !arbol.actualizarTabla(
                 this.identificador,
                 '\u0000',
                 this.fila.toString(),
@@ -138,7 +137,7 @@ export default class Declaracion extends Instruccion {
                 this.fila.toString(),
                 this.columna.toString()
               );
-              listaSimbolos.push(nuevoSimbolo);
+              arbol.listaSimbolos.push(nuevoSimbolo);
             }
           }
           break;
@@ -155,7 +154,7 @@ export default class Declaracion extends Instruccion {
             );
           } else {
             if (
-              !indexController.actualizarTabla(
+              !arbol.actualizarTabla(
                 this.identificador,
                 '',
                 this.fila.toString(),
@@ -172,7 +171,7 @@ export default class Declaracion extends Instruccion {
                 this.fila.toString(),
                 this.columna.toString()
               );
-              listaSimbolos.push(nuevoSimbolo);
+              arbol.listaSimbolos.push(nuevoSimbolo);
             }
           }
           break;
@@ -190,7 +189,7 @@ export default class Declaracion extends Instruccion {
             );
           } else {
             if (
-              !indexController.actualizarTabla(
+              !arbol.actualizarTabla(
                 this.identificador,
                 'true',
                 this.fila.toString(),
@@ -207,7 +206,7 @@ export default class Declaracion extends Instruccion {
                 this.fila.toString(),
                 this.columna.toString()
               );
-              listaSimbolos.push(nuevoSimbolo);
+              arbol.listaSimbolos.push(nuevoSimbolo);
             }
           }
           break;
@@ -234,7 +233,7 @@ export default class Declaracion extends Instruccion {
           );
         } else {
           if (
-            !indexController.actualizarTabla(
+            !arbol.actualizarTabla(
               this.identificador,
               val,
               this.fila.toString(),
@@ -251,7 +250,7 @@ export default class Declaracion extends Instruccion {
               this.fila.toString(),
               this.columna.toString()
             );
-            listaSimbolos.push(nuevoSimbolo);
+            arbol.listaSimbolos.push(nuevoSimbolo);
           }
         }
       }

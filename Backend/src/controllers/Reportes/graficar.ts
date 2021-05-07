@@ -1,7 +1,5 @@
 import nodoAST from '../Analizador/Abastracto/nodoAST';
 import { exec } from 'child_process';
-import { writeFile } from 'node:fs';
-import { stdout } from 'node:process';
 var fs = require('fs');
 let cuerpo = '';
 let contador = 0;
@@ -13,24 +11,18 @@ export default function graficarArbol(arbolitos: nodoAST) {
       n0[label="${arbolitos.getValor().replace('"', '\\"')}"];
       ${cuerpo}
     }`;
-  fs.writeFile('arbolAST.dot', principal, () => {
-    console.log('Creado');
-  });
+  fs.writeFile('arbolAST.dot', principal, () => {});
   exec(
     'dot -Tsvg arbolAST.dot -o ../Frontend/Typesty/src/assets/arbolAST.svg',
     (error, stdout, stderr) => {
       if (error) {
-        console.log(`error: ${error.message}`);
         return;
       }
       if (stderr) {
-        console.log(`stderr:${stderr}`);
         return;
       }
-      console.log(`stdout:${stdout}`);
     }
   );
-  //console.log(principal);
 }
 function graphAST(texto: string, padre: nodoAST) {
   for (let hijo of padre.getHijos()) {

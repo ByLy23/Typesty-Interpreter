@@ -80,9 +80,11 @@ export default class Aritmetica extends Instruccion {
     let opUn = this.operandoUnico?.tipoDato.getTipo();
     switch (opUn) {
       case tipoDato.ENTERO:
+        this.tipoDato = new Tipo(tipoDato.ENTERO);
         return parseInt(izq) * -1;
       case tipoDato.DECIMAL:
-        return parseFloat(izq) * -1;
+        this.tipoDato = new Tipo(tipoDato.DECIMAL);
+        return parseFloat(izq) * -1.0;
     }
   }
   /*----------------------------------------------------------SUMA------------------------------------------------- */

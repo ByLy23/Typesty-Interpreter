@@ -32,6 +32,9 @@ const metodos= require("./Instrucciones/Metodos");
 const llamadas= require("./Instrucciones/LlamadaFuncMetd");
 const ejecucion= require("./Instrucciones/Exec");
 const funciones= require("./Instrucciones/Funciones");
+const vectores=require('./Instrucciones/declaracionVectores');
+const accesoVector= require('./Instrucciones/accesoVector');
+const modiVector = require('./Instrucciones/asignacionVector');
 %}
 //definicion lexica
 %lex 
@@ -64,6 +67,7 @@ const funciones= require("./Instrucciones/Funciones");
 "for"           return 'RESFOR';
 "void"          return 'RESVOID';
 "exec"          return 'RESEXEC';
+"new"           return 'RESNUEVO';
 //simbolos
 "{"             return 'LLAVEABRE';
 ","             return 'COMA';
@@ -73,6 +77,8 @@ const funciones= require("./Instrucciones/Funciones");
 ";"             return 'PTCOMA';
 "("             return 'PARABRE';
 ")"             return 'PARCIERRA';
+"["             return 'CORCHABRE';
+"]"             return 'CORCHCIERRA';
 "+"             return 'MAS';
 "-"             return 'MENOS';
 "/"             return 'DIVI';
@@ -106,7 +112,8 @@ const funciones= require("./Instrucciones/Funciones");
 .   {inicio.listaErrores.push(new errores.default('ERROR LEXICO',yytext,this._$.first_line,this._$.first_column)); console.log("lexi "+yytext);}
 /lex
 //Precedencia
-%left 'INTERROGACION' 'DOSPUNTOS'
+%left 'INTERROGACION' 
+%left 'DOSPUNTOS'
 %left 'OR'
 %left 'AND'
 %left 'NOT'
@@ -207,10 +214,9 @@ INSTRUCCION:
     |CONDICIONIF                        {$$=$1;}
     |CONDICIONWHILE                     {$$=$1;}
     |CONDICIONDOWHILE                   {$$=$1;}
-    |IFTERNARIO                         {$$=$1;}
     |CONDBREAK                          {$$=$1;}
     |CODCONTINUE                        {$$=$1;}
-    |CONDRETURN PTCOMA                         {$$=$1;}
+    |CONDRETURN PTCOMA                  {$$=$1;}
     |CONDSWITCH                         {$$=$1;}
     |CONDINCREMENTO  PTCOMA             {$$=$1;}
     |CONDECREMENTO PTCOMA               {$$=$1;}
@@ -219,6 +225,8 @@ INSTRUCCION:
     |LLAMADA  PTCOMA                    {$$=$1;}
     |EJECUTAR PTCOMA                    {$$=$1;}
     |FUNCIONES                          {$$=$1;}
+    |VECTORES PTCOMA                    {$$=$1;}
+    |ASIGVECTORES PTCOMA                {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"Se esperaba un token en esta linea",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -255,12 +263,14 @@ EXPRESION:
     |EXPRESION DIFERENTE EXPRESION      {$$= new relacional.default(relacional.Relacionales.DIFERENTE,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION MAYOR EXPRESION          {$$= new relacional.default(relacional.Relacionales.MAYOR,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION MENOR EXPRESION          {$$= new relacional.default(relacional.Relacionales.MENOR,@1.first_line,@1.first_column,$1,$3);}
+    |IFTERNARIO                         {$$=$1;}
     |EXPRESION MAYORIGUAL EXPRESION     {$$= new relacional.default(relacional.Relacionales.MAYORIGUAL,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION MENORIGUAL EXPRESION     {$$= new relacional.default(relacional.Relacionales.MENORIGUAL,@1.first_line,@1.first_column,$1,$3);}
     //LOGICAS
     |EXPRESION AND EXPRESION            {$$=new logicas.default(logicas.Logicas.AND,@1.first_line,@1.first_column,$1,$3);}
     |EXPRESION OR EXPRESION             {$$=new logicas.default(logicas.Logicas.OR,@1.first_line,@1.first_column,$1,$3);}
     |NOT EXPRESION                      {$$=new logicas.default(logicas.Logicas.NOT,@1.first_line,@1.first_column,$2);}
+    
     //NATIVO
     |ENTERO                     {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.ENTERO),$1,@1.first_line,@1.first_column);}
     |DECIMAL                    {$$= new nativo.default(new Tipo.default(Tipo.tipoDato.DECIMAL),$1,@1.first_line,@1.first_column);}
@@ -272,6 +282,7 @@ EXPRESION:
     |CONDINCREMENTO             {$$=$1;}
     |CONDECREMENTO              {$$=$1;}
     |LLAMADA                    {$$=$1;}
+    |ACCESOVECTOR               {$$=$1;}
  
     ;
 CONDICIONIF:
@@ -286,7 +297,7 @@ CONDICIONDOWHILE:
     RESDO LLAVEABRE INSTRUCCIONES LLAVECIERRA RESWHILE PARABRE EXPRESION PARCIERRA PTCOMA {$$=new condDoWhile.default($7,$3,@1.first_line,@1.first_column);}
     ;
 IFTERNARIO:
-    EXPRESION INTERROGACION EXPRESION DOSPUNTOS EXPRESION PTCOMA        {$$=new condTernario.default($1,$3,$5,@1.first_line,@1.first_column);}
+    EXPRESION INTERROGACION EXPRESION DOSPUNTOS EXPRESION   {$$=new condTernario.default($1,$3,$5,@1.first_line,@1.first_column);}
     ;
 CONDBREAK:
     RESBREAK PTCOMA                                                     {$$=new condBreak.default(@1.first_line,@1.first_column); }
@@ -355,6 +366,20 @@ FUNCIONES:
     TIPODATO IDENTIFICADOR PARABRE PARAMETROS PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,$4,$7);}
     |TIPODATO IDENTIFICADOR PARABRE PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA           {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,[],$6);}
     ;
+VECTORES:
+    TIPODATO CORCHABRE CORCHCIERRA IDENTIFICADOR IGUAL RESNUEVO TIPODATO CORCHABRE EXPRESION CORCHCIERRA {$$=new vectores.default($1,$4,true,@1.first_line,@1.first_column,$9,$7);}
+    |TIPODATO CORCHABRE CORCHCIERRA IDENTIFICADOR IGUAL LLAVEABRE LISTAVALORES LLAVECIERRA  {$$=new vectores.default($1,$4,false,@1.first_line,@1.first_column,undefined,undefined,$7);}
+    ;
+LISTAVALORES:
+    LISTAVALORES COMA EXPRESION         {$1.push($3);$$=$1;} 
+    |EXPRESION                          {$$=[$1];}
+    ;
+ACCESOVECTOR:
+    IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA {$$=new accesoVector.default($1,$3,@1.first_line,@1.first_column);}
+    ;
+ASIGVECTORES:
+    IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA IGUAL EXPRESION {$$=new modiVector.default($1, $3, $6,@1.first_line,@1.first_column);}
+    ;
     /*
     |TIPODATO
     TIPODATO:
@@ -365,7 +390,7 @@ FUNCIONES:
         |RESDOUBLE
     |DECLARACION
     DECLARACION:
-        TIPODATO IDENTIFICADOR PTCMA
+        TIPODATO IDENTIFICADOR 
         |TIPODATO IDENTIFICADOR IGUAL EXPRESION PTCOMA
         |ERROR PTCOMA
     a=b;
