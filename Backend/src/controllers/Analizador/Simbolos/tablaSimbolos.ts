@@ -25,7 +25,6 @@ export default class tablaSimbolos {
     this.tablaActual = Tabla;
   }
   public setVariable(simbolo: Simbolo) {
-    console.log(simbolo);
     for (let e: tablaSimbolos = this; e != null; e = e.getAnterior()) {
       let encontrado: Simbolo = <Simbolo>(
         e.getTabla().get(simbolo.getidentificador().toLowerCase())

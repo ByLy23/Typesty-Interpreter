@@ -221,7 +221,6 @@ export default class Declaracion extends Instruccion {
           this.columna
         );
       } else {
-        console.log(val);
         if (
           tabla.setVariable(new Simbolo(this.tipo, this.identificador, val)) ==
           'La variable existe actualmente'

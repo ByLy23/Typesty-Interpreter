@@ -11,7 +11,6 @@ export default class Nativo extends Instruccion {
     this.valor = valor;
     if (tipo.getTipo() == tipoDato.CADENA) {
       let val = this.valor.toString();
-      console.log(this.valor);
       this.valor = val
         .replace('\\n', '\n')
         .replace('\\t', '\t')
@@ -19,8 +18,6 @@ export default class Nativo extends Instruccion {
         .replace('\\\\', '\\')
         .replace("\\'", "'")
         .replace('\\"', '"');
-
-      console.log(this.valor);
     }
   }
 

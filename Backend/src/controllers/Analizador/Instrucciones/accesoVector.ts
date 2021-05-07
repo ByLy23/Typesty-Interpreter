@@ -20,6 +20,10 @@ export default class accesoVector extends Instruccion {
   }
   public getNodo() {
     let nodo = new nodoAST('ACCESO-VECTOR');
+    nodo.agregarHijo(this.identificador);
+    nodo.agregarHijo('[');
+    nodo.agregarHijoAST(this.expresion.getNodo());
+    nodo.agregarHijo(']');
     return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
@@ -32,5 +36,8 @@ export default class accesoVector extends Instruccion {
         this.fila,
         this.columna
       );
+    let ide = tabla.getVariable(this.identificador);
+    if (ide != null) return ide.getvalor()[exp];
+    return 0;
   }
 }

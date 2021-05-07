@@ -28,7 +28,6 @@ var Nativo = /** @class */ (function (_super) {
         _this.valor = valor;
         if (tipo.getTipo() == Tipo_1.tipoDato.CADENA) {
             var val = _this.valor.toString();
-            console.log(_this.valor);
             _this.valor = val
                 .replace('\\n', '\n')
                 .replace('\\t', '\t')
@@ -36,7 +35,6 @@ var Nativo = /** @class */ (function (_super) {
                 .replace('\\\\', '\\')
                 .replace("\\'", "'")
                 .replace('\\"', '"');
-            console.log(_this.valor);
         }
         return _this;
     }

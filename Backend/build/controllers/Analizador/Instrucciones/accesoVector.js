@@ -51,6 +51,10 @@ var accesoVector = /** @class */ (function (_super) {
     }
     accesoVector.prototype.getNodo = function () {
         var nodo = new nodoAST_1.default('ACCESO-VECTOR');
+        nodo.agregarHijo(this.identificador);
+        nodo.agregarHijo('[');
+        nodo.agregarHijoAST(this.expresion.getNodo());
+        nodo.agregarHijo(']');
         return nodo;
     };
     accesoVector.prototype.interpretar = function (arbol, tabla) {
@@ -59,6 +63,10 @@ var accesoVector = /** @class */ (function (_super) {
             return exp;
         if (this.expresion.tipoDato.getTipo() != Tipo_1.tipoDato.ENTERO)
             return new Errores_1.default('SEMANTICO', 'TIPO DE DATO DIFERENTE', this.fila, this.columna);
+        var ide = tabla.getVariable(this.identificador);
+        if (ide != null)
+            return ide.getvalor()[exp];
+        return 0;
     };
     return accesoVector;
 }(Instruccion_1.Instruccion));

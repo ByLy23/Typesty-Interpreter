@@ -113,7 +113,6 @@ var Declaracion = /** @class */ (function (_super) {
                 return new Errores_1.default('SEMANTICO', 'TIPO DE VALOR DIFERENTE', this.fila, this.columna);
             }
             else {
-                console.log(val);
                 if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, val)) ==
                     'La variable existe actualmente') {
                     return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);

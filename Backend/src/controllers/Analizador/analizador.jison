@@ -33,6 +33,7 @@ const llamadas= require("./Instrucciones/LlamadaFuncMetd");
 const ejecucion= require("./Instrucciones/Exec");
 const funciones= require("./Instrucciones/Funciones");
 const vectores=require('./Instrucciones/declaracionVectores');
+const accesoVector= require('./Instrucciones/accesoVector');
 %}
 //definicion lexica
 %lex 
@@ -373,7 +374,7 @@ LISTAVALORES:
     |EXPRESION                          {$$=[$1];}
     ;
 ACCESOVECTOR:
-    IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA //RETORA VECTOR
+    IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA {$$=new accesoVector.default($1,$3,@1.first_line,@1.first_column);}
     ;
     /*
     |TIPODATO

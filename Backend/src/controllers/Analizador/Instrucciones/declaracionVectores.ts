@@ -36,6 +36,24 @@ export default class declaracionVectores extends Instruccion {
   }
   public getNodo() {
     let nodo = new nodoAST('VECTORES');
+    nodo.agregarHijo(obtenerValor(this.tipo.getTipo()) + '');
+    nodo.agregarHijo('[');
+    nodo.agregarHijo(']');
+    nodo.agregarHijo(this.identificador);
+    nodo.agregarHijo('=');
+    if (this.tipoDeclaracion) {
+      nodo.agregarHijo('[');
+      nodo.agregarHijoAST(this.cantidad?.getNodo());
+      nodo.agregarHijo(']');
+    } else {
+      nodo.agregarHijo('{');
+      this.listaValores?.forEach((res) => {
+        nodo.agregarHijoAST(res.getNodo());
+        nodo.agregarHijo(',');
+      });
+      nodo.agregarHijo('}');
+    }
+    nodo.agregarHijo(';');
     return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
@@ -157,7 +175,6 @@ export default class declaracionVectores extends Instruccion {
           arbol.listaSimbolos.push(nuevoSimbolo);
         }
       }
-      console.log(tabla.getVariable(this.identificador));
       //declaracion tipo 2
     }
   }

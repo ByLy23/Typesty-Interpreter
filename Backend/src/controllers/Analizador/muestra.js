@@ -100,3 +100,7 @@ new funciones.default(tipo, fila, col, id, par, ins);
 const vectores = require('./Instrucciones/declaracionVectores');
 
 new vectores.default(tipo, id, tipo, fila, col, cant, vec, lis);
+
+const accesoVector = require('./Instrucciones/accesoVector');
+
+new accesoVector.default(ide, exp, fia, com);

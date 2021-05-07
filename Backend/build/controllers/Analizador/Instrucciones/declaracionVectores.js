@@ -38,7 +38,27 @@ var declaracionVectores = /** @class */ (function (_super) {
         return _this;
     }
     declaracionVectores.prototype.getNodo = function () {
+        var _a, _b;
         var nodo = new nodoAST_1.default('VECTORES');
+        nodo.agregarHijo(cambiarTipo_1.default(this.tipo.getTipo()) + '');
+        nodo.agregarHijo('[');
+        nodo.agregarHijo(']');
+        nodo.agregarHijo(this.identificador);
+        nodo.agregarHijo('=');
+        if (this.tipoDeclaracion) {
+            nodo.agregarHijo('[');
+            nodo.agregarHijoAST((_a = this.cantidad) === null || _a === void 0 ? void 0 : _a.getNodo());
+            nodo.agregarHijo(']');
+        }
+        else {
+            nodo.agregarHijo('{');
+            (_b = this.listaValores) === null || _b === void 0 ? void 0 : _b.forEach(function (res) {
+                nodo.agregarHijoAST(res.getNodo());
+                nodo.agregarHijo(',');
+            });
+            nodo.agregarHijo('}');
+        }
+        nodo.agregarHijo(';');
         return nodo;
     };
     declaracionVectores.prototype.interpretar = function (arbol, tabla) {
@@ -89,7 +109,6 @@ var declaracionVectores = /** @class */ (function (_super) {
                     arbol.listaSimbolos.push(nuevoSimbolo);
                 }
             }
-            console.log(tabla.getVariable(this.identificador));
             //declaracion tipo 2
         }
     };
