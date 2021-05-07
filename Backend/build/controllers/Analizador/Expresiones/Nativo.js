@@ -26,6 +26,18 @@ var Nativo = /** @class */ (function (_super) {
     function Nativo(tipo, valor, fila, columna) {
         var _this = _super.call(this, tipo, fila, columna) || this;
         _this.valor = valor;
+        if (tipo.getTipo() == Tipo_1.tipoDato.CADENA) {
+            var val = _this.valor.toString();
+            console.log(_this.valor);
+            _this.valor = val
+                .replace('\\n', '\n')
+                .replace('\\t', '\t')
+                .replace('\\r', '\r')
+                .replace('\\\\', '\\')
+                .replace("\\'", "'")
+                .replace('\\"', '"');
+            console.log(_this.valor);
+        }
         return _this;
     }
     Nativo.prototype.getNodo = function () {

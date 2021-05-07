@@ -19,6 +19,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var cambiarTipo_1 = __importDefault(require("../../Reportes/cambiarTipo"));
+var reporteTabla_1 = require("../../Reportes/reporteTabla");
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
@@ -58,14 +59,38 @@ var declaracionVectores = /** @class */ (function (_super) {
                 for (var i = 0; i < num; i++) {
                     arreglo[i] = [];
                 }
-                console.log(arreglo);
                 if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, arreglo)) == 'La variable existe actualmente')
                     return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
-                console.log(tabla.getVariable(this.identificador));
+                else {
+                    if (!arbol.actualizarTabla(this.identificador, arreglo, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString())) {
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, arreglo, 'Vector', cambiarTipo_1.default(this.tipo.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                        arbol.listaSimbolos.push(nuevoSimbolo);
+                    }
+                }
             }
         }
         else {
-            console.log(cambiarTipo_1.default(this.tipo.getTipo()) + " " + this.identificador + " = {" + this.listaValores + "}");
+            var arreglo = [];
+            if (this.listaValores == null || this.listaValores.length <= 0)
+                return new Errores_1.default('SEMANTICO', 'NO TIENE NINGUN VALOR', this.fila, this.columna);
+            for (var i = 0; i < this.listaValores.length; i++) {
+                var valor = this.listaValores[i].interpretar(arbol, tabla);
+                if (valor instanceof Errores_1.default)
+                    return valor;
+                if (this.tipo.getTipo() != this.listaValores[i].tipoDato.getTipo())
+                    return new Errores_1.default('SEMANTICO', 'TIPO DE DATO DIFERENTE', this.fila, this.columna);
+                arreglo[i] = valor;
+            }
+            if (tabla.setVariable(new Simbolo_1.default(this.tipo, this.identificador, arreglo)) == 'La variable existe actualmente')
+                return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
+            else {
+                if (!arbol.actualizarTabla(this.identificador, arreglo, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString())) {
+                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, arreglo, 'Vector', cambiarTipo_1.default(this.tipo.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                    arbol.listaSimbolos.push(nuevoSimbolo);
+                }
+            }
+            console.log(tabla.getVariable(this.identificador));
+            //declaracion tipo 2
         }
     };
     return declaracionVectores;

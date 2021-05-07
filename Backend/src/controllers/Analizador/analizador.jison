@@ -97,7 +97,7 @@ const vectores=require('./Instrucciones/declaracionVectores');
 
 //espacios en blanco
 //cadena
-\"[^]*\"             { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
+\"[^\"]*\"             { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
 [0-9]+("."[0-9]+)\b     return 'DECIMAL';
 [0-9]+\b                return 'ENTERO';
 \'[^\']\'               return 'CARACTER';
@@ -280,6 +280,7 @@ EXPRESION:
     |CONDINCREMENTO             {$$=$1;}
     |CONDECREMENTO              {$$=$1;}
     |LLAMADA                    {$$=$1;}
+    |ACCESOVECTOR               {$$=$1;}
  
     ;
 CONDICIONIF:
@@ -370,6 +371,9 @@ VECTORES:
 LISTAVALORES:
     LISTAVALORES COMA EXPRESION         {$1.push($3);$$=$1;} 
     |EXPRESION                          {$$=[$1];}
+    ;
+ACCESOVECTOR:
+    IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA //RETORA VECTOR
     ;
     /*
     |TIPODATO

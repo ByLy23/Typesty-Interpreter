@@ -1,4 +1,5 @@
 import obtenerValor from '../../Reportes/cambiarTipo';
+import { reporteTabla } from '../../Reportes/reporteTabla';
 import { Instruccion } from '../Abastracto/Instruccion';
 import nodoAST from '../Abastracto/nodoAST';
 import Errores from '../Excepciones/Errores';
@@ -68,7 +69,6 @@ export default class declaracionVectores extends Instruccion {
         for (let i = 0; i < num; i++) {
           arreglo[i] = [];
         }
-        console.log(arreglo);
         if (
           tabla.setVariable(
             new Simbolo(this.tipo, this.identificador, arreglo)
@@ -80,14 +80,85 @@ export default class declaracionVectores extends Instruccion {
             this.fila,
             this.columna
           );
-        console.log(tabla.getVariable(this.identificador));
+        else {
+          if (
+            !arbol.actualizarTabla(
+              this.identificador,
+              arreglo,
+              this.fila.toString(),
+              tabla.getNombre().toString(),
+              this.columna.toString()
+            )
+          ) {
+            let nuevoSimbolo = new reporteTabla(
+              this.identificador,
+              arreglo,
+              'Vector',
+              obtenerValor(this.tipo.getTipo()) + '',
+              tabla.getNombre(),
+              this.fila.toString(),
+              this.columna.toString()
+            );
+            arbol.listaSimbolos.push(nuevoSimbolo);
+          }
+        }
       }
     } else {
-      console.log(
-        `${obtenerValor(this.tipo.getTipo())} ${this.identificador} = {${
-          this.listaValores
-        }}`
-      );
+      let arreglo: any = [];
+      if (this.listaValores == null || this.listaValores.length <= 0)
+        return new Errores(
+          'SEMANTICO',
+          'NO TIENE NINGUN VALOR',
+          this.fila,
+          this.columna
+        );
+      for (let i = 0; i < this.listaValores.length; i++) {
+        let valor = this.listaValores[i].interpretar(arbol, tabla);
+        if (valor instanceof Errores) return valor;
+        if (this.tipo.getTipo() != this.listaValores[i].tipoDato.getTipo())
+          return new Errores(
+            'SEMANTICO',
+            'TIPO DE DATO DIFERENTE',
+            this.fila,
+            this.columna
+          );
+        arreglo[i] = valor;
+      }
+      if (
+        tabla.setVariable(
+          new Simbolo(this.tipo, this.identificador, arreglo)
+        ) == 'La variable existe actualmente'
+      )
+        return new Errores(
+          'SEMANTICO',
+          'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE',
+          this.fila,
+          this.columna
+        );
+      else {
+        if (
+          !arbol.actualizarTabla(
+            this.identificador,
+            arreglo,
+            this.fila.toString(),
+            tabla.getNombre().toString(),
+            this.columna.toString()
+          )
+        ) {
+          let nuevoSimbolo = new reporteTabla(
+            this.identificador,
+            arreglo,
+            'Vector',
+            obtenerValor(this.tipo.getTipo()) + '',
+            tabla.getNombre(),
+            this.fila.toString(),
+            this.columna.toString()
+          );
+          arbol.listaSimbolos.push(nuevoSimbolo);
+        }
+      }
+      console.log(tabla.getVariable(this.identificador));
+      //declaracion tipo 2
     }
   }
 }

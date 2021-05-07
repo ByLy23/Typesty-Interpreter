@@ -7,14 +7,20 @@ digraph arbolAST{
       n2 -> n4;n5[label="("];
       n2 -> n5;n6[label=")"];
       n2 -> n6;n7[label="{"];
-      n2 -> n7;n8[label="VECTORES"];
-      n2 -> n8;n9[label="VECTORES"];
-      n2 -> n9;n10[label="}"];
-      n2 -> n10;n11[label="EXEC"];
-      n1 -> n11;n12[label="exec"];
-      n11 -> n12;n13[label="prueba"];
-      n11 -> n13;n14[label="("];
-      n11 -> n14;n15[label=")"];
-      n11 -> n15;n16[label=";"];
-      n11 -> n16;
+      n2 -> n7;n8[label="IMPRESION"];
+      n2 -> n8;n9[label="print"];
+      n8 -> n9;n10[label="("];
+      n8 -> n10;n11[label="NATIVO"];
+      n8 -> n11;n12[label="as
+ 	 \  'd"];
+      n11 -> n12;n13[label=")"];
+      n8 -> n13;n14[label=";"];
+      n8 -> n14;n15[label="}"];
+      n2 -> n15;n16[label="EXEC"];
+      n1 -> n16;n17[label="exec"];
+      n16 -> n17;n18[label="prueba"];
+      n16 -> n18;n19[label="("];
+      n16 -> n19;n20[label=")"];
+      n16 -> n20;n21[label=";"];
+      n16 -> n21;
     }

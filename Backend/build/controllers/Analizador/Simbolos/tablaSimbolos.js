@@ -40,14 +40,15 @@ var tablaSimbolos = /** @class */ (function () {
         this.tablaActual = Tabla;
     };
     tablaSimbolos.prototype.setVariable = function (simbolo) {
+        console.log(simbolo);
         for (var e = this; e != null; e = e.getAnterior()) {
-            var encontrado = (e.getTabla().get(simbolo.getidentificador()));
+            var encontrado = (e.getTabla().get(simbolo.getidentificador().toLowerCase()));
             if (encontrado != null) {
                 return "La variable existe actualmente";
             }
             break;
         }
-        this.tablaActual.set(simbolo.getidentificador(), simbolo);
+        this.tablaActual.set(simbolo.getidentificador().toLowerCase(), simbolo);
         return "creada con exito";
     };
     tablaSimbolos.prototype.getVariable = function (id) {
