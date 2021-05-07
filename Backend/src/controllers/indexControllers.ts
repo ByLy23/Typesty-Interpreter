@@ -67,7 +67,6 @@ class IndexController {
         }
         //graficars
       }
-
       let arbolAst = new nodoAST('RAIZ');
       let nodoINS = new nodoAST('INSTRUCCIONES');
       ast.getinstrucciones().forEach((element) => {

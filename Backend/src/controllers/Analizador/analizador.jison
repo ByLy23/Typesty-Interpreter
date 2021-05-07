@@ -32,6 +32,9 @@ const metodos= require("./Instrucciones/Metodos");
 const llamadas= require("./Instrucciones/LlamadaFuncMetd");
 const ejecucion= require("./Instrucciones/Exec");
 const funciones= require("./Instrucciones/Funciones");
+const vectores=require('./Instrucciones/declaracionVectores');
+const accesoVector= require('./Instrucciones/accesoVector');
+const modiVector = require('./Instrucciones/asignacionVector');
 %}
 //definicion lexica
 %lex 
@@ -64,6 +67,7 @@ const funciones= require("./Instrucciones/Funciones");
 "for"           return 'RESFOR';
 "void"          return 'RESVOID';
 "exec"          return 'RESEXEC';
+"new"           return 'RESNUEVO';
 //simbolos
 "{"             return 'LLAVEABRE';
 ","             return 'COMA';
@@ -73,6 +77,8 @@ const funciones= require("./Instrucciones/Funciones");
 ";"             return 'PTCOMA';
 "("             return 'PARABRE';
 ")"             return 'PARCIERRA';
+"["             return 'CORCHABRE';
+"]"             return 'CORCHCIERRA';
 "+"             return 'MAS';
 "-"             return 'MENOS';
 "/"             return 'DIVI';
@@ -208,10 +214,9 @@ INSTRUCCION:
     |CONDICIONIF                        {$$=$1;}
     |CONDICIONWHILE                     {$$=$1;}
     |CONDICIONDOWHILE                   {$$=$1;}
-    
     |CONDBREAK                          {$$=$1;}
     |CODCONTINUE                        {$$=$1;}
-    |CONDRETURN PTCOMA                         {$$=$1;}
+    |CONDRETURN PTCOMA                  {$$=$1;}
     |CONDSWITCH                         {$$=$1;}
     |CONDINCREMENTO  PTCOMA             {$$=$1;}
     |CONDECREMENTO PTCOMA               {$$=$1;}
@@ -220,6 +225,8 @@ INSTRUCCION:
     |LLAMADA  PTCOMA                    {$$=$1;}
     |EJECUTAR PTCOMA                    {$$=$1;}
     |FUNCIONES                          {$$=$1;}
+    |VECTORES PTCOMA                    {$$=$1;}
+    |ASIGVECTORES PTCOMA                {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"Se esperaba un token en esta linea",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -275,6 +282,7 @@ EXPRESION:
     |CONDINCREMENTO             {$$=$1;}
     |CONDECREMENTO              {$$=$1;}
     |LLAMADA                    {$$=$1;}
+    |ACCESOVECTOR               {$$=$1;}
  
     ;
 CONDICIONIF:
@@ -358,6 +366,20 @@ FUNCIONES:
     TIPODATO IDENTIFICADOR PARABRE PARAMETROS PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,$4,$7);}
     |TIPODATO IDENTIFICADOR PARABRE PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA           {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,[],$6);}
     ;
+VECTORES:
+    TIPODATO CORCHABRE CORCHCIERRA IDENTIFICADOR IGUAL RESNUEVO TIPODATO CORCHABRE EXPRESION CORCHCIERRA {$$=new vectores.default($1,$4,true,@1.first_line,@1.first_column,$9,$7);}
+    |TIPODATO CORCHABRE CORCHCIERRA IDENTIFICADOR IGUAL LLAVEABRE LISTAVALORES LLAVECIERRA  {$$=new vectores.default($1,$4,false,@1.first_line,@1.first_column,undefined,undefined,$7);}
+    ;
+LISTAVALORES:
+    LISTAVALORES COMA EXPRESION         {$1.push($3);$$=$1;} 
+    |EXPRESION                          {$$=[$1];}
+    ;
+ACCESOVECTOR:
+    IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA {$$=new accesoVector.default($1,$3,@1.first_line,@1.first_column);}
+    ;
+ASIGVECTORES:
+    IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA IGUAL EXPRESION {$$=new modiVector.default($1, $3, $6,@1.first_line,@1.first_column);}
+    ;
     /*
     |TIPODATO
     TIPODATO:
@@ -368,7 +390,7 @@ FUNCIONES:
         |RESDOUBLE
     |DECLARACION
     DECLARACION:
-        TIPODATO IDENTIFICADOR PTCMA
+        TIPODATO IDENTIFICADOR 
         |TIPODATO IDENTIFICADOR IGUAL EXPRESION PTCOMA
         |ERROR PTCOMA
     a=b;

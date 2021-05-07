@@ -4,10 +4,7 @@ var Simbolo = /** @class */ (function () {
     function Simbolo(tipo, identificador, valor) {
         this.tipo = tipo;
         this.identificador = identificador;
-        if (valor)
-            this.valor = valor;
-        else
-            this.valor = null;
+        this.valor = valor;
     }
     //getters y setters
     Simbolo.prototype.gettipo = function () {
