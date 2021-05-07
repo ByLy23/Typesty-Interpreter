@@ -64,9 +64,11 @@ var accesoVector = /** @class */ (function (_super) {
         if (this.expresion.tipoDato.getTipo() != Tipo_1.tipoDato.ENTERO)
             return new Errores_1.default('SEMANTICO', 'TIPO DE DATO DIFERENTE', this.fila, this.columna);
         var ide = tabla.getVariable(this.identificador);
-        if (ide != null)
+        if (ide != null) {
+            this.tipoDato = new Tipo_1.default(ide.gettipo().getTipo());
             return ide.getvalor()[exp];
-        return 0;
+        }
+        return null;
     };
     return accesoVector;
 }(Instruccion_1.Instruccion));

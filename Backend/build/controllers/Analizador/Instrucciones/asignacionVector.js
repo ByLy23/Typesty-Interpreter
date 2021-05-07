@@ -52,6 +52,13 @@ var asignacionVector = /** @class */ (function (_super) {
     }
     asignacionVector.prototype.getNodo = function () {
         var nodo = new nodoAST_1.default('ASIGNACION-VECTOR');
+        nodo.agregarHijo(this.identificador);
+        nodo.agregarHijo('[');
+        nodo.agregarHijoAST(this.posicion.getNodo());
+        nodo.agregarHijo(']');
+        nodo.agregarHijo('=');
+        nodo.agregarHijoAST(this.expresion.getNodo());
+        nodo.agregarHijo(';');
         return nodo;
     };
     asignacionVector.prototype.interpretar = function (arbol, tabla) {

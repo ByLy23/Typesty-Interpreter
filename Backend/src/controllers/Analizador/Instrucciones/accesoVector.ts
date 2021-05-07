@@ -37,7 +37,11 @@ export default class accesoVector extends Instruccion {
         this.columna
       );
     let ide = tabla.getVariable(this.identificador);
-    if (ide != null) return ide.getvalor()[exp];
-    return 0;
+
+    if (ide != null) {
+      this.tipoDato = new Tipo(ide.gettipo().getTipo());
+      return ide.getvalor()[exp];
+    }
+    return null;
   }
 }

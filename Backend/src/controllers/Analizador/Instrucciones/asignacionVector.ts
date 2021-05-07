@@ -24,6 +24,13 @@ export default class asignacionVector extends Instruccion {
   }
   public getNodo() {
     let nodo = new nodoAST('ASIGNACION-VECTOR');
+    nodo.agregarHijo(this.identificador);
+    nodo.agregarHijo('[');
+    nodo.agregarHijoAST(this.posicion.getNodo());
+    nodo.agregarHijo(']');
+    nodo.agregarHijo('=');
+    nodo.agregarHijoAST(this.expresion.getNodo());
+    nodo.agregarHijo(';');
     return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
