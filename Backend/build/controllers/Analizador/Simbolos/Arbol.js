@@ -40,16 +40,20 @@ var Arbol = /** @class */ (function () {
             if (f instanceof Metodos_1.default) {
                 if (identificador.toLowerCase() ==
                     f.identificador.toLowerCase()) {
-                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'Metodo', 'Void', '', f.fila.toString(), f.columna.toString());
-                    this.listaSimbolos.push(nuevoSimbolo);
+                    if (!this.actualizarTabla(f.identificador.toString(), '', f.fila.toString(), '', f.columna.toString())) {
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'MetodoCreacion', 'void', '', f.fila.toString(), f.columna.toString());
+                        this.listaSimbolos.push(nuevoSimbolo);
+                    }
                     return f;
                 }
             }
             else if (f instanceof Funciones_1.default) {
                 if (identificador.toLowerCase() ==
                     f.identificador.toLowerCase()) {
-                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'Funcion', cambiarTipo_1.default(f.tipoDato.getTipo()) + '', '', f.fila.toString(), f.columna.toString());
-                    this.listaSimbolos.push(nuevoSimbolo);
+                    if (!this.actualizarTabla(f.identificador.toString(), '', f.fila.toString(), '', f.columna.toString())) {
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(f.identificador, '', 'FuncionCreacion', cambiarTipo_1.default(f.tipoDato.getTipo()) + '', '', f.fila.toString(), f.columna.toString());
+                        this.listaSimbolos.push(nuevoSimbolo);
+                    }
                     return f;
                 }
             }

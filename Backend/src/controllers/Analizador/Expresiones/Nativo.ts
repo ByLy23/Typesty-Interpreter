@@ -9,6 +9,16 @@ export default class Nativo extends Instruccion {
   constructor(tipo: Tipo, valor: any, fila: Number, columna: Number) {
     super(tipo, fila, columna);
     this.valor = valor;
+    if (tipo.getTipo() == tipoDato.CADENA) {
+      let val = this.valor.toString();
+      this.valor = val
+        .replace('\\n', '\n')
+        .replace('\\t', '\t')
+        .replace('\\r', '\r')
+        .replace('\\\\', '\\')
+        .replace("\\'", "'")
+        .replace('\\"', '"');
+    }
   }
 
   public getNodo(): nodoAST {

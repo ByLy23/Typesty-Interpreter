@@ -41,16 +41,27 @@ export default class Arbol {
           identificador.toLowerCase() ==
           (<Metodos>f).identificador.toLowerCase()
         ) {
-          let nuevoSimbolo = new reporteTabla(
-            f.identificador,
-            '',
-            'Metodo',
-            'Void',
-            '',
-            f.fila.toString(),
-            f.columna.toString()
-          );
-          this.listaSimbolos.push(nuevoSimbolo);
+          if (
+            !this.actualizarTabla(
+              f.identificador.toString(),
+              '',
+              f.fila.toString(),
+              '',
+              f.columna.toString()
+            )
+          ) {
+            let nuevoSimbolo = new reporteTabla(
+              f.identificador,
+              '',
+              'MetodoCreacion',
+              'void',
+              '',
+              f.fila.toString(),
+              f.columna.toString()
+            );
+            this.listaSimbolos.push(nuevoSimbolo);
+          }
+
           return f;
         }
       } else if (f instanceof Funciones) {
@@ -58,16 +69,26 @@ export default class Arbol {
           identificador.toLowerCase() ==
           (<Funciones>f).identificador.toLowerCase()
         ) {
-          let nuevoSimbolo = new reporteTabla(
-            f.identificador,
-            '',
-            'Funcion',
-            obtenerValor(f.tipoDato.getTipo()) + '',
-            '',
-            f.fila.toString(),
-            f.columna.toString()
-          );
-          this.listaSimbolos.push(nuevoSimbolo);
+          if (
+            !this.actualizarTabla(
+              f.identificador.toString(),
+              '',
+              f.fila.toString(),
+              '',
+              f.columna.toString()
+            )
+          ) {
+            let nuevoSimbolo = new reporteTabla(
+              f.identificador,
+              '',
+              'FuncionCreacion',
+              obtenerValor(f.tipoDato.getTipo()) + '',
+              '',
+              f.fila.toString(),
+              f.columna.toString()
+            );
+            this.listaSimbolos.push(nuevoSimbolo);
+          }
           return f;
         }
       }
