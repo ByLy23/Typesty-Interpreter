@@ -83,7 +83,6 @@ export default class Aritmetica extends Instruccion {
         this.tipoDato = new Tipo(tipoDato.ENTERO);
         return parseInt(izq) * -1;
       case tipoDato.DECIMAL:
-        console.log(`${izq} as`);
         this.tipoDato = new Tipo(tipoDato.DECIMAL);
         return parseFloat(izq) * -1.0;
     }

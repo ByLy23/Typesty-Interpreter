@@ -157,19 +157,19 @@ export default class LlamadaFuncMetd extends Instruccion {
               nuevaTabla.setNombre(metodo.identificador);
               if (
                 !arbol.actualizarTabla(
-                  this.identificador.toString(),
-                  '',
+                  metodo.identificador.toString(),
+                  newVal,
                   this.fila.toString(),
-                  nuevaTabla.getNombre().toString(),
+                  tabla.getNombre().toString(),
                   this.columna.toString()
                 )
               ) {
                 let nuevoSimbolo = new reporteTabla(
-                  this.identificador,
-                  variable.getvalor(),
+                  metodo.identificador,
+                  newVal,
                   'Funcion',
                   obtenerValor(this.tipoDato.getTipo()) + '',
-                  nuevaTabla.getNombre(),
+                  tabla.getNombre(),
                   this.fila.toString(),
                   this.columna.toString()
                 );
