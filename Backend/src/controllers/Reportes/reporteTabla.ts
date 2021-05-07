@@ -22,7 +22,6 @@ export class reporteTabla {
     this.linea = linea;
     this.columna = columna;
     this.valor = valor;
-    console.log(valor);
   }
   public getIdentificador(): String {
     return this.identificador;

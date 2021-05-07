@@ -10,7 +10,6 @@ var reporteTabla = /** @class */ (function () {
         this.linea = linea;
         this.columna = columna;
         this.valor = valor;
-        console.log(valor);
     }
     reporteTabla.prototype.getIdentificador = function () {
         return this.identificador;

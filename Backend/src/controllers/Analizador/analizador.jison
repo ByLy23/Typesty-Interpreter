@@ -34,6 +34,7 @@ const ejecucion= require("./Instrucciones/Exec");
 const funciones= require("./Instrucciones/Funciones");
 const vectores=require('./Instrucciones/declaracionVectores');
 const accesoVector= require('./Instrucciones/accesoVector');
+const modiVector = require('./Instrucciones/asignacionVector');
 %}
 //definicion lexica
 %lex 
@@ -213,10 +214,9 @@ INSTRUCCION:
     |CONDICIONIF                        {$$=$1;}
     |CONDICIONWHILE                     {$$=$1;}
     |CONDICIONDOWHILE                   {$$=$1;}
-    
     |CONDBREAK                          {$$=$1;}
     |CODCONTINUE                        {$$=$1;}
-    |CONDRETURN PTCOMA                         {$$=$1;}
+    |CONDRETURN PTCOMA                  {$$=$1;}
     |CONDSWITCH                         {$$=$1;}
     |CONDINCREMENTO  PTCOMA             {$$=$1;}
     |CONDECREMENTO PTCOMA               {$$=$1;}
@@ -225,7 +225,8 @@ INSTRUCCION:
     |LLAMADA  PTCOMA                    {$$=$1;}
     |EJECUTAR PTCOMA                    {$$=$1;}
     |FUNCIONES                          {$$=$1;}
-    |VECTORES PTCOMA                     {$$=$1;}
+    |VECTORES PTCOMA                    {$$=$1;}
+    |ASIGVECTORES PTCOMA                {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"Se esperaba un token en esta linea",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -375,6 +376,9 @@ LISTAVALORES:
     ;
 ACCESOVECTOR:
     IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA {$$=new accesoVector.default($1,$3,@1.first_line,@1.first_column);}
+    ;
+ASIGVECTORES:
+    IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA IGUAL EXPRESION {$$=new modiVector.default($1, $3, $6,@1.first_line,@1.first_column);}
     ;
     /*
     |TIPODATO
