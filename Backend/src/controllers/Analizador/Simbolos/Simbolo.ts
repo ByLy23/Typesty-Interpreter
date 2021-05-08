@@ -7,7 +7,7 @@ export default class Simbolo {
 
   constructor(tipo: Tipo, identificador: String, valor?: any) {
     this.tipo = tipo;
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.valor = valor;
   }
   //getters y setters

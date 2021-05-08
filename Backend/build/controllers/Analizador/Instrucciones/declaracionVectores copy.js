@@ -83,7 +83,7 @@ var declaracionVectores = /** @class */ (function (_super) {
                     return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
                 else {
                     if (!arbol.actualizarTabla(this.identificador, arreglo, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString())) {
-                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, arreglo, 'vector', cambiarTipo_1.default(this.tipo.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                        var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, arreglo, 'Vector', cambiarTipo_1.default(this.tipo.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
                         arbol.listaSimbolos.push(nuevoSimbolo);
                     }
                 }
@@ -105,7 +105,7 @@ var declaracionVectores = /** @class */ (function (_super) {
                 return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
             else {
                 if (!arbol.actualizarTabla(this.identificador, arreglo, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString())) {
-                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, arreglo, 'vector', cambiarTipo_1.default(this.tipo.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, arreglo, 'Vector', cambiarTipo_1.default(this.tipo.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
                     arbol.listaSimbolos.push(nuevoSimbolo);
                 }
             }

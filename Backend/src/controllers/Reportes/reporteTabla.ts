@@ -15,7 +15,7 @@ export class reporteTabla {
     linea: String,
     columna: String
   ) {
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.forma = forma;
     this.tipo = tipo;
     this.entorno = entorno;

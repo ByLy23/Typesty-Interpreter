@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.reporteTabla = void 0;
 var reporteTabla = /** @class */ (function () {
     function reporteTabla(identificador, valor, forma, tipo, entorno, linea, columna) {
-        this.identificador = identificador;
+        this.identificador = identificador.toLowerCase();
         this.forma = forma;
         this.tipo = tipo;
         this.entorno = entorno;

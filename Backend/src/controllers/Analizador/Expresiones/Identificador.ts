@@ -9,7 +9,7 @@ export default class Identificador extends Instruccion {
   public identificador: String;
   constructor(identificador: String, fila: Number, columna: Number) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
   }
   public getNodo(): nodoAST {
     let nodo = new nodoAST('IDENTIFICADOR');

@@ -99,6 +99,10 @@ new funciones.default(tipo, fila, col, id, par, ins);
 
 const vectores = require('./Instrucciones/declaracionVectores');
 
+const listas = require('./Instrucciones/declaracionListas');
+
+new listas.default(tipo, ide, fila, col, tipoV);
+
 new vectores.default(tipo, id, tipo, fila, col, cant, vec, lis);
 
 const accesoVector = require('./Instrucciones/accesoVector');
@@ -108,3 +112,19 @@ new accesoVector.default(ide, exp, fia, com);
 const modiVector = require('./Instrucciones/asignacionVector');
 
 new modiVector.default(ide, pos, exp, fila, co);
+
+const accesoLista = require('./Instrucciones/accesoLista');
+
+new accesoLista.default(ide, exp, fia, com);
+
+const modiLista = require('./Instrucciones/asignacionLista');
+
+new modiLista.default(ide, pos, exp, fila, co);
+
+const agregarLista = require('./Instrucciones/agregarLista');
+
+new agregarLista.default(ide, exp, fila, col);
+
+const funcNativa = require('./Instrucciones/funcNativa');
+
+new funcNativa.default(ide, exp, fila, col);

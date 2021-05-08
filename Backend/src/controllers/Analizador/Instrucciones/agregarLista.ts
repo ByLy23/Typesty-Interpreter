@@ -5,54 +5,35 @@ import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
-export default class asignacionVector extends Instruccion {
+export default class agregarLista extends Instruccion {
   private identificador: string;
-  private posicion: Instruccion;
   private expresion: Instruccion;
 
   constructor(
     identificador: string,
-    posicion: Instruccion,
     expresion: Instruccion,
     fila: number,
     columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador.toLowerCase();
-    this.posicion = posicion;
     this.expresion = expresion;
   }
   public getNodo() {
-    let nodo = new nodoAST('ASIGNACION-VECTOR');
+    let nodo = new nodoAST('ADD-LISTA');
     nodo.agregarHijo(this.identificador);
-    nodo.agregarHijo('[');
-    nodo.agregarHijoAST(this.posicion.getNodo());
-    nodo.agregarHijo(']');
-    nodo.agregarHijo('=');
+    nodo.agregarHijo('.');
+    nodo.agregarHijo('add');
+    nodo.agregarHijo('(');
     nodo.agregarHijoAST(this.expresion.getNodo());
+    nodo.agregarHijo(')');
     nodo.agregarHijo(';');
     return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let ide = tabla.getVariable(this.identificador);
     if (ide != null) {
-      let pos = this.posicion.interpretar(arbol, tabla);
-      if (pos instanceof Errores) return pos;
-      if (this.posicion.tipoDato.getTipo() != tipoDato.ENTERO)
-        return new Errores(
-          'SEMANTICO',
-          'TIPO DE DATO NO NUMERICO',
-          this.fila,
-          this.columna
-        );
       let arreglo = ide.getvalor();
-      if (pos > arreglo.length)
-        return new Errores(
-          'SEMANTICO',
-          'RANGO FUERA DE LOS LIMITES',
-          this.fila,
-          this.columna
-        );
       let exp = this.expresion.interpretar(arbol, tabla);
       if (exp instanceof Errores) return exp;
       if (ide.gettipo().getTipo() != this.expresion.tipoDato.getTipo())
@@ -62,7 +43,7 @@ export default class asignacionVector extends Instruccion {
           this.fila,
           this.columna
         );
-      arreglo[pos] = exp;
+      arreglo.push(exp);
       ide.setvalor(arreglo);
       arbol.actualizarTabla(
         this.identificador,

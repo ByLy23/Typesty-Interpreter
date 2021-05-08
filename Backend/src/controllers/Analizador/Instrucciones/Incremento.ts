@@ -19,8 +19,8 @@ export default class Decremento extends Instruccion {
   public getNodo(): nodoAST {
     let nodo = new nodoAST('INCREMENTO');
     nodo.agregarHijoAST(this.identificador.getNodo());
-    nodo.agregarHijo('-');
-    nodo.agregarHijo('-');
+    nodo.agregarHijo('+');
+    nodo.agregarHijo('+');
     return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {

@@ -48,7 +48,7 @@ var Exec = /** @class */ (function (_super) {
     __extends(Exec, _super);
     function Exec(identificador, parametros, fila, columna) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
-        _this.identificador = identificador;
+        _this.identificador = identificador.toLowerCase();
         _this.parametros = parametros;
         return _this;
     }

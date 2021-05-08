@@ -5,7 +5,7 @@ import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
-export default class accesoVector extends Instruccion {
+export default class accesoLista extends Instruccion {
   private identificador: string;
   private expresion: Instruccion;
   constructor(
@@ -19,10 +19,12 @@ export default class accesoVector extends Instruccion {
     this.expresion = expresion;
   }
   public getNodo() {
-    let nodo = new nodoAST('ACCESO-VECTOR');
+    let nodo = new nodoAST('ACCESO-LISTA');
     nodo.agregarHijo(this.identificador);
     nodo.agregarHijo('[');
+    nodo.agregarHijo('[');
     nodo.agregarHijoAST(this.expresion.getNodo());
+    nodo.agregarHijo(']');
     nodo.agregarHijo(']');
     return nodo;
   }

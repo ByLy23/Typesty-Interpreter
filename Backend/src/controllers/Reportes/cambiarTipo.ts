@@ -13,6 +13,8 @@ export default function obtenerValor(valor: any) {
         return 'string';
       case 4:
         return 'void';
+      default:
+        return 'no';
     }
   }
 }

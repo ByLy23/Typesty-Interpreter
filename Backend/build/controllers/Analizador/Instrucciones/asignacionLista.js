@@ -41,41 +41,51 @@ var Instruccion_1 = require("../Abastracto/Instruccion");
 var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
-var Asignacion = /** @class */ (function (_super) {
-    __extends(Asignacion, _super);
-    function Asignacion(identificador, valor, fila, columna) {
+var asignacionLista = /** @class */ (function (_super) {
+    __extends(asignacionLista, _super);
+    function asignacionLista(identificador, posicion, expresion, fila, columna) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
         _this.identificador = identificador.toLowerCase();
-        _this.valor = valor;
+        _this.posicion = posicion;
+        _this.expresion = expresion;
         return _this;
     }
-    Asignacion.prototype.getNodo = function () {
-        var nodo = new nodoAST_1.default('ASIGNACION');
+    asignacionLista.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('ASIGNACION-LISTA');
         nodo.agregarHijo(this.identificador);
+        nodo.agregarHijo('[');
+        nodo.agregarHijo('[');
+        nodo.agregarHijoAST(this.posicion.getNodo());
+        nodo.agregarHijo(']');
+        nodo.agregarHijo(']');
         nodo.agregarHijo('=');
-        nodo.agregarHijoAST(this.valor.getNodo());
+        nodo.agregarHijoAST(this.expresion.getNodo());
         nodo.agregarHijo(';');
         return nodo;
     };
-    Asignacion.prototype.interpretar = function (arbol, tabla) {
-        //tomar el tipoDato de la variable
-        var variable = tabla.getVariable(this.identificador);
-        if (variable != null) {
-            var val = this.valor.interpretar(arbol, tabla);
-            if (variable.gettipo().getTipo() != this.valor.tipoDato.getTipo()) {
+    asignacionLista.prototype.interpretar = function (arbol, tabla) {
+        var ide = tabla.getVariable(this.identificador);
+        if (ide != null) {
+            var pos = this.posicion.interpretar(arbol, tabla);
+            if (pos instanceof Errores_1.default)
+                return pos;
+            if (this.posicion.tipoDato.getTipo() != Tipo_1.tipoDato.ENTERO)
+                return new Errores_1.default('SEMANTICO', 'TIPO DE DATO NO NUMERICO', this.fila, this.columna);
+            var arreglo = ide.getvalor();
+            if (pos > arreglo.length)
+                return new Errores_1.default('SEMANTICO', 'RANGO FUERA DE LOS LIMITES', this.fila, this.columna);
+            var exp = this.expresion.interpretar(arbol, tabla);
+            if (exp instanceof Errores_1.default)
+                return exp;
+            if (ide.gettipo().getTipo() != this.expresion.tipoDato.getTipo())
                 return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
-            }
-            else {
-                variable.setvalor(val);
-                arbol.actualizarTabla(this.identificador, variable.getvalor(), this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
-                //identificadorm,
-                //actualizar valor de la tabla y no crear otra equis des
-            }
+            arreglo[pos] = exp;
+            ide.setvalor(arreglo);
+            arbol.actualizarTabla(this.identificador, arreglo, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
         }
-        else {
-            return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' NO EXISTE', this.fila, this.columna);
-        }
+        else
+            return new Errores_1.default('SEMANTICO', "VARIABLE " + this.identificador + " NO EXISTE", this.fila, this.columna);
     };
-    return Asignacion;
+    return asignacionLista;
 }(Instruccion_1.Instruccion));
-exports.default = Asignacion;
+exports.default = asignacionLista;
