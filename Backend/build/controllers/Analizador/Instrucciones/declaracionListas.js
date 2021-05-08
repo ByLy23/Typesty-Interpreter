@@ -29,12 +29,24 @@ var declaracionListas = /** @class */ (function (_super) {
     function declaracionListas(tipo, identificador, fila, columna, tipoVector) {
         var _this = _super.call(this, tipo, fila, columna) || this;
         _this.tipo = tipo;
-        _this.identificador = identificador;
+        _this.identificador = identificador.toLowerCase();
         _this.tipoVector = tipoVector;
         return _this;
     }
     declaracionListas.prototype.getNodo = function () {
         var nodo = new nodoAST_1.default('LISTAS');
+        nodo.agregarHijo('list');
+        nodo.agregarHijo('<');
+        nodo.agregarHijo(cambiarTipo_1.default(this.tipo.getTipo()) + '');
+        nodo.agregarHijo('>');
+        nodo.agregarHijo(this.identificador);
+        nodo.agregarHijo('=');
+        nodo.agregarHijo('new');
+        nodo.agregarHijo('list');
+        nodo.agregarHijo('<');
+        nodo.agregarHijo(cambiarTipo_1.default(this.tipoVector.getTipo()) + '');
+        nodo.agregarHijo('>');
+        nodo.agregarHijo(';');
         return nodo;
     };
     declaracionListas.prototype.interpretar = function (arbol, tabla) {
@@ -47,7 +59,7 @@ var declaracionListas = /** @class */ (function (_super) {
                 return new Errores_1.default('SEMANTICO', 'LA VARIABLE ' + this.identificador + ' EXISTE ACTUALMENTE', this.fila, this.columna);
             else {
                 if (!arbol.actualizarTabla(this.identificador, arreglo.toString(), this.fila.toString(), tabla.getNombre().toString(), this.columna.toString())) {
-                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, arreglo.toString(), 'Lista', cambiarTipo_1.default(this.tipo.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
+                    var nuevoSimbolo = new reporteTabla_1.reporteTabla(this.identificador, arreglo.toString(), 'lista', cambiarTipo_1.default(this.tipo.getTipo()) + '', tabla.getNombre(), this.fila.toString(), this.columna.toString());
                     arbol.listaSimbolos.push(nuevoSimbolo);
                 }
             }

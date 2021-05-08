@@ -111,7 +111,7 @@ export default class declaracionVectores extends Instruccion {
             let nuevoSimbolo = new reporteTabla(
               this.identificador,
               arreglo,
-              'Vector',
+              'vector',
               obtenerValor(this.tipo.getTipo()) + '',
               tabla.getNombre(),
               this.fila.toString(),
@@ -166,7 +166,7 @@ export default class declaracionVectores extends Instruccion {
           let nuevoSimbolo = new reporteTabla(
             this.identificador,
             arreglo,
-            'Vector',
+            'vector',
             obtenerValor(this.tipo.getTipo()) + '',
             tabla.getNombre(),
             this.fila.toString(),

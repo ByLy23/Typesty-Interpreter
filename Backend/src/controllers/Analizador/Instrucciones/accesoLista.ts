@@ -15,7 +15,7 @@ export default class accesoLista extends Instruccion {
     columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.expresion = expresion;
   }
   public getNodo() {

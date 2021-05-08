@@ -124,3 +124,7 @@ new modiLista.default(ide, pos, exp, fila, co);
 const agregarLista = require('./Instrucciones/agregarLista');
 
 new agregarLista.default(ide, exp, fila, col);
+
+const funcNativa = require('./Instrucciones/funcNativa');
+
+new funcNativa.default(ide, exp, fila, col);

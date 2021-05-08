@@ -27,7 +27,7 @@ var Funciones = /** @class */ (function (_super) {
     __extends(Funciones, _super);
     function Funciones(tipo, fila, columna, identificador, parametros, instrucciones) {
         var _this = _super.call(this, tipo, fila, columna) || this;
-        _this.identificador = identificador;
+        _this.identificador = identificador.toLowerCase();
         _this.parametros = parametros;
         _this.instrucciones = instrucciones;
         return _this;

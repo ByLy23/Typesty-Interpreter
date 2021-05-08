@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Simbolo = /** @class */ (function () {
     function Simbolo(tipo, identificador, valor) {
         this.tipo = tipo;
-        this.identificador = identificador;
+        this.identificador = identificador.toLowerCase();
         this.valor = valor;
     }
     //getters y setters

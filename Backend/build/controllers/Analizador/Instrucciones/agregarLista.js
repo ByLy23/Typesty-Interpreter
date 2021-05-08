@@ -45,12 +45,19 @@ var agregarLista = /** @class */ (function (_super) {
     __extends(agregarLista, _super);
     function agregarLista(identificador, expresion, fila, columna) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
-        _this.identificador = identificador;
+        _this.identificador = identificador.toLowerCase();
         _this.expresion = expresion;
         return _this;
     }
     agregarLista.prototype.getNodo = function () {
         var nodo = new nodoAST_1.default('ADD-LISTA');
+        nodo.agregarHijo(this.identificador);
+        nodo.agregarHijo('.');
+        nodo.agregarHijo('add');
+        nodo.agregarHijo('(');
+        nodo.agregarHijoAST(this.expresion.getNodo());
+        nodo.agregarHijo(')');
+        nodo.agregarHijo(';');
         return nodo;
     };
     agregarLista.prototype.interpretar = function (arbol, tabla) {
@@ -64,7 +71,6 @@ var agregarLista = /** @class */ (function (_super) {
                 return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
             arreglo.push(exp);
             ide.setvalor(arreglo);
-            console.log(arreglo);
             arbol.actualizarTabla(this.identificador, arreglo, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
         }
         else

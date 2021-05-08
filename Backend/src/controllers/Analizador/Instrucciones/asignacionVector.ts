@@ -18,7 +18,7 @@ export default class asignacionVector extends Instruccion {
     columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.posicion = posicion;
     this.expresion = expresion;
   }
@@ -64,7 +64,6 @@ export default class asignacionVector extends Instruccion {
         );
       arreglo[pos] = exp;
       ide.setvalor(arreglo);
-      console.log(arreglo);
       arbol.actualizarTabla(
         this.identificador,
         arreglo,
