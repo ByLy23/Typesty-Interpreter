@@ -35,6 +35,10 @@ const funciones= require("./Instrucciones/Funciones");
 const vectores=require('./Instrucciones/declaracionVectores');
 const accesoVector= require('./Instrucciones/accesoVector');
 const modiVector = require('./Instrucciones/asignacionVector');
+const listas = require('./Instrucciones/declaracionListas');
+const accesoLista = require('./Instrucciones/accesoLista');
+const modiLista = require('./Instrucciones/asignacionLista');
+const agregarLista= require('./Instrucciones/agregarLista');
 %}
 //definicion lexica
 %lex 
@@ -68,6 +72,8 @@ const modiVector = require('./Instrucciones/asignacionVector');
 "void"          return 'RESVOID';
 "exec"          return 'RESEXEC';
 "new"           return 'RESNUEVO';
+"list"          return 'RESLIST';
+"add"           return 'RESADD';
 //simbolos
 "{"             return 'LLAVEABRE';
 ","             return 'COMA';
@@ -95,6 +101,7 @@ const modiVector = require('./Instrucciones/asignacionVector');
 ">"             return 'MAYOR';
 "?"             return 'INTERROGACION';
 ":"             return 'DOSPUNTOS';
+"."             return 'PUNTO';
 //expresiones regulares
 
 //espacios en blanco
@@ -226,7 +233,10 @@ INSTRUCCION:
     |EJECUTAR PTCOMA                    {$$=$1;}
     |FUNCIONES                          {$$=$1;}
     |VECTORES PTCOMA                    {$$=$1;}
+    |LISTAS PTCOMA                      {$$=$1;}
     |ASIGVECTORES PTCOMA                {$$=$1;}
+    |ASIGLISTAS PTCOMA                  {$$=$1;}
+    |AGREGARLISTA PTCOMA                {$$=$1;}
     //|CONDICION
     //|CICLO
     |error PTCOMA {inicio.listaErrores.push(new errores.default('ERROR SINTACTICO',"Se esperaba un token en esta linea",@1.first_line,@1.first_column));console.log("sinta "); $$=false;}
@@ -283,6 +293,7 @@ EXPRESION:
     |CONDECREMENTO              {$$=$1;}
     |LLAMADA                    {$$=$1;}
     |ACCESOVECTOR               {$$=$1;}
+    |ACCESOLISTAS               {$$=$1;}
  
     ;
 CONDICIONIF:
@@ -379,6 +390,18 @@ ACCESOVECTOR:
     ;
 ASIGVECTORES:
     IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA IGUAL EXPRESION {$$=new modiVector.default($1, $3, $6,@1.first_line,@1.first_column);}
+    ;
+LISTAS:
+    RESLIST MENOR TIPODATO MAYOR IDENTIFICADOR IGUAL RESNUEVO RESLIST MENOR TIPODATO MAYOR {$$=new listas.default($3, $5,@1.first_line,@1.first_column, $10);}
+    ;
+ACCESOLISTAS:
+    IDENTIFICADOR CORCHABRE CORCHABRE EXPRESION CORCHCIERRA CORCHCIERRA {$$=new accesoLista.default($1,$4,@1.first_line,@1.first_column);}
+    ;
+ASIGLISTAS:
+    IDENTIFICADOR CORCHABRE CORCHABRE EXPRESION CORCHCIERRA CORCHCIERRA IGUAL EXPRESION {$$=new modiLista.default($1, $4, $8,@1.first_line,@1.first_column);}
+    ;
+AGREGARLISTA:
+    IDENTIFICADOR PUNTO RESADD PARABRE EXPRESION PARCIERRA {$$=new agregarLista.default($1,$5,@1.first_line,@1.first_column);}
     ;
     /*
     |TIPODATO
