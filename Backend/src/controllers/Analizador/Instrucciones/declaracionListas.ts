@@ -22,7 +22,7 @@ export default class declaracionListas extends Instruccion {
   ) {
     super(tipo, fila, columna);
     this.tipo = tipo;
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.tipoVector = tipoVector;
   }
   public getNodo() {

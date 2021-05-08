@@ -20,7 +20,7 @@ export default class Metodos extends Instruccion {
     instrucciones: Instruccion[]
   ) {
     super(tipo, fila, columna);
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.parametros = parametros;
     this.instrucciones = instrucciones;
   }

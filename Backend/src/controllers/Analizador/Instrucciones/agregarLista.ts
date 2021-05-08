@@ -16,7 +16,7 @@ export default class agregarLista extends Instruccion {
     columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.expresion = expresion;
   }
   public getNodo() {
@@ -45,7 +45,6 @@ export default class agregarLista extends Instruccion {
         );
       arreglo.push(exp);
       ide.setvalor(arreglo);
-      console.log(arreglo);
       arbol.actualizarTabla(
         this.identificador,
         arreglo,

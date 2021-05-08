@@ -24,7 +24,7 @@ var Arbol = /** @class */ (function () {
     Arbol.prototype.actualizarTabla = function (identificador, valor, linea, entorno, columna) {
         for (var _i = 0, _a = this.listaSimbolos; _i < _a.length; _i++) {
             var elemento = _a[_i];
-            if (elemento.getIdentificador().toString() == identificador &&
+            if (elemento.getIdentificador().toString() == identificador.toLowerCase() &&
                 elemento.getEntorno().toString() == entorno.toString()) {
                 elemento.setValor(valor);
                 elemento.setLinea(linea);
@@ -37,7 +37,7 @@ var Arbol = /** @class */ (function () {
     Arbol.prototype.BuscarTipo = function (identificador) {
         for (var _i = 0, _a = this.listaSimbolos; _i < _a.length; _i++) {
             var elemento = _a[_i];
-            if (elemento.getIdentificador() == identificador) {
+            if (elemento.getIdentificador() == identificador.toLowerCase()) {
                 return elemento.getForma().toString();
             }
         }

@@ -23,7 +23,7 @@ export default class Arbol {
   ): boolean {
     for (var elemento of this.listaSimbolos) {
       if (
-        elemento.getIdentificador().toString() == identificador &&
+        elemento.getIdentificador().toString() == identificador.toLowerCase() &&
         elemento.getEntorno().toString() == entorno.toString()
       ) {
         elemento.setValor(valor);
@@ -36,7 +36,7 @@ export default class Arbol {
   }
   public BuscarTipo(identificador: string): string {
     for (var elemento of this.listaSimbolos) {
-      if (elemento.getIdentificador() == identificador) {
+      if (elemento.getIdentificador() == identificador.toLowerCase()) {
         return elemento.getForma().toString();
       }
     }

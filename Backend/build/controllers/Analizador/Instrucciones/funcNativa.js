@@ -53,22 +53,31 @@ var funcNativa = /** @class */ (function (_super) {
         return nodo;
     };
     funcNativa.prototype.interpretar = function (arbol, tabla) {
+        console.log(this.identificador + " " + this.expresion);
         switch (this.identificador) {
             case 'tolower':
-                break;
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                return '';
             case 'toupper':
-                break;
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
+                return '';
             case 'length':
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
                 break;
             case 'truncate':
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
                 break;
             case 'round':
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
                 break;
             case 'typeof':
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
                 break;
             case 'tostring':
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
                 break;
             case 'tochararray':
+                //this.tipoDato = new Tipo(tipoDato.CADENA); RETORNA EL TIPO DE DATO QUE TENGA EL IDENTIFICADOR
                 break;
         }
     };

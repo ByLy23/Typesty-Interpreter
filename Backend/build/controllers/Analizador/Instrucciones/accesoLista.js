@@ -45,7 +45,7 @@ var accesoLista = /** @class */ (function (_super) {
     __extends(accesoLista, _super);
     function accesoLista(identificador, expresion, fila, columna) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
-        _this.identificador = identificador;
+        _this.identificador = identificador.toLowerCase();
         _this.expresion = expresion;
         return _this;
     }

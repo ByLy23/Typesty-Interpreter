@@ -29,7 +29,7 @@ var declaracionListas = /** @class */ (function (_super) {
     function declaracionListas(tipo, identificador, fila, columna, tipoVector) {
         var _this = _super.call(this, tipo, fila, columna) || this;
         _this.tipo = tipo;
-        _this.identificador = identificador;
+        _this.identificador = identificador.toLowerCase();
         _this.tipoVector = tipoVector;
         return _this;
     }

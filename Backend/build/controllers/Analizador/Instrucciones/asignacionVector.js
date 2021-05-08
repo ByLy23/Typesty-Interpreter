@@ -45,7 +45,7 @@ var asignacionVector = /** @class */ (function (_super) {
     __extends(asignacionVector, _super);
     function asignacionVector(identificador, posicion, expresion, fila, columna) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
-        _this.identificador = identificador;
+        _this.identificador = identificador.toLowerCase();
         _this.posicion = posicion;
         _this.expresion = expresion;
         return _this;
@@ -79,7 +79,6 @@ var asignacionVector = /** @class */ (function (_super) {
                 return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
             arreglo[pos] = exp;
             ide.setvalor(arreglo);
-            console.log(arreglo);
             arbol.actualizarTabla(this.identificador, arreglo, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
         }
         else
