@@ -39,6 +39,7 @@ const listas = require('./Instrucciones/declaracionListas');
 const accesoLista = require('./Instrucciones/accesoLista');
 const modiLista = require('./Instrucciones/asignacionLista');
 const agregarLista= require('./Instrucciones/agregarLista');
+const funcNativa= require('./Instrucciones/funcNativa');
 %}
 //definicion lexica
 %lex 
@@ -74,6 +75,14 @@ const agregarLista= require('./Instrucciones/agregarLista');
 "new"           return 'RESNUEVO';
 "list"          return 'RESLIST';
 "add"           return 'RESADD';
+"tolower"       return 'RESLOW';
+"toupper"       return 'RESUP';
+"length"        return 'RESLENG';
+"truncate"      return 'RESTRUN';
+"round"         return 'RESROUND';
+"typeof"        return 'RESTYPE';
+"tostring"      return 'RESTOSTR';
+"tochararray"   return 'RESTOCHRARR';
 //simbolos
 "{"             return 'LLAVEABRE';
 ","             return 'COMA';
@@ -294,6 +303,7 @@ EXPRESION:
     |LLAMADA                    {$$=$1;}
     |ACCESOVECTOR               {$$=$1;}
     |ACCESOLISTAS               {$$=$1;}
+    |FUNCNATIVA PARABRE EXPRESION PARCIERRA {$$=new funcNativa.default($1,$3,@1.first_line,@1.first_column); }
  
     ;
 CONDICIONIF:
@@ -402,6 +412,16 @@ ASIGLISTAS:
     ;
 AGREGARLISTA:
     IDENTIFICADOR PUNTO RESADD PARABRE EXPRESION PARCIERRA {$$=new agregarLista.default($1,$5,@1.first_line,@1.first_column);}
+    ;
+FUNCNATIVA:
+    RESLOW          {$$=$1;}
+    |RESUP          {$$=$1;}
+    |RESLENG        {$$=$1;}
+    |RESTRUN        {$$=$1;}
+    |RESROUND       {$$=$1;}
+    |RESTYPE        {$$=$1;}
+    |RESTOSTR       {$$=$1;}
+    |RESTOCHRARR    {$$=$1;}
     ;
     /*
     |TIPODATO

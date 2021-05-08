@@ -16,11 +16,18 @@ export default class agregarLista extends Instruccion {
     columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.expresion = expresion;
   }
   public getNodo() {
     let nodo = new nodoAST('ADD-LISTA');
+    nodo.agregarHijo(this.identificador);
+    nodo.agregarHijo('.');
+    nodo.agregarHijo('add');
+    nodo.agregarHijo('(');
+    nodo.agregarHijoAST(this.expresion.getNodo());
+    nodo.agregarHijo(')');
+    nodo.agregarHijo(';');
     return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
@@ -38,7 +45,6 @@ export default class agregarLista extends Instruccion {
         );
       arreglo.push(exp);
       ide.setvalor(arreglo);
-      console.log(arreglo);
       arbol.actualizarTabla(
         this.identificador,
         arreglo,

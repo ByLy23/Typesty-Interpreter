@@ -11,7 +11,7 @@ import Tipo, { tipoDato } from '../Simbolos/Tipo';
 export default class declaracionListas extends Instruccion {
   private tipo: Tipo;
   private identificador: string;
-  private tipoVector?: Tipo;
+  private tipoVector: Tipo;
 
   constructor(
     tipo: Tipo,
@@ -22,12 +22,23 @@ export default class declaracionListas extends Instruccion {
   ) {
     super(tipo, fila, columna);
     this.tipo = tipo;
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.tipoVector = tipoVector;
   }
   public getNodo() {
     let nodo = new nodoAST('LISTAS');
-
+    nodo.agregarHijo('list');
+    nodo.agregarHijo('<');
+    nodo.agregarHijo(obtenerValor(this.tipo.getTipo()) + '');
+    nodo.agregarHijo('>');
+    nodo.agregarHijo(this.identificador);
+    nodo.agregarHijo('=');
+    nodo.agregarHijo('new');
+    nodo.agregarHijo('list');
+    nodo.agregarHijo('<');
+    nodo.agregarHijo(obtenerValor(this.tipoVector.getTipo()) + '');
+    nodo.agregarHijo('>');
+    nodo.agregarHijo(';');
     return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
@@ -64,7 +75,7 @@ export default class declaracionListas extends Instruccion {
           let nuevoSimbolo = new reporteTabla(
             this.identificador,
             arreglo.toString(),
-            'Lista',
+            'lista',
             obtenerValor(this.tipo.getTipo()) + '',
             tabla.getNombre(),
             this.fila.toString(),

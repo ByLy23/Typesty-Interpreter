@@ -15,7 +15,7 @@ export default class Asignacion extends Instruccion {
     columna: Number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.valor = valor;
   }
   public getNodo(): nodoAST {

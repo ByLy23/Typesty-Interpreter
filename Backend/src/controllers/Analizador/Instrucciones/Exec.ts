@@ -17,7 +17,7 @@ export default class Exec extends Instruccion {
     columna: Number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
-    this.identificador = identificador;
+    this.identificador = identificador.toLowerCase();
     this.parametros = parametros;
   }
   public getNodo(): nodoAST {

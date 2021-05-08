@@ -15,6 +15,8 @@ function obtenerValor(valor) {
                 return 'string';
             case 4:
                 return 'void';
+            default:
+                return 'no';
         }
     }
 }
