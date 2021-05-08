@@ -26,6 +26,10 @@ export default class funcNativa extends Instruccion {
   }
   public getNodo() {
     let nodo = new nodoAST('FUNCION-NATIVA');
+    nodo.agregarHijo(this.identificador);
+    nodo.agregarHijo('(');
+    nodo.agregarHijoAST(this.expresion.getNodo());
+    nodo.agregarHijo(')');
     return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
@@ -141,11 +145,3 @@ export default class funcNativa extends Instruccion {
     }
   }
 }
-/*
-toString
-    numerico, booleano y caracter
-    retorna string
-tocharArray
-    cadena en lista de caracteres
-    retorna lista
-*/

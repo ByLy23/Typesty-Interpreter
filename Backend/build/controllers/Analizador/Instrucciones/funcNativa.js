@@ -57,6 +57,10 @@ var funcNativa = /** @class */ (function (_super) {
     }
     funcNativa.prototype.getNodo = function () {
         var nodo = new nodoAST_1.default('FUNCION-NATIVA');
+        nodo.agregarHijo(this.identificador);
+        nodo.agregarHijo('(');
+        nodo.agregarHijoAST(this.expresion.getNodo());
+        nodo.agregarHijo(')');
         return nodo;
     };
     funcNativa.prototype.interpretar = function (arbol, tabla) {
@@ -132,11 +136,3 @@ var funcNativa = /** @class */ (function (_super) {
     return funcNativa;
 }(Instruccion_1.Instruccion));
 exports.default = funcNativa;
-/*
-toString
-    numerico, booleano y caracter
-    retorna string
-tocharArray
-    cadena en lista de caracteres
-    retorna lista
-*/

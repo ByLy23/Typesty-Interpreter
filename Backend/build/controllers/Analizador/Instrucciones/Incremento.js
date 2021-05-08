@@ -52,8 +52,8 @@ var Decremento = /** @class */ (function (_super) {
     Decremento.prototype.getNodo = function () {
         var nodo = new nodoAST_1.default('INCREMENTO');
         nodo.agregarHijoAST(this.identificador.getNodo());
-        nodo.agregarHijo('-');
-        nodo.agregarHijo('-');
+        nodo.agregarHijo('+');
+        nodo.agregarHijo('+');
         return nodo;
     };
     Decremento.prototype.interpretar = function (arbol, tabla) {
