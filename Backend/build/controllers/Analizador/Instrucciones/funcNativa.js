@@ -39,44 +39,66 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
-var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
-var agregarLista = /** @class */ (function (_super) {
-    __extends(agregarLista, _super);
-    function agregarLista(identificador, expresion, fila, columna) {
+var funcNativa = /** @class */ (function (_super) {
+    __extends(funcNativa, _super);
+    function funcNativa(identificador, expresion, fila, columna) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
-        _this.identificador = identificador;
+        _this.identificador = identificador.toLowerCase();
         _this.expresion = expresion;
         return _this;
     }
-    agregarLista.prototype.getNodo = function () {
-        var nodo = new nodoAST_1.default('ADD-LISTA');
-        nodo.agregarHijo(this.identificador);
-        nodo.agregarHijo('.');
-        nodo.agregarHijo('add');
-        nodo.agregarHijo('(');
-        nodo.agregarHijoAST(this.expresion.getNodo());
-        nodo.agregarHijo(')');
-        nodo.agregarHijo(';');
+    funcNativa.prototype.getNodo = function () {
+        var nodo = new nodoAST_1.default('FUNCION-NATIVA');
         return nodo;
     };
-    agregarLista.prototype.interpretar = function (arbol, tabla) {
-        var ide = tabla.getVariable(this.identificador);
-        if (ide != null) {
-            var arreglo = ide.getvalor();
-            var exp = this.expresion.interpretar(arbol, tabla);
-            if (exp instanceof Errores_1.default)
-                return exp;
-            if (ide.gettipo().getTipo() != this.expresion.tipoDato.getTipo())
-                return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' TIPOS DE DATOS DIFERENTES', this.fila, this.columna);
-            arreglo.push(exp);
-            ide.setvalor(arreglo);
-            console.log(arreglo);
-            arbol.actualizarTabla(this.identificador, arreglo, this.fila.toString(), tabla.getNombre().toString(), this.columna.toString());
+    funcNativa.prototype.interpretar = function (arbol, tabla) {
+        switch (this.identificador) {
+            case 'tolower':
+                break;
+            case 'toupper':
+                break;
+            case 'length':
+                break;
+            case 'truncate':
+                break;
+            case 'round':
+                break;
+            case 'typeof':
+                break;
+            case 'tostring':
+                break;
+            case 'tochararray':
+                break;
         }
-        else
-            return new Errores_1.default('SEMANTICO', "VARIABLE " + this.identificador + " NO EXISTE", this.fila, this.columna);
     };
-    return agregarLista;
+    return funcNativa;
 }(Instruccion_1.Instruccion));
-exports.default = agregarLista;
+exports.default = funcNativa;
+/*
+toupper
+    cadena
+    retorna cadena
+tolower
+    cadena
+    retorna cadena
+length
+    vector, lista, cadena
+    retorna entero
+truncate
+    double, entero
+    retorna entero
+round
+    double >=0.5 o <0.5
+    retorna entero
+typeof
+    tipoDato
+    retorna string
+    si es no que vaya a buscar en la lista con el metodo buscartipo para ver si es vector o lista
+toString
+    numerico, booleano y caracter
+    retorna string
+tocharArray
+    cadena en lista de caracteres
+    retorna lista
+*/

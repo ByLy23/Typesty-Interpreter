@@ -21,6 +21,13 @@ export default class agregarLista extends Instruccion {
   }
   public getNodo() {
     let nodo = new nodoAST('ADD-LISTA');
+    nodo.agregarHijo(this.identificador);
+    nodo.agregarHijo('.');
+    nodo.agregarHijo('add');
+    nodo.agregarHijo('(');
+    nodo.agregarHijoAST(this.expresion.getNodo());
+    nodo.agregarHijo(')');
+    nodo.agregarHijo(';');
     return nodo;
   }
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {

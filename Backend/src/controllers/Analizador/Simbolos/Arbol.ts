@@ -34,6 +34,14 @@ export default class Arbol {
     }
     return false;
   }
+  public BuscarTipo(identificador: string): string {
+    for (var elemento of this.listaSimbolos) {
+      if (elemento.getIdentificador() == identificador) {
+        return elemento.getForma().toString();
+      }
+    }
+    return '';
+  }
   public getFuncion(identificador: String) {
     for (let f of this.funciones) {
       if (f instanceof Metodos) {

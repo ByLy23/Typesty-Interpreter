@@ -35,6 +35,18 @@ var declaracionListas = /** @class */ (function (_super) {
     }
     declaracionListas.prototype.getNodo = function () {
         var nodo = new nodoAST_1.default('LISTAS');
+        nodo.agregarHijo('list');
+        nodo.agregarHijo('<');
+        nodo.agregarHijo(cambiarTipo_1.default(this.tipo.getTipo()) + '');
+        nodo.agregarHijo('>');
+        nodo.agregarHijo(this.identificador);
+        nodo.agregarHijo('=');
+        nodo.agregarHijo('new');
+        nodo.agregarHijo('list');
+        nodo.agregarHijo('<');
+        nodo.agregarHijo(cambiarTipo_1.default(this.tipoVector.getTipo()) + '');
+        nodo.agregarHijo('>');
+        nodo.agregarHijo(';');
         return nodo;
     };
     declaracionListas.prototype.interpretar = function (arbol, tabla) {
