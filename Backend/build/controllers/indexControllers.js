@@ -8,12 +8,17 @@ var nodoAST_1 = __importDefault(require("./Analizador/Abastracto/nodoAST"));
 var Errores_1 = __importDefault(require("./Analizador/Excepciones/Errores"));
 var Asignacion_1 = __importDefault(require("./Analizador/Instrucciones/Asignacion"));
 var Declaracion_1 = __importDefault(require("./Analizador/Instrucciones/Declaracion"));
+var declaracionVectores_1 = __importDefault(require("./Analizador/Instrucciones/declaracionVectores"));
+var declaracionListas_1 = __importDefault(require("./Analizador/Instrucciones/declaracionListas"));
 var Exec_1 = __importDefault(require("./Analizador/Instrucciones/Exec"));
 var Funciones_1 = __importDefault(require("./Analizador/Instrucciones/Funciones"));
 var Metodos_1 = __importDefault(require("./Analizador/Instrucciones/Metodos"));
 var Arbol_1 = __importDefault(require("./Analizador/Simbolos/Arbol"));
 var tablaSimbolos_1 = __importDefault(require("./Analizador/Simbolos/tablaSimbolos"));
 var graficar_1 = __importDefault(require("./Reportes/graficar"));
+var asignacionVector_1 = __importDefault(require("./Analizador/Instrucciones/asignacionVector"));
+var asignacionLista_1 = __importDefault(require("./Analizador/Instrucciones/asignacionLista"));
+var agregarLista_1 = __importDefault(require("./Analizador/Instrucciones/agregarLista"));
 var arbolNuevo;
 var contador;
 var cuerpo;
@@ -52,6 +57,11 @@ var IndexController = /** @class */ (function () {
                     continue;
                 if (i instanceof Declaracion_1.default ||
                     i instanceof Asignacion_1.default ||
+                    i instanceof declaracionVectores_1.default ||
+                    i instanceof declaracionListas_1.default ||
+                    i instanceof asignacionVector_1.default ||
+                    i instanceof asignacionLista_1.default ||
+                    i instanceof agregarLista_1.default ||
                     i instanceof Exec_1.default) {
                     var resultador = i.interpretar(ast, tabla);
                     if (resultador instanceof Errores_1.default) {

@@ -3,13 +3,17 @@ import nodoAST from './Analizador/Abastracto/nodoAST';
 import Errores from './Analizador/Excepciones/Errores';
 import Asignacion from './Analizador/Instrucciones/Asignacion';
 import Declaracion from './Analizador/Instrucciones/Declaracion';
+import declaracionVectores from './Analizador/Instrucciones/declaracionVectores';
+import declaracionListas from './Analizador/Instrucciones/declaracionListas';
 import Exec from './Analizador/Instrucciones/Exec';
 import Funciones from './Analizador/Instrucciones/Funciones';
 import Metodos from './Analizador/Instrucciones/Metodos';
 import Arbol from './Analizador/Simbolos/Arbol';
 import tablaSimbolos from './Analizador/Simbolos/tablaSimbolos';
-import { reporteTabla } from './Reportes/reporteTabla';
 import graficarArbol from './Reportes/graficar';
+import asignacionVector from './Analizador/Instrucciones/asignacionVector';
+import asignacionLista from './Analizador/Instrucciones/asignacionLista';
+import agregarLista from './Analizador/Instrucciones/agregarLista';
 
 export let listaErrores: Array<Errores>;
 let arbolNuevo: Arbol;
@@ -47,6 +51,11 @@ class IndexController {
         if (
           i instanceof Declaracion ||
           i instanceof Asignacion ||
+          i instanceof declaracionVectores ||
+          i instanceof declaracionListas ||
+          i instanceof asignacionVector ||
+          i instanceof asignacionLista ||
+          i instanceof agregarLista ||
           i instanceof Exec
         ) {
           var resultador = i.interpretar(ast, tabla);

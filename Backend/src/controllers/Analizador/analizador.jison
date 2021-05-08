@@ -40,6 +40,7 @@ const accesoLista = require('./Instrucciones/accesoLista');
 const modiLista = require('./Instrucciones/asignacionLista');
 const agregarLista= require('./Instrucciones/agregarLista');
 const funcNativa= require('./Instrucciones/funcNativa');
+const casteo= require('./Instrucciones/casteo');
 %}
 //definicion lexica
 %lex 
@@ -304,6 +305,7 @@ EXPRESION:
     |ACCESOVECTOR               {$$=$1;}
     |ACCESOLISTAS               {$$=$1;}
     |FUNCNATIVA PARABRE EXPRESION PARCIERRA {$$=new funcNativa.default($1,$3,@1.first_line,@1.first_column); }
+    |PARABRE TIPODATO PARCIERRA EXPRESION {$$=new casteo.default($2,$4,@1.first_line,@1.first_column);}
  
     ;
 CONDICIONIF:
@@ -423,6 +425,7 @@ FUNCNATIVA:
     |RESTOSTR       {$$=$1;}
     |RESTOCHRARR    {$$=$1;}
     ;
+
     /*
     |TIPODATO
     TIPODATO:

@@ -88,28 +88,11 @@ var condIf = /** @class */ (function (_super) {
             return new Errores_1.default('SEMANTICO', 'DATO DEBE SER BOOLEANO', this.fila, this.columna);
         }
         if (val) {
-            var nuevaTabla = new tablaSimbolos_1.default(tabla);
-            nuevaTabla.setNombre('If');
-            for (var i = 0; i < this.condIf.length; i++) {
-                var a = this.condIf[i].interpretar(arbol, nuevaTabla);
-                if (a instanceof Errores_1.default) {
-                    indexControllers_1.listaErrores.push(a);
-                    arbol.actualizaConsola(a.returnError());
-                }
-                if (a instanceof Return_1.default)
-                    return a;
-                if (a == 'ByLyContinue')
-                    return a;
-                if (a == 'ByLy23')
-                    return a;
-            }
-        }
-        else {
-            if (this.condElse != undefined) {
+            if (this.condIf.length > 0) {
                 var nuevaTabla = new tablaSimbolos_1.default(tabla);
-                nuevaTabla.setNombre('else');
-                for (var i = 0; i < this.condElse.length; i++) {
-                    var a = this.condElse[i].interpretar(arbol, nuevaTabla);
+                nuevaTabla.setNombre('If');
+                for (var i = 0; i < this.condIf.length; i++) {
+                    var a = this.condIf[i].interpretar(arbol, nuevaTabla);
                     if (a instanceof Errores_1.default) {
                         indexControllers_1.listaErrores.push(a);
                         arbol.actualizaConsola(a.returnError());
@@ -120,6 +103,27 @@ var condIf = /** @class */ (function (_super) {
                         return a;
                     if (a == 'ByLy23')
                         return a;
+                }
+            }
+        }
+        else {
+            if (this.condElse != undefined) {
+                if (this.condElse.length > 0) {
+                    var nuevaTabla = new tablaSimbolos_1.default(tabla);
+                    nuevaTabla.setNombre('else');
+                    for (var i = 0; i < this.condElse.length; i++) {
+                        var a = this.condElse[i].interpretar(arbol, nuevaTabla);
+                        if (a instanceof Errores_1.default) {
+                            indexControllers_1.listaErrores.push(a);
+                            arbol.actualizaConsola(a.returnError());
+                        }
+                        if (a instanceof Return_1.default)
+                            return a;
+                        if (a == 'ByLyContinue')
+                            return a;
+                        if (a == 'ByLy23')
+                            return a;
+                    }
                 }
             }
             else if (this.condElseIf != undefined) {
