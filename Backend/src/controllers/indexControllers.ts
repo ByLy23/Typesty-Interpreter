@@ -32,7 +32,6 @@ class IndexController {
       // return;
       var tabla = new tablaSimbolos();
       ast.settablaGlobal(tabla);
-
       for (let i of ast.getinstrucciones()) {
         if (i instanceof Metodos || i instanceof Funciones) {
           ast.getfunciones().push(i);

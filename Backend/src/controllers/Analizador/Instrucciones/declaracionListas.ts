@@ -75,7 +75,7 @@ export default class declaracionListas extends Instruccion {
           let nuevoSimbolo = new reporteTabla(
             this.identificador,
             arreglo.toString(),
-            'Lista',
+            'lista',
             obtenerValor(this.tipo.getTipo()) + '',
             tabla.getNombre(),
             this.fila.toString(),

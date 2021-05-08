@@ -41,7 +41,7 @@ var Arbol = /** @class */ (function () {
                 return elemento.getForma().toString();
             }
         }
-        return '';
+        return 'as';
     };
     Arbol.prototype.getFuncion = function (identificador) {
         for (var _i = 0, _a = this.funciones; _i < _a.length; _i++) {

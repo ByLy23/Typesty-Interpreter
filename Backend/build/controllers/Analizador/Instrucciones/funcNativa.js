@@ -37,8 +37,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var cambiarTipo_1 = __importDefault(require("../../Reportes/cambiarTipo"));
 var Instruccion_1 = require("../Abastracto/Instruccion");
 var nodoAST_1 = __importDefault(require("../Abastracto/nodoAST"));
+var Errores_1 = __importDefault(require("../Excepciones/Errores"));
+var Identificador_1 = __importDefault(require("../Expresiones/Identificador"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
 var funcNativa = /** @class */ (function (_super) {
     __extends(funcNativa, _super);
@@ -46,6 +49,10 @@ var funcNativa = /** @class */ (function (_super) {
         var _this = _super.call(this, new Tipo_1.default(Tipo_1.tipoDato.ENTERO), fila, columna) || this;
         _this.identificador = identificador.toLowerCase();
         _this.expresion = expresion;
+        if (expresion instanceof Identificador_1.default)
+            _this.ide = expresion.identificador.toString();
+        else
+            _this.ide = '';
         return _this;
     }
     funcNativa.prototype.getNodo = function () {
@@ -53,57 +60,79 @@ var funcNativa = /** @class */ (function (_super) {
         return nodo;
     };
     funcNativa.prototype.interpretar = function (arbol, tabla) {
-        console.log(this.identificador + " " + this.expresion);
+        var exp = this.expresion.interpretar(arbol, tabla);
+        if (exp instanceof Errores_1.default)
+            return exp;
         switch (this.identificador) {
             case 'tolower':
+                if (this.expresion.tipoDato.getTipo() != Tipo_1.tipoDato.CADENA)
+                    return new Errores_1.default('SEMANTICO', 'TIPO DE DATO INCOMPATIBLE CON FUNCION TOLOWER', this.fila, this.columna);
                 this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
-                return '';
+                return exp.toString().toLowerCase();
             case 'toupper':
+                if (this.expresion.tipoDato.getTipo() != Tipo_1.tipoDato.CADENA)
+                    return new Errores_1.default('SEMANTICO', 'TIPO DE DATO INCOMPATIBLE CON FUNCION TOUPPER', this.fila, this.columna);
                 this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
-                return '';
+                return exp.toString().toUpperCase();
             case 'length':
                 this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
-                break;
+                var vec = arbol.BuscarTipo(this.ide);
+                if (vec == 'lista' || vec == 'vector')
+                    return exp.length;
+                else if (this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.CADENA)
+                    return exp.length;
+                else
+                    return new Errores_1.default('SEMANTICO', 'TIPO DE DATO INCOMPATIBLE CON FUNCION LENGTH', this.fila, this.columna);
             case 'truncate':
                 this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
-                break;
+                if (this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.DECIMAL ||
+                    this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.ENTERO)
+                    return Math.trunc(parseFloat(exp));
+                else
+                    return new Errores_1.default('SEMANTICO', 'TIPO DE DATO INCOMPATIBLE CON FUNCION TRUNCATE', this.fila, this.columna);
             case 'round':
                 this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.ENTERO);
-                break;
+                if (this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.DECIMAL ||
+                    this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.ENTERO)
+                    return Math.round(parseFloat(exp));
+                else
+                    return new Errores_1.default('SEMANTICO', 'TIPO DE DATO INCOMPATIBLE CON FUNCION ROUND', this.fila, this.columna);
             case 'typeof':
                 this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
-                break;
+                var tipo = arbol.BuscarTipo(this.ide);
+                if (tipo == 'lista' || tipo == 'vector')
+                    return tipo.toString();
+                else
+                    return cambiarTipo_1.default(this.expresion.tipoDato.getTipo());
             case 'tostring':
                 this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CADENA);
-                break;
+                if (this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.DECIMAL ||
+                    this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.ENTERO ||
+                    this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.BOOLEANO ||
+                    this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.CARACTER)
+                    return exp.toString();
+                else
+                    return new Errores_1.default('SEMANTICO', 'TIPO DE DATO INCOMPATIBLE CON FUNCION TOSTRING', this.fila, this.columna);
             case 'tochararray':
-                //this.tipoDato = new Tipo(tipoDato.CADENA); RETORNA EL TIPO DE DATO QUE TENGA EL IDENTIFICADOR
-                break;
+                this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.CARACTER);
+                if (this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.CADENA) {
+                    var arreglo = [];
+                    var cadena = exp.toString();
+                    for (var i = 0; i < cadena.length; i++) {
+                        arreglo.push(cadena[i]);
+                    }
+                    return arreglo;
+                }
+                else
+                    return new Errores_1.default('SEMANTICO', 'TIPO DE DATO INCOMPATIBLE CON FUNCION TOCHARARRAY', this.fila, this.columna);
+            default:
+                return new Errores_1.default('SEMANTICO', 'TIPO DE DATO INCOMPATIBLE CON FUNCION NATIVA', this.fila, this.columna);
         }
     };
     return funcNativa;
 }(Instruccion_1.Instruccion));
 exports.default = funcNativa;
 /*
-toupper
-    cadena
-    retorna cadena
-tolower
-    cadena
-    retorna cadena
-length
-    vector, lista, cadena
-    retorna entero
-truncate
-    double, entero
-    retorna entero
-round
-    double >=0.5 o <0.5
-    retorna entero
-typeof
-    tipoDato
-    retorna string
-    si es no que vaya a buscar en la lista con el metodo buscartipo para ver si es vector o lista
 toString
     numerico, booleano y caracter
     retorna string

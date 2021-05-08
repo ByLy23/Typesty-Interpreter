@@ -40,7 +40,7 @@ export default class Arbol {
         return elemento.getForma().toString();
       }
     }
-    return '';
+    return 'as';
   }
   public getFuncion(identificador: String) {
     for (let f of this.funciones) {
