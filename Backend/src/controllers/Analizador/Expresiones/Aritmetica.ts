@@ -13,8 +13,8 @@ export default class Aritmetica extends Instruccion {
 
   constructor(
     operador: Operadores,
-    fila: Number,
-    columna: Number,
+    fila: number,
+    columna: number,
     op1: Instruccion,
     op2?: Instruccion
   ) {
@@ -106,7 +106,7 @@ export default class Aritmetica extends Instruccion {
         return this.op2Suma(5, op2, izq, der);
     }
   }
-  private op2Suma(numero: Number, op2: any, izq: any, der: any) {
+  private op2Suma(numero: number, op2: any, izq: any, der: any) {
     if (numero == 1) {
       //entero
       switch (
@@ -261,7 +261,7 @@ export default class Aritmetica extends Instruccion {
         return this.op2Resta(5, op2, izq, der);
     }
   }
-  private op2Resta(numero: Number, op2: any, izq: any, der: any) {
+  private op2Resta(numero: number, op2: any, izq: any, der: any) {
     if (numero == 1) {
       //entero
       switch (
@@ -399,7 +399,7 @@ export default class Aritmetica extends Instruccion {
         return this.op2Multi(5, op2, izq, der);
     }
   }
-  private op2Multi(numero: Number, op2: any, izq: any, der: any) {
+  private op2Multi(numero: number, op2: any, izq: any, der: any) {
     if (numero == 1) {
       //entero
       switch (
@@ -513,7 +513,7 @@ export default class Aritmetica extends Instruccion {
         return this.op2Division(5, op2, izq, der);
     }
   }
-  private op2Division(numero: Number, op2: any, izq: any, der: any) {
+  private op2Division(numero: number, op2: any, izq: any, der: any) {
     if (numero == 1) {
       //entero
       switch (
@@ -558,7 +558,7 @@ export default class Aritmetica extends Instruccion {
         case tipoDato.DECIMAL: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
           return der != 0
-            ? parseFloat(izq) * parseFloat(der)
+            ? parseFloat(izq) / parseFloat(der)
             : 'NO SE PUEDE DIVIDIR SOBRE CERO';
         case tipoDato.CARACTER: //retorna decimal
           this.tipoDato = new Tipo(tipoDato.DECIMAL);
@@ -643,7 +643,7 @@ export default class Aritmetica extends Instruccion {
         return this.op2Potencia(5, op2, izq, der);
     }
   }
-  private op2Potencia(numero: Number, op2: any, izq: any, der: any) {
+  private op2Potencia(numero: number, op2: any, izq: any, der: any) {
     if (numero == 1) {
       //entero
       switch (
@@ -732,7 +732,7 @@ export default class Aritmetica extends Instruccion {
         return this.op2Mod(5, op2, izq, der);
     }
   }
-  private op2Mod(numero: Number, op2: any, izq: any, der: any) {
+  private op2Mod(numero: number, op2: any, izq: any, der: any) {
     if (numero == 1) {
       //entero
       switch (

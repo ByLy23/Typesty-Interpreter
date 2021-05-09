@@ -11,8 +11,8 @@ export default class Asignacion extends Instruccion {
   constructor(
     identificador: string,
     valor: Instruccion,
-    fila: Number,
-    columna: Number
+    fila: number,
+    columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador.toLowerCase();
@@ -51,6 +51,7 @@ export default class Asignacion extends Instruccion {
         //actualizar valor de la tabla y no crear otra equis des
       }
     } else {
+      console.log(this.identificador);
       return new Errores(
         'SEMANTICO',
         'VARIABLE ' + this.identificador + ' NO EXISTE',

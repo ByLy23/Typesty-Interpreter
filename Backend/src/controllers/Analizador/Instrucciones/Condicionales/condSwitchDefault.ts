@@ -9,7 +9,7 @@ import Return from '../Return';
 
 export default class condSwitchCase extends Instruccion {
   private instrucciones: Instruccion[];
-  constructor(fila: Number, columna: Number, instrucciones: Instruccion[]) {
+  constructor(fila: number, columna: number, instrucciones: Instruccion[]) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.instrucciones = instrucciones;
   }

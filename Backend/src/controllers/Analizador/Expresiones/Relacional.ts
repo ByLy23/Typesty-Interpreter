@@ -13,8 +13,8 @@ export default class Relacional extends Instruccion {
   private relacion: Relacionales;
   constructor(
     relacion: Relacionales,
-    fila: Number,
-    columna: Number,
+    fila: number,
+    columna: number,
     cond1: Instruccion,
     cond2: Instruccion
   ) {

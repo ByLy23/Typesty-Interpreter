@@ -13,8 +13,8 @@ export default class Exec extends Instruccion {
   constructor(
     identificador: String,
     parametros: Instruccion[],
-    fila: Number,
-    columna: Number
+    fila: number,
+    columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador.toLowerCase();

@@ -18,4 +18,7 @@ export class InicioService {
       entrada: codigo,
     });
   }
+  graficarAst(): Observable<any> {
+    return this.http.get(`${this.path}/graficar`, {});
+  }
 }

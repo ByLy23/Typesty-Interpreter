@@ -13,8 +13,8 @@ export default class condWhile extends Instruccion {
   constructor(
     condicion: Instruccion,
     expresion: Instruccion[],
-    fila: Number,
-    columna: Number
+    fila: number,
+    columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.condicion = condicion;

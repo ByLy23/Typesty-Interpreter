@@ -20,15 +20,15 @@ var Errores = /** @class */ (function () {
         return this.fila;
     };
     Errores.prototype.returnError = function () {
-        return ("Se obtuvo: " +
+        return ('Se obtuvo: ' +
             this.tipoError +
-            " desc:{" +
+            ' desc:{' +
             this.desc +
-            "} en la fila: " +
+            '} en la fila: ' +
             this.fila +
-            " en la columna: " +
+            ' en la columna: ' +
             this.columna +
-            "\n");
+            '\n');
     };
     return Errores;
 }());

@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InicioService } from 'src/app/servicios/inicio.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { InicioService } from 'src/app/servicios/inicio.service';
   styleUrls: ['./contenido-inicio.component.css'],
 })
 export class ContenidoInicioComponent implements OnInit {
-  constructor(private inicioSrv: InicioService) {
+  constructor(private inicioSrv: InicioService, private dialog: MatDialog) {
     this.code = 'asd';
   }
   code = '';
@@ -65,4 +66,24 @@ export class ContenidoInicioComponent implements OnInit {
     var elemento = document.getElementById(identificador);
     elemento.innerHTML = contenido;
   }
+
+  generarAst() {
+    this.inicioSrv.graficarAst().subscribe((res) => {
+      if (res.msg == false) {
+        alert('ALGO FALLO EN EL GRAFICO');
+      } else {
+        this.presentAlert();
+      }
+    });
+  }
+  presentAlert() {
+    // #docregion focus-restoration
+    this.dialog.open(Pruebas, {});
+  }
 }
+
+@Component({
+  selector: 'contenido-dialog',
+  templateUrl: './contenido-dialog-component.html',
+})
+export class Pruebas {}

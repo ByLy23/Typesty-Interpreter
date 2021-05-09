@@ -13,8 +13,8 @@ export default class Declaracion extends Instruccion {
   private valor: Instruccion | undefined;
   constructor(
     tipo: Tipo,
-    fila: Number,
-    columna: Number,
+    fila: number,
+    columna: number,
     id: string,
     valor?: Instruccion
   ) {

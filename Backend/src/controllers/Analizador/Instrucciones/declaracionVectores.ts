@@ -123,13 +123,7 @@ export default class declaracionVectores extends Instruccion {
       }
     } else {
       let arreglo: any = [];
-      if (this.listaValores == null || this.listaValores.length <= 0)
-        return new Errores(
-          'SEMANTICO',
-          'NO TIENE NINGUN VALOR',
-          this.fila,
-          this.columna
-        );
+      if (this.listaValores == null) this.listaValores = [];
       for (let i = 0; i < this.listaValores.length; i++) {
         let valor = this.listaValores[i].interpretar(arbol, tabla);
         if (valor instanceof Errores) return valor;
