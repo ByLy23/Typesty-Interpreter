@@ -12,8 +12,8 @@ export default class condSwitchCase extends Instruccion {
   public expresionCase?: Instruccion;
   private instrucciones: Instruccion[];
   constructor(
-    fila: Number,
-    columna: Number,
+    fila: number,
+    columna: number,
     expresion: Instruccion,
     instrucciones: Instruccion[]
   ) {

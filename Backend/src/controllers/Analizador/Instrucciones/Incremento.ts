@@ -10,8 +10,8 @@ export default class Decremento extends Instruccion {
   private identificador: Identificador | Instruccion;
   constructor(
     identificador: Identificador | Instruccion,
-    fila: Number,
-    columna: Number
+    fila: number,
+    columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador;

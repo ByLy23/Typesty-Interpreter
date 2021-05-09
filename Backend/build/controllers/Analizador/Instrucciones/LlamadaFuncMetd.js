@@ -45,6 +45,8 @@ var Errores_1 = __importDefault(require("../Excepciones/Errores"));
 var tablaSimbolos_1 = __importDefault(require("../Simbolos/tablaSimbolos"));
 var Tipo_1 = __importStar(require("../Simbolos/Tipo"));
 var Declaracion_1 = __importDefault(require("./Declaracion"));
+var declaracionListas_1 = __importDefault(require("./declaracionListas"));
+var declaracionVectores_1 = __importDefault(require("./declaracionVectores"));
 var Funciones_1 = __importDefault(require("./Funciones"));
 var Metodos_1 = __importDefault(require("./Metodos"));
 var LlamadaFuncMetd = /** @class */ (function (_super) {
@@ -78,7 +80,16 @@ var LlamadaFuncMetd = /** @class */ (function (_super) {
                     var newVal = this.parametros[param].interpretar(arbol, tabla);
                     if (newVal instanceof Errores_1.default)
                         return newVal;
-                    var dec = new Declaracion_1.default(metodo.parametros[param].tipato, metodo.fila, metodo.columna, metodo.parametros[param].identificador);
+                    var dec = void 0;
+                    if (metodo.parametros[param].arreglo) {
+                        dec = new declaracionVectores_1.default(metodo.parametros[param].tipato, metodo.parametros[param].identificador, false, metodo.fila, metodo.columna);
+                    }
+                    else if (metodo.parametros[param].lista) {
+                        dec = new declaracionListas_1.default(metodo.parametros[param].tipato, metodo.parametros[param].identificador, metodo.fila, metodo.columna, metodo.parametros[param].tipato, undefined);
+                    }
+                    else {
+                        dec = new Declaracion_1.default(metodo.parametros[param].tipato, metodo.fila, metodo.columna, metodo.parametros[param].identificador);
+                    }
                     var nuevaDec = dec.interpretar(arbol, nuevaTabla);
                     if (nuevaDec instanceof Errores_1.default)
                         return nuevaDec;

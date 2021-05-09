@@ -13,8 +13,8 @@ export default class condIf extends Instruccion {
   private condElse: Instruccion[] | undefined;
   private condElseIf: Instruccion | undefined;
   constructor(
-    fila: Number,
-    columna: Number,
+    fila: number,
+    columna: number,
     cond1: Instruccion,
     condIf: Instruccion[],
     condElse: Instruccion[] | undefined,

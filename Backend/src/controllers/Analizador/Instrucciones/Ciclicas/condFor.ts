@@ -17,8 +17,8 @@ export default class condFor extends Instruccion {
     condicion: Instruccion,
     actualizacion: Instruccion,
     instrucciones: Instruccion[],
-    fila: Number,
-    columna: Number
+    fila: number,
+    columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.declaracionAsignacion = declasignacion;

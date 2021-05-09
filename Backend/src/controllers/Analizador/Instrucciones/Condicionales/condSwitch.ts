@@ -13,8 +13,8 @@ export default class condSwitch extends Instruccion {
   private listaCasos: condSwitchCase[] | undefined;
   private defecto: Instruccion | undefined;
   constructor(
-    fila: Number,
-    columna: Number,
+    fila: number,
+    columna: number,
     expresion: Instruccion,
     listaCasos: condSwitchCase[],
     defecto: Instruccion

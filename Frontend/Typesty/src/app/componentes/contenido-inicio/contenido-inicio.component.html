@@ -3,7 +3,7 @@
             <mat-button-toggle (click)="interpretarContenido(contenido.value)" value="Interpretar">Interpretar</mat-button-toggle>
             <mat-button-toggle value="Abrir Archivo" (click)="textInput.click()">Abrir Archivo</mat-button-toggle>
             <input type="file" hidden="true" #textInput onclick="this.value=null"(change)="textInputChange($event)" accept=".ty"/>
-            <mat-button-toggle value="Generar AST">Generar AST</mat-button-toggle>
+            <mat-button-toggle value="Generar AST" (click)="generarAst()">Generar AST</mat-button-toggle>
             
           </mat-button-toggle-group>
     <div class="texto">
@@ -16,3 +16,4 @@
         <textarea #consolas id="consolas" class="consola"></textarea>
     </div>
 </div>
+

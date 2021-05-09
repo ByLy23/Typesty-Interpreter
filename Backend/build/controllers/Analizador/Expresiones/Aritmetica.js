@@ -524,7 +524,7 @@ var Aritmetica = /** @class */ (function (_super) {
                 case Tipo_1.tipoDato.DECIMAL: //retorna decimal
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
                     return der != 0
-                        ? parseFloat(izq) * parseFloat(der)
+                        ? parseFloat(izq) / parseFloat(der)
                         : 'NO SE PUEDE DIVIDIR SOBRE CERO';
                 case Tipo_1.tipoDato.CARACTER: //retorna decimal
                     this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);

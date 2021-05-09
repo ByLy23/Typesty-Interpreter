@@ -128,3 +128,7 @@ new agregarLista.default(ide, exp, fila, col);
 const funcNativa = require('./Instrucciones/funcNativa');
 
 new funcNativa.default(ide, exp, fila, col);
+
+const casteo = require('./Instrucciones/casteo');
+
+new casteo.default(tipo, exp, fila, col);

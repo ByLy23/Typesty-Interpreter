@@ -7,7 +7,7 @@ import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Print extends Instruccion {
   private expresion: Instruccion;
-  constructor(expresion: Instruccion, fila: Number, columna: Number) {
+  constructor(expresion: Instruccion, fila: number, columna: number) {
     super(new Tipo(tipoDato.CADENA), fila, columna);
     this.expresion = expresion;
   }

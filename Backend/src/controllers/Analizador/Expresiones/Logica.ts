@@ -14,8 +14,8 @@ export default class Logica extends Instruccion {
   private loogica: Logicas;
   constructor(
     relacion: Logicas,
-    fila: Number,
-    columna: Number,
+    fila: number,
+    columna: number,
     cond1: Instruccion,
     cond2?: Instruccion
   ) {

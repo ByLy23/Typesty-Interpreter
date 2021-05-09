@@ -9,6 +9,7 @@ class IndexRoutes {
 
   config(): void {
     this.router.get('/', indexController.index);
+    this.router.get('/graficar', indexController.graficar);
     this.router.post('/interpretar', indexController.interpretar);
   }
 }

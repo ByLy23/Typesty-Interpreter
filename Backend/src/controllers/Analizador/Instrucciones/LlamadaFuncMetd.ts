@@ -7,6 +7,8 @@ import Arbol from '../Simbolos/Arbol';
 import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../Simbolos/Tipo';
 import Declaracion from './Declaracion';
+import declaracionListas from './declaracionListas';
+import declaracionVectores from './declaracionVectores';
 import Funciones from './Funciones';
 import Metodos from './Metodos';
 
@@ -16,8 +18,8 @@ export default class LlamadaFuncMetd extends Instruccion {
   constructor(
     identificador: String,
     parametros: Instruccion[],
-    fila: Number,
-    columna: Number
+    fila: number,
+    columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador.toLowerCase();
@@ -50,12 +52,33 @@ export default class LlamadaFuncMetd extends Instruccion {
         for (let param = 0; param < this.parametros.length; param++) {
           let newVal = this.parametros[param].interpretar(arbol, tabla);
           if (newVal instanceof Errores) return newVal;
-          let dec = new Declaracion(
-            metodo.parametros[param].tipato,
-            metodo.fila,
-            metodo.columna,
-            metodo.parametros[param].identificador
-          );
+
+          let dec;
+          if (metodo.parametros[param].arreglo) {
+            dec = new declaracionVectores(
+              metodo.parametros[param].tipato,
+              metodo.parametros[param].identificador,
+              false,
+              metodo.fila,
+              metodo.columna
+            );
+          } else if (metodo.parametros[param].lista) {
+            dec = new declaracionListas(
+              metodo.parametros[param].tipato,
+              metodo.parametros[param].identificador,
+              metodo.fila,
+              metodo.columna,
+              metodo.parametros[param].tipato,
+              undefined
+            );
+          } else {
+            dec = new Declaracion(
+              metodo.parametros[param].tipato,
+              metodo.fila,
+              metodo.columna,
+              metodo.parametros[param].identificador
+            );
+          }
           let nuevaDec = dec.interpretar(arbol, nuevaTabla);
           if (nuevaDec instanceof Errores) return nuevaDec;
 

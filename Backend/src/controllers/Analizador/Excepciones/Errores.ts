@@ -1,21 +1,21 @@
 export default class Errores {
   private tipoError: String;
   private desc: String;
-  private fila: Number;
-  private columna: Number;
+  private fila: number;
+  private columna: number;
   public getDesc(): String {
     return this.desc;
   }
   public getTipoError(): String {
     return this.tipoError;
   }
-  public getcolumna(): Number {
+  public getcolumna(): number {
     return this.columna;
   }
-  public getFila(): Number {
+  public getFila(): number {
     return this.fila;
   }
-  constructor(tipo: String, desc: String, fila: Number, columna: Number) {
+  constructor(tipo: String, desc: String, fila: number, columna: number) {
     this.tipoError = tipo;
     this.desc = desc;
     this.fila = fila;
@@ -23,15 +23,15 @@ export default class Errores {
   }
   public returnError(): String {
     return (
-      "Se obtuvo: " +
+      'Se obtuvo: ' +
       this.tipoError +
-      " desc:{" +
+      ' desc:{' +
       this.desc +
-      "} en la fila: " +
+      '} en la fila: ' +
       this.fila +
-      " en la columna: " +
+      ' en la columna: ' +
       this.columna +
-      "\n"
+      '\n'
     );
   }
 }
