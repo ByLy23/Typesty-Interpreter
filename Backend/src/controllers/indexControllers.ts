@@ -26,7 +26,6 @@ class IndexController {
     res.json({ text: 'Hola bbsitas' });
   }
   public interpretar(req: Request, res: Response) {
-    let arbolito;
     listaErrores = new Array<Errores>();
     let parser = require('./Analizador/analizador');
     const { entrada } = req.body;
@@ -73,25 +72,29 @@ class IndexController {
           listaErrores.push(error);
           ast.actualizaConsola((<Errores>error).returnError());
         }
-        //graficars
       }
-      let arbolAst = new nodoAST('RAIZ');
-      let nodoINS = new nodoAST('INSTRUCCIONES');
-      ast.getinstrucciones().forEach((element) => {
-        nodoINS.agregarHijoAST(element.getNodo());
-      });
-      arbolAst.agregarHijoAST(nodoINS);
-      graficarArbol(<nodoAST>arbolAst);
+
       arbolNuevo = ast;
       res.send({
         resultado: ast.getconsola(),
         errores: listaErrores,
         tabla: ast.getSimbolos(),
-        arbol: arbolito,
       });
     } catch (err) {
       res.json({ error: err, errores: listaErrores });
     }
+  }
+  public graficar(req: Request, res: Response) {
+    let otro = arbolNuevo;
+    if (otro == null) return res.json({ msg: false });
+    let arbolAst = new nodoAST('RAIZ');
+    let nodoINS = new nodoAST('INSTRUCCIONES');
+    otro.getinstrucciones().forEach((element) => {
+      nodoINS.agregarHijoAST(element.getNodo());
+    });
+    arbolAst.agregarHijoAST(nodoINS);
+    graficarArbol(<nodoAST>arbolAst);
+    return res.json({ msg: true });
   }
 }
 export const indexController = new IndexController();

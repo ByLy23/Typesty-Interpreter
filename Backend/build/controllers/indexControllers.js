@@ -31,7 +31,6 @@ var IndexController = /** @class */ (function () {
         res.json({ text: 'Hola bbsitas' });
     };
     IndexController.prototype.interpretar = function (req, res) {
-        var arbolito;
         exports.listaErrores = new Array();
         var parser = require('./Analizador/analizador');
         var entrada = req.body.entrada;
@@ -74,26 +73,30 @@ var IndexController = /** @class */ (function () {
                     exports.listaErrores.push(error);
                     ast.actualizaConsola(error.returnError());
                 }
-                //graficars
             }
-            var arbolAst = new nodoAST_1.default('RAIZ');
-            var nodoINS_1 = new nodoAST_1.default('INSTRUCCIONES');
-            ast.getinstrucciones().forEach(function (element) {
-                nodoINS_1.agregarHijoAST(element.getNodo());
-            });
-            arbolAst.agregarHijoAST(nodoINS_1);
-            graficar_1.default(arbolAst);
             arbolNuevo = ast;
             res.send({
                 resultado: ast.getconsola(),
                 errores: exports.listaErrores,
                 tabla: ast.getSimbolos(),
-                arbol: arbolito,
             });
         }
         catch (err) {
             res.json({ error: err, errores: exports.listaErrores });
         }
+    };
+    IndexController.prototype.graficar = function (req, res) {
+        var otro = arbolNuevo;
+        if (otro == null)
+            return res.json({ msg: false });
+        var arbolAst = new nodoAST_1.default('RAIZ');
+        var nodoINS = new nodoAST_1.default('INSTRUCCIONES');
+        otro.getinstrucciones().forEach(function (element) {
+            nodoINS.agregarHijoAST(element.getNodo());
+        });
+        arbolAst.agregarHijoAST(nodoINS);
+        graficar_1.default(arbolAst);
+        return res.json({ msg: true });
     };
     return IndexController;
 }());

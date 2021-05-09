@@ -20,6 +20,7 @@ import { ContenidoInicioComponent } from './componentes/contenido-inicio/conteni
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { CodemirrorModule } from 'ng2-codemirror';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { CodemirrorModule } from 'ng2-codemirror';
     MatButtonToggleModule,
     MatInputModule,
     MatTableModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

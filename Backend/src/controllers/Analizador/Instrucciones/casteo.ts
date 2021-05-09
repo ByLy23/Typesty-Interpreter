@@ -40,7 +40,6 @@ export default class casteo extends Instruccion {
     if (this.expresion.tipoDato.getTipo() == tipoDato.ENTERO) {
       if (this.tipo.getTipo() == tipoDato.DECIMAL) {
         this.tipoDato = new Tipo(tipoDato.DECIMAL);
-        console.log('aca');
         return parseFloat(exp);
       } else if (this.tipo.getTipo() == tipoDato.CADENA) {
         this.tipoDato = new Tipo(tipoDato.CADENA);

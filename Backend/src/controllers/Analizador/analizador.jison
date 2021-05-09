@@ -309,15 +309,15 @@ EXPRESION:
  
     ;
 CONDICIONIF:
-    RESIF PARABRE EXPRESION /*COND1*/PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA                                                         {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,undefined);}
-    |RESIF PARABRE EXPRESION/*COND1*/ PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE/*true*/ LLAVEABRE INSTRUCCIONES LLAVECIERRA    {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,$10,undefined);}
-    |RESIF PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA RESELSE /*true*/CONDICIONIF                                     {$$= new condIf.default(@1.first_line,@1.first_column,$3,$6,undefined,$9);}     
+    RESIF PARABRE EXPRESION /*COND1*/PARCIERRA BLOQUEINSTRUCCION                                                        {$$= new condIf.default(@1.first_line,@1.first_column,$3,$5,undefined,undefined);}
+    |RESIF PARABRE EXPRESION/*COND1*/ PARCIERRA BLOQUEINSTRUCCION RESELSE/*true*/ BLOQUEINSTRUCCION    {$$= new condIf.default(@1.first_line,@1.first_column,$3,$5,$7,undefined);}
+    |RESIF PARABRE EXPRESION PARCIERRA BLOQUEINSTRUCCION RESELSE /*true*/CONDICIONIF                                     {$$= new condIf.default(@1.first_line,@1.first_column,$3,$5,undefined,$7);}     
     ;
 CONDICIONWHILE:
-    RESWHILE PARABRE EXPRESION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA              {$$=new condWhile.default($3,$6,@1.first_line,@1.first_column);}
+    RESWHILE PARABRE EXPRESION PARCIERRA BLOQUEINSTRUCCION              {$$=new condWhile.default($3,$5,@1.first_line,@1.first_column);}
     ;
 CONDICIONDOWHILE:
-    RESDO LLAVEABRE INSTRUCCIONES LLAVECIERRA RESWHILE PARABRE EXPRESION PARCIERRA PTCOMA {$$=new condDoWhile.default($7,$3,@1.first_line,@1.first_column);}
+    RESDO BLOQUEINSTRUCCION RESWHILE PARABRE EXPRESION PARCIERRA PTCOMA {$$=new condDoWhile.default($5,$2,@1.first_line,@1.first_column);}
     ;
 IFTERNARIO:
     EXPRESION INTERROGACION EXPRESION DOSPUNTOS EXPRESION   {$$=new condTernario.default($1,$3,$5,@1.first_line,@1.first_column);}
@@ -354,7 +354,7 @@ CONDECREMENTO:
     EXPRESION MENOS MENOS                                                           {$$=new Decremento.default($1,@1.first_line,@1.first_column);}
     ;
 CONDFOR:
-    RESFOR PARABRE DECLASIG PTCOMA EXPRESION PTCOMA ACTUALIZACION PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new condFor.default($3,$5,$7,$10,@1.first_line,@1.first_column);}
+    RESFOR PARABRE DECLASIG PTCOMA EXPRESION PTCOMA ACTUALIZACION PARCIERRA BLOQUEINSTRUCCION {$$=new condFor.default($3,$5,$7,$9,@1.first_line,@1.first_column);}
     ;
 DECLASIG:
     DECLARACION {$$=$1;}
@@ -366,8 +366,8 @@ ACTUALIZACION:
     |ASIGNACION    {$$=$1;}
     ;
 METODOS:
-    RESVOID IDENTIFICADOR PARABRE PARAMETROS PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new metodos.default(new Tipo.default(Tipo.tipoDato.VOID),@1.first_line,@1.first_column,$2,$4,$7);}
-    |RESVOID IDENTIFICADOR PARABRE PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA           {$$=new metodos.default(new Tipo.default(Tipo.tipoDato.VOID),@1.first_line,@1.first_column,$2,[],$6);}
+    RESVOID IDENTIFICADOR PARABRE PARAMETROS PARCIERRA BLOQUEINSTRUCCION {$$=new metodos.default(new Tipo.default(Tipo.tipoDato.VOID),@1.first_line,@1.first_column,$2,$4,$6);}
+    |RESVOID IDENTIFICADOR PARABRE PARCIERRA BLOQUEINSTRUCCION           {$$=new metodos.default(new Tipo.default(Tipo.tipoDato.VOID),@1.first_line,@1.first_column,$2,[],$5);}
     ;
 PARAMETROS:
     PARAMETROS COMA TIPODATO IDENTIFICADOR    {$1.push({tipato:$3,identificador:$4});$$=$1;} 
@@ -386,8 +386,8 @@ EJECUTAR:
     |RESEXEC IDENTIFICADOR PARABRE PARCIERRA            {$$=new ejecucion.default($2,[],@1.first_line,@1.first_column);}                        
     ;
 FUNCIONES:
-    TIPODATO IDENTIFICADOR PARABRE PARAMETROS PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,$4,$7);}
-    |TIPODATO IDENTIFICADOR PARABRE PARCIERRA LLAVEABRE INSTRUCCIONES LLAVECIERRA           {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,[],$6);}
+    TIPODATO IDENTIFICADOR PARABRE PARAMETROS PARCIERRA BLOQUEINSTRUCCION {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,$4,$6);}
+    |TIPODATO IDENTIFICADOR PARABRE PARCIERRA BLOQUEINSTRUCCION           {$$=new funciones.default($1,@1.first_line,@1.first_column,$2,[],$5);}
     ;
 VECTORES:
     TIPODATO CORCHABRE CORCHCIERRA IDENTIFICADOR IGUAL RESNUEVO TIPODATO CORCHABRE EXPRESION CORCHCIERRA {$$=new vectores.default($1,$4,true,@1.first_line,@1.first_column,$9,$7);}
@@ -425,7 +425,10 @@ FUNCNATIVA:
     |RESTOSTR       {$$=$1;}
     |RESTOCHRARR    {$$=$1;}
     ;
-
+BLOQUEINSTRUCCION:
+    LLAVEABRE INSTRUCCIONES LLAVECIERRA {$$=$2;}
+    |LLAVEABRE LLAVECIERRA              {$$=[];}
+    ;
     /*
     |TIPODATO
     TIPODATO:

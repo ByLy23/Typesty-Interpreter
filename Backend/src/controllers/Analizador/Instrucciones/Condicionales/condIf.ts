@@ -65,11 +65,24 @@ export default class condIf extends Instruccion {
       );
     }
     if (val) {
-      if (this.condIf.length > 0) {
+      let nuevaTabla = new tablaSimbolos(tabla);
+      nuevaTabla.setNombre('If');
+      for (let i = 0; i < this.condIf.length; i++) {
+        let a = this.condIf[i].interpretar(arbol, nuevaTabla);
+        if (a instanceof Errores) {
+          listaErrores.push(a);
+          arbol.actualizaConsola((<Errores>a).returnError());
+        }
+        if (a instanceof Return) return a;
+        if (a == 'ByLyContinue') return a;
+        if (a == 'ByLy23') return a;
+      }
+    } else {
+      if (this.condElse != undefined) {
         let nuevaTabla = new tablaSimbolos(tabla);
-        nuevaTabla.setNombre('If');
-        for (let i = 0; i < this.condIf.length; i++) {
-          let a = this.condIf[i].interpretar(arbol, nuevaTabla);
+        nuevaTabla.setNombre('else');
+        for (let i = 0; i < this.condElse.length; i++) {
+          let a = this.condElse[i].interpretar(arbol, nuevaTabla);
           if (a instanceof Errores) {
             listaErrores.push(a);
             arbol.actualizaConsola((<Errores>a).returnError());
@@ -77,23 +90,6 @@ export default class condIf extends Instruccion {
           if (a instanceof Return) return a;
           if (a == 'ByLyContinue') return a;
           if (a == 'ByLy23') return a;
-        }
-      }
-    } else {
-      if (this.condElse != undefined) {
-        if (this.condElse.length > 0) {
-          let nuevaTabla = new tablaSimbolos(tabla);
-          nuevaTabla.setNombre('else');
-          for (let i = 0; i < this.condElse.length; i++) {
-            let a = this.condElse[i].interpretar(arbol, nuevaTabla);
-            if (a instanceof Errores) {
-              listaErrores.push(a);
-              arbol.actualizaConsola((<Errores>a).returnError());
-            }
-            if (a instanceof Return) return a;
-            if (a == 'ByLyContinue') return a;
-            if (a == 'ByLy23') return a;
-          }
         }
       } else if (this.condElseIf != undefined) {
         let b = this.condElseIf.interpretar(arbol, tabla);

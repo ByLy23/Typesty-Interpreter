@@ -67,7 +67,6 @@ var casteo = /** @class */ (function (_super) {
         if (this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.ENTERO) {
             if (this.tipo.getTipo() == Tipo_1.tipoDato.DECIMAL) {
                 this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);
-                console.log('aca');
                 return parseFloat(exp);
             }
             else if (this.tipo.getTipo() == Tipo_1.tipoDato.CADENA) {
