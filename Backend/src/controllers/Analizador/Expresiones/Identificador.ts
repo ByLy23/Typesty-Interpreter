@@ -7,7 +7,7 @@ import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Identificador extends Instruccion {
   public identificador: String;
-  constructor(identificador: String, fila: Number, columna: Number) {
+  constructor(identificador: String, fila: number, columna: number) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.identificador = identificador.toLowerCase();
   }

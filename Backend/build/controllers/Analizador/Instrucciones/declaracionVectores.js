@@ -91,8 +91,8 @@ var declaracionVectores = /** @class */ (function (_super) {
         }
         else {
             var arreglo = [];
-            if (this.listaValores == null || this.listaValores.length <= 0)
-                return new Errores_1.default('SEMANTICO', 'NO TIENE NINGUN VALOR', this.fila, this.columna);
+            if (this.listaValores == null)
+                this.listaValores = [];
             for (var i = 0; i < this.listaValores.length; i++) {
                 var valor = this.listaValores[i].interpretar(arbol, tabla);
                 if (valor instanceof Errores_1.default)

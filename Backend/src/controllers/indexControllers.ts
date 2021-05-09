@@ -46,7 +46,8 @@ class IndexController {
           listaErrores.push(i);
           ast.actualizaConsola((<Errores>i).returnError());
         }
-        if (i instanceof Metodos || i instanceof Funciones) continue;
+        if (i instanceof Metodos || i instanceof Funciones || i instanceof Exec)
+          continue;
         if (
           i instanceof Declaracion ||
           i instanceof Asignacion ||
@@ -54,8 +55,7 @@ class IndexController {
           i instanceof declaracionListas ||
           i instanceof asignacionVector ||
           i instanceof asignacionLista ||
-          i instanceof agregarLista ||
-          i instanceof Exec
+          i instanceof agregarLista
         ) {
           var resultador = i.interpretar(ast, tabla);
           if (resultador instanceof Errores) {
@@ -73,7 +73,15 @@ class IndexController {
           ast.actualizaConsola((<Errores>error).returnError());
         }
       }
-
+      for (let i of ast.getinstrucciones()) {
+        if (i instanceof Exec) {
+          var resultador = i.interpretar(ast, tabla);
+          if (resultador instanceof Errores) {
+            listaErrores.push(resultador);
+            ast.actualizaConsola((<Errores>resultador).returnError());
+          }
+        }
+      }
       arbolNuevo = ast;
       res.send({
         resultado: ast.getconsola(),

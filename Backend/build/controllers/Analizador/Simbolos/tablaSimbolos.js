@@ -52,7 +52,7 @@ var tablaSimbolos = /** @class */ (function () {
     };
     tablaSimbolos.prototype.getVariable = function (id) {
         for (var e = this; e != null; e = e.getAnterior()) {
-            var encontrado = e.getTabla().get(id);
+            var encontrado = e.getTabla().get(id.toLowerCase());
             if (encontrado != null) {
                 return encontrado;
             }

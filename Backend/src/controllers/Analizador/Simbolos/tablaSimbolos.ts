@@ -39,7 +39,7 @@ export default class tablaSimbolos {
   }
   public getVariable(id: String) {
     for (let e: tablaSimbolos = this; e != null; e = e.getAnterior()) {
-      let encontrado: Simbolo = <Simbolo>e.getTabla().get(id);
+      let encontrado: Simbolo = <Simbolo>e.getTabla().get(id.toLowerCase());
       if (encontrado != null) {
         return encontrado;
       }

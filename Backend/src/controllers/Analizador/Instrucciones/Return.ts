@@ -7,7 +7,7 @@ import Tipo, { tipoDato } from '../Simbolos/Tipo';
 export default class Return extends Instruccion {
   private expresionReturn?: Instruccion;
   public valor = null;
-  constructor(fila: Number, columna: Number, expresion?: Instruccion) {
+  constructor(fila: number, columna: number, expresion?: Instruccion) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.expresionReturn = expresion;
   }

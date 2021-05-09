@@ -13,8 +13,8 @@ export default class Metodos extends Instruccion {
   private instrucciones: Instruccion[];
   constructor(
     tipo: Tipo,
-    fila: Number,
-    columna: Number,
+    fila: number,
+    columna: number,
     identificador: String,
     parametros: any,
     instrucciones: Instruccion[]

@@ -73,6 +73,7 @@ var Asignacion = /** @class */ (function (_super) {
             }
         }
         else {
+            console.log(this.identificador);
             return new Errores_1.default('SEMANTICO', 'VARIABLE ' + this.identificador + ' NO EXISTE', this.fila, this.columna);
         }
     };

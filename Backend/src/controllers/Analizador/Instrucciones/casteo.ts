@@ -30,13 +30,6 @@ export default class casteo extends Instruccion {
   public interpretar(arbol: Arbol, tabla: tablaSimbolos) {
     let exp = this.expresion.interpretar(arbol, tabla);
     if (exp instanceof Errores) return exp;
-    if (this.tipo.getTipo() == this.expresion.tipoDato.getTipo())
-      return new Errores(
-        'SEMANTICO',
-        'NO SE PUEDE CASTEAR EL MISMO TIPO DE DATO',
-        this.fila,
-        this.columna
-      );
     if (this.expresion.tipoDato.getTipo() == tipoDato.ENTERO) {
       if (this.tipo.getTipo() == tipoDato.DECIMAL) {
         this.tipoDato = new Tipo(tipoDato.DECIMAL);

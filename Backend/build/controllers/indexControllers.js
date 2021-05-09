@@ -52,7 +52,7 @@ var IndexController = /** @class */ (function () {
                     exports.listaErrores.push(i);
                     ast.actualizaConsola(i.returnError());
                 }
-                if (i instanceof Metodos_1.default || i instanceof Funciones_1.default)
+                if (i instanceof Metodos_1.default || i instanceof Funciones_1.default || i instanceof Exec_1.default)
                     continue;
                 if (i instanceof Declaracion_1.default ||
                     i instanceof Asignacion_1.default ||
@@ -60,8 +60,7 @@ var IndexController = /** @class */ (function () {
                     i instanceof declaracionListas_1.default ||
                     i instanceof asignacionVector_1.default ||
                     i instanceof asignacionLista_1.default ||
-                    i instanceof agregarLista_1.default ||
-                    i instanceof Exec_1.default) {
+                    i instanceof agregarLista_1.default) {
                     var resultador = i.interpretar(ast, tabla);
                     if (resultador instanceof Errores_1.default) {
                         exports.listaErrores.push(resultador);
@@ -72,6 +71,16 @@ var IndexController = /** @class */ (function () {
                     var error = new Errores_1.default('SEMANTICO', 'SENTENCIA FUERA DE METODO', i.fila, i.columna);
                     exports.listaErrores.push(error);
                     ast.actualizaConsola(error.returnError());
+                }
+            }
+            for (var _d = 0, _e = ast.getinstrucciones(); _d < _e.length; _d++) {
+                var i = _e[_d];
+                if (i instanceof Exec_1.default) {
+                    var resultador = i.interpretar(ast, tabla);
+                    if (resultador instanceof Errores_1.default) {
+                        exports.listaErrores.push(resultador);
+                        ast.actualizaConsola(resultador.returnError());
+                    }
                 }
             }
             arbolNuevo = ast;

@@ -137,7 +137,7 @@ const casteo= require('./Instrucciones/casteo');
 %left 'MAYOR' 'MENOR' 'MAYORIGUAL' 'MENORIGUAL' 'COMPARACION' 'DIFERENTE'
 %left 'MAS' 'MENOS'
 %left 'POR' 'DIVI' 'MOD'
-%nonassoc 'POTENCIA'
+%right 'POTENCIA'
 %right 'UMENOS'
 
 %start INI
@@ -371,6 +371,10 @@ METODOS:
     ;
 PARAMETROS:
     PARAMETROS COMA TIPODATO IDENTIFICADOR    {$1.push({tipato:$3,identificador:$4});$$=$1;} 
+    |PARAMETROS COMA TIPODATO CORCHABRE CORCHCIERRA IDENTIFICADOR   {$1.push({tipato:$3,identificador:$6,arreglo:true});$$=$1;} 
+    |PARAMETROS COMA RESLIST MENOR TIPODATO MAYOR IDENTIFICADOR                     {$1.push({tipato:$5,identificador:$7,lista:true});$$=$1;} 
+    |TIPODATO CORCHABRE CORCHCIERRA IDENTIFICADOR                   {$$=[{tipato:$1,identificador:$4,arreglo:true}];} 
+    |RESLIST MENOR TIPODATO MAYOR IDENTIFICADOR                     {$$=[{tipato:$3,identificador:$5,lista:true}];} 
     |TIPODATO IDENTIFICADOR                   {$$=[{tipato:$1,identificador:$2}];} 
     ;
 LLAMADA:
@@ -404,7 +408,8 @@ ASIGVECTORES:
     IDENTIFICADOR CORCHABRE EXPRESION CORCHCIERRA IGUAL EXPRESION {$$=new modiVector.default($1, $3, $6,@1.first_line,@1.first_column);}
     ;
 LISTAS:
-    RESLIST MENOR TIPODATO MAYOR IDENTIFICADOR IGUAL RESNUEVO RESLIST MENOR TIPODATO MAYOR {$$=new listas.default($3, $5,@1.first_line,@1.first_column, $10);}
+    RESLIST MENOR TIPODATO MAYOR IDENTIFICADOR IGUAL RESNUEVO RESLIST MENOR TIPODATO MAYOR {$$=new listas.default($3, $5,@1.first_line,@1.first_column, $10,undefined);}
+    |RESLIST MENOR TIPODATO MAYOR IDENTIFICADOR IGUAL EXPRESION {$$=new listas.default($3, $5,@1.first_line,@1.first_column, undefined,$7);}
     ;
 ACCESOLISTAS:
     IDENTIFICADOR CORCHABRE CORCHABRE EXPRESION CORCHCIERRA CORCHCIERRA {$$=new accesoLista.default($1,$4,@1.first_line,@1.first_column);}

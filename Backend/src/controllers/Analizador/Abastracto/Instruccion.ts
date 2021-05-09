@@ -4,9 +4,9 @@ import Tipo from '../Simbolos/Tipo';
 import nodoAST from './nodoAST';
 export abstract class Instruccion {
   public tipoDato: Tipo;
-  public fila: Number;
-  public columna: Number;
-  constructor(tipo: Tipo, fila: Number, columna: Number) {
+  public fila: number;
+  public columna: number;
+  constructor(tipo: Tipo, fila: number, columna: number) {
     this.tipoDato = tipo;
     this.fila = fila;
     this.columna = columna;

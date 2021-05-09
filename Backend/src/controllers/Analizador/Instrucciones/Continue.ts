@@ -5,7 +5,7 @@ import tablaSimbolos from '../Simbolos/tablaSimbolos';
 import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Continue extends Instruccion {
-  constructor(fila: Number, columna: Number) {
+  constructor(fila: number, columna: number) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
   }
   public getNodo(): nodoAST {

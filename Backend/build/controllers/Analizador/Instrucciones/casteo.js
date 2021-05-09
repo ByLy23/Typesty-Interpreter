@@ -62,8 +62,6 @@ var casteo = /** @class */ (function (_super) {
         var exp = this.expresion.interpretar(arbol, tabla);
         if (exp instanceof Errores_1.default)
             return exp;
-        if (this.tipo.getTipo() == this.expresion.tipoDato.getTipo())
-            return new Errores_1.default('SEMANTICO', 'NO SE PUEDE CASTEAR EL MISMO TIPO DE DATO', this.fila, this.columna);
         if (this.expresion.tipoDato.getTipo() == Tipo_1.tipoDato.ENTERO) {
             if (this.tipo.getTipo() == Tipo_1.tipoDato.DECIMAL) {
                 this.tipoDato = new Tipo_1.default(Tipo_1.tipoDato.DECIMAL);

@@ -6,7 +6,7 @@ import Tipo, { tipoDato } from '../Simbolos/Tipo';
 
 export default class Nativo extends Instruccion {
   valor: any;
-  constructor(tipo: Tipo, valor: any, fila: Number, columna: Number) {
+  constructor(tipo: Tipo, valor: any, fila: number, columna: number) {
     super(tipo, fila, columna);
     this.valor = valor;
     if (tipo.getTipo() == tipoDato.CADENA) {

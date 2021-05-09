@@ -13,8 +13,8 @@ export default class condIfTernario extends Instruccion {
     cond: Instruccion,
     conIf: Instruccion,
     conElse: Instruccion,
-    fila: Number,
-    columna: Number
+    fila: number,
+    columna: number
   ) {
     super(new Tipo(tipoDato.ENTERO), fila, columna);
     this.condicion = cond;
