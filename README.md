@@ -33,4 +33,4 @@ For the `Frontend` I use [Angular CLI](https://github.com/angular/angular-cli) v
 
 ## Contact
 
-If you want to contact me, you can write to me on [LinkedIn](https://www.linkedin.com/in/byronorellana-byly23/) or write to my [email](byronorellana556@hotmail.com).
+If you want to contact me, you can write to me on [LinkedIn](https://www.linkedin.com/in/byronorellana-byly23/) or write to my email [byronorellana556@hotmail.com].
