@@ -1,0 +1,129 @@
+====================ARCHIVO 3====================
+**************SECCION DE VECTORES****************
+---Vector Desordenado---
+vectorNumeros[0] = 200
+vectorNumeros[1] = 26
+vectorNumeros[2] = 1
+vectorNumeros[3] = 15
+vectorNumeros[4] = 167
+vectorNumeros[5] = 0
+vectorNumeros[6] = 76
+vectorNumeros[7] = 94
+vectorNumeros[8] = 25
+vectorNumeros[9] = 44
+vectorNumeros[10] = 5
+vectorNumeros[11] = 59
+vectorNumeros[12] = 95
+vectorNumeros[13] = 10
+vectorNumeros[14] = 23
+-----Vector Ordenado----
+vectorNumeros[0] = 0
+vectorNumeros[1] = 1
+vectorNumeros[2] = 5
+vectorNumeros[3] = 10
+vectorNumeros[4] = 15
+vectorNumeros[5] = 23
+vectorNumeros[6] = 25
+vectorNumeros[7] = 26
+vectorNumeros[8] = 44
+vectorNumeros[9] = 59
+vectorNumeros[10] = 76
+vectorNumeros[11] = 94
+vectorNumeros[12] = 95
+vectorNumeros[13] = 167
+vectorNumeros[14] = 200
+************FIN DE SECCION VECTORES***************
+****************SECCION DE LISTAS****************
+frase[[0]] = )
+frase[[1]] = :
+frase[[2]] =  
+frase[[3]] = 1
+frase[[4]] = I
+frase[[5]] = P
+frase[[6]] = M
+frase[[7]] = O
+frase[[8]] = C
+frase[[9]] =  
+frase[[10]] = E
+frase[[11]] = L
+frase[[12]] = A
+frase[[13]] = S
+frase[[14]] =  
+frase[[15]] = I
+frase[[16]] = S
+El mensaje es:
+SI SALE COMPI1 :)
+************FIN DE SECCION DE LISTAS**************
+**************SECCION DE CASTEOS***************
+int a DOUBLE
+double a INT
+char  a DOUBLE
+int a CHAR
+double a STRING
+************FIN DE SECCION DE CASTEOS*************
+**************SECCION DE NATIVAS***************
+------------------LENGTH-------------------
+vectorNumero es de 15 elementos
+La lista frase tiene 17 elementos
+------------------TOLOWER-------------------
+SIN TOLOWER
+con tolower
+------------------TOUPPER-------------------
+sin toupper
+CON TOUPPER
+------------------TRUNCATE------------------
+sin truncate: 17.8
+con truncate 17
+------------------ROUND-------------------
+sin round: 26.5
+con round 27
+sin round: 26.4
+con round 26
+-----------------TYPEOF--------------------
+tipo: STRING
+tipo: INT
+tipo: DOUBLE
+tipo: CHAR
+tipo: BOOLEAN
+------------------LENGTH-------------------
+tamaño: 14
+------------------TOSTRING-------------------
+tipo: INT
+tipo: STRING
+----------------TOCHARARRAY------------------
+########imprimiendo lista de caracteres#######
+listaChar[[0]] = S
+listaChar[[1]] = O
+listaChar[[2]] = Y
+listaChar[[3]] =  
+listaChar[[4]] = U
+listaChar[[5]] = N
+listaChar[[6]] = A
+listaChar[[7]] =  
+listaChar[[8]] = L
+listaChar[[9]] = I
+listaChar[[10]] = S
+listaChar[[11]] = T
+listaChar[[12]] = A
+************FIN DE SECCION DE NATIVAS*************
+***********SECCION DE RECURSIVIDAD***************
+---------------FUNCION FIBONACCI-----------------
+Resultado de fibonacci(20) = 6765
+-------------------------------------------------
+---------------FUNCION PAR-IMPAR-----------------
+El numero '71' es Impar
+-------------------------------------------------
+----------------TORRES DE HANOI------------------
+Mover disco de 1 a 3
+Mover disco de 1 a 2
+Mover disco de 3 a 2
+Mover disco de 1 a 3
+Mover disco de 2 a 1
+Mover disco de 2 a 3
+Mover disco de 1 a 3
+-------------------------------------------------
+---------------FUNCION ACKERMANN-----------------
+Funcion de Ackerman (3, 4) = 125
+-------------------------------------------------
+*************FIN DE RECURSIVIDAD*****************
+=================================================
