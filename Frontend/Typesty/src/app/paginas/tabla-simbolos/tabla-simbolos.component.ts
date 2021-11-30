@@ -21,7 +21,6 @@ export class TablaSimbolosComponent implements OnInit {
     let info = window.localStorage.getItem('simbolos');
     let otro = JSON.parse(info);
     this.dataSource = otro;
-    console.log("prubea")
   }
 }
 export interface Simbolos {
@@ -29,7 +28,7 @@ export interface Simbolos {
   tipo: string;
   tipoDato: string;
   entorno: string;
-  linea: number;
-  columna: number;
+  linea: string;
+  columna: string;
   valor: string;
 }
